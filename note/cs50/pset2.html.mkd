@@ -1,0 +1,225 @@
+﻿<!--c-->
+## pset 2 
+
+----
+
+[pset2](https://cdn.cs50.net/2014/spring/psets/2/hacker2/hacker2.html)
+
+### initials
+
+* 要求：输出名字的缩写
+* 掌握：标准输入，基本库函数
+* 难点：判断首字母的算法
+
+```cpp
+#include <stdio.h>
+#include <cs50.h>
+#include <ctype.h>
+
+int main(void)
+{
+    printf("please put in your name:\n");
+    char* name = GetString();
+    char* s = name;
+    int flag =  1;
+    while (*s != '\0')
+    {
+        if (isalpha(*s) && flag)
+        {
+            printf("%c",toupper(*s));
+            flag = 0;
+        }
+        if (*s == ' ' && !flag) 
+        {
+            flag = 1;
+        }
+        s++;
+    }
+    free(name);
+    printf("\n");
+}
+```
+
+### crack
+
+* 要求：破解加密的密码
+* 掌握：[文件读写](C intro.html), 其他函数的理解(man)，main 函数命令行参数，常量定义
+* 难点：字符串函数， 函数返回字符串，内存管理
+* 爆点：短于8位字符的密码遍历，从简单到复杂
+* 注意：因为涉及到很多指针函数，所以内存管理这一块是个很大的问题，需要用`valgrind`多检查。另外现在还是没有明白为什么下面的`tmp`不需要也不能释放内存，是不是跟`crypt`的实现有关
+  
+> > 假如定义一个字符指针，由一个字符指针函数赋值，这样这个指针不需要用malloc来分配内存。因为子函数已经分好内存了，只是注意用完以后要释放。比如说 `char* c = GetString();` 这种类型的就不要先用`malloc`给`c`来分配内存。但是还有一类指针函数，比如`strcp(sour, dest)`，这样的函数在实现的时候并没有给分配内存，所以使用前要`malloc`, 从函数的参数形式也能看出差别，类似的有`fgets(word, n, f)`, `sort(int* arr, int n)`。所以如果要实现一个用户自己分配内存，然后从屏幕读取字符的函数，参数应该这样写`NewGetString(char* c)`
+
+```cpp
+/**
+ * crack
+ * crack the password encrypted by DES method
+ * first with a dictionary
+ * if failed, go to brute
+ * assume the password consist by all printable chars
+ * and have a maxLength of 8
+ * useage: crack ciphertext
+ */
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define _XOPEN_SOURCE
+// all printable chars
+#define CHARSTART 0x20 
+#define CHAREND 0x7E
+#define MAXWORD 64
+
+char* crypt(char* key, char* salt);
+char* crackDictionary(char* encrypted);
+char* crackBrute(char* encrypted);
+char* GetCharList(int charStart, int charEnd);
+
+
+int main(int argc, char* argv[])
+{
+    if (argc != 2)
+    {
+        printf("usage: input a encrypted password\n");
+        return 1;
+    }
+
+    char* encrypted = malloc(sizeof(char) * 15);
+    char* password;
+
+    strcpy(encrypted, argv[1]);
+
+    if ((password = crackDictionary(encrypted)) != NULL)
+    {
+        printf("crack successfly with dictionary!\n");
+    }
+    else 
+    {
+        printf("crack fail with dictionary, using brute crack.\n");
+        password = crackBrute(encrypted);
+    }
+    printf("%s\n", password);
+    free(encrypted);
+    free(password);
+}
+
+ 
+/**
+ * crack encrypted password with a dictionary
+ */
+
+char* crackDictionary(char* encrypted)
+{
+    char* salt = malloc(sizeof(char) * 3);
+    strncpy(salt, encrypted, 2);
+    salt[2] = '\0';
+    char* tmp;
+
+    FILE* f;
+    if ((f = fopen("words","r")) == NULL)
+    {
+        printf("dictionary open error\n");
+        return NULL;
+    }
+    char* word = malloc(sizeof(char) * (MAXWORD + 1));
+    while (fgets(word, sizeof(char) * MAXWORD, f) != NULL)
+    {
+        // get rid of the huanghangfu
+        word[strlen(word) - 1] = '\0';
+        tmp = crypt(word, salt);
+        if (!strcmp(tmp, encrypted))
+        {
+            char* password = malloc(sizeof(char) * (strlen(word) + 1));
+            strcpy(password, word);
+            free(salt);
+            free(word);
+            return password;
+        }
+    }
+    free(salt);
+    free(word);
+    fclose(f);
+    return NULL;
+}
+
+/**
+ * crack encrypted password brutely
+ * assume the maxlength of password is 8
+ * traverse all possible combinations from 1 char to 8 chars.
+ */
+
+char* crackBrute(char* encrypted)
+{
+    char* salt = malloc(sizeof(char) * 3);
+    strncpy(salt, encrypted, 2);
+    salt[2] = '\0';
+    char* key = malloc(sizeof(char) * 9);
+    key[8] = '\0';
+
+    // charList include '\0'
+    char* charList = GetCharList(CHARSTART, CHAREND);
+    char* tmp;
+
+    // change chars from left to right
+    // one position can't be \0 if position right of it be anyting else.
+
+    for (int a = 0; a <= CHAREND - CHARSTART + 1; a++)
+    {
+        key[7] = charList[a];
+        for (int b = (a || 0); b <= CHAREND - CHARSTART + 1; b++)
+        {
+            key[6] = charList[b];
+            for (int c = (a || b); c <= CHAREND - CHARSTART + 1; c++)
+            {
+                key[5] = charList[c];
+                for (int d = (a || b || c); d <= CHAREND - CHARSTART + 1; d++)
+                {
+                    key[4] = charList[d];
+                    for (int e = (a || b || c || d); e <= CHAREND - CHARSTART + 1; e++)
+                    {
+                        key[3] = charList[e];
+                        for (int f = (a || b || c || d || e); f <= CHAREND - CHARSTART + 1; f++)
+                        {
+                            key[2] = charList[f];
+                            for (int g = (a || b || c || d || e || f); g <= CHAREND - CHARSTART + 1; g++)
+                            {
+                                key[1] = charList[g];
+                                for (int h = (a || b || c || d || e || f || g); h <= CHAREND - CHARSTART + 1; h++)
+                                {
+                                    key[0] = charList[h];
+                                    tmp = crypt(key, salt);
+                                    if (!strcmp(tmp, encrypted))
+                                    {
+                                        free(charList);
+                                        free(salt);
+                                        return key;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    free(charList);
+    free(salt);
+    return NULL;
+}
+
+/**
+ * get all possible char in a list
+ */
+
+char* GetCharList(int charStart, int charEnd)
+{
+    char* charList = malloc(sizeof(char)*(charEnd - charStart + 2));
+    charList[0] = '\0';
+    for (int i = 0; i <= charEnd - charStart; i++)
+    {
+        charList[i+1] = charStart + i;
+    }
+    return charList;
+}
+```

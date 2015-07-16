@@ -1,0 +1,498 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>wiki batch</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#wiki-batch">wiki batch</a><ul>
+        <li><a href="#模板关键词">模板关键词</a></li>
+        <li><a href="#归档">归档</a></li>
+        <li><a href="#问题">问题</a></li>
+        <li><a href="#简单版本">简单版本</a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/batch.html">batch</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/06 15:26</div>
+<!--batch-->
+<h2 id="wiki-batch">wiki batch</h2>
+<hr />
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">@echo</span> off
+<span class="kw">rem</span> <span class="st">&quot;cover md to html with a tmeplate and variables (multi tag, update time, creation time, relative path and title)&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;archive: analyse all md file and make a bounch of archive files(tags, update date, creation date catalogy) and a archive index&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;all the archive maybe have to change if any single md file change like update tags or create a new md&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;so if you need archive function, pls dont use other tools or batch file mixly.&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;todo batch cant hand utf8, so all the tags and name of md file could not use chinese.&quot;</span>
+<span class="kw">cd</span> /d %~dp0
+<span class="kw">set</span> <span class="ot">wiki_path=</span><span class="kw">%</span>~dp0
+<span class="kw">set</span> <span class="ot">wiki_path_pandoc=</span><span class="kw">%wiki_path</span>:\=<span class="dt">\\</span>%
+
+<span class="kw">rem</span> <span class="st">&quot;walk through all md file, update archive tmp files and covert md files to html if md file is new or changed&quot;</span>
+<span class="kw">for</span> <span class="kw">/r</span> <span class="st">&quot;note&quot;</span> %%i in (*html.mkd) <span class="kw">do</span> <span class="kw">(</span> <span class="kw">call</span>:check_note <span class="st">&quot;%%i&quot;</span><span class="kw">)</span>
+<span class="kw">rem</span> <span class="st">&quot;walk through all archive tmp file, update archive files and covert archive files to html if archive tmp file is new or changed&quot;</span>
+<span class="kw">for</span> <span class="kw">/r</span> <span class="st">&quot;archive&quot;</span> %%i in (*html.mkd.tmp) <span class="kw">do</span> <span class="kw">(</span> <span class="kw">call</span>:check_archive_tmp_files <span class="st">&quot;%%i&quot;</span><span class="kw">)</span>
+<span class="kw">rem</span> <span class="st">&quot;update archive index file&quot;</span>
+<span class="kw">call</span>:update_archive_index
+<span class="kw">rem</span> <span class="st">&quot;conver archive index file to html&quot;</span>
+<span class="kw">call</span>:archive_md_to_html <span class="st">&quot;archive/archive.html.mkd&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;wait for a while&quot;</span>
+<span class="kw">ping</span> 1.1.1.1 -n 1 -w 500 <span class="kw">&gt;</span> nul
+<span class="kw">goto</span> end
+
+:<span class="kw">check_note</span>
+    <span class="kw">rem</span> <span class="st">&quot;for given md file, get the path and name of matched html file&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;compare update time of md file and html file&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;md note need update if html file dont exist or the update time of html is earlier.&quot;</span>
+    <span class="kw">set</span> <span class="ot">html_file=</span><span class="st">&quot;%~dpn1&quot;</span>
+    <span class="kw">if</span> <span class="kw">not</span> exist %html_file% ( 
+        <span class="kw">call</span>:update_note_html_and_archive_tmp_files %1
+    ) <span class="kw">else</span> <span class="kw">(</span>
+        <span class="kw">set</span> <span class="ot">note_update_time=</span><span class="kw">%</span>~t1
+        <span class="kw">setlocal</span> enabledelayedexpansion
+        <span class="kw">FOR</span> %%f IN (%html_file%<span class="kw">)</span> <span class="kw">DO</span> SET note_exec_time=%%~tf
+        <span class="kw">rem</span> <span class="st">&quot;del md archive list in all archive files and and add new archive list to archive files and convert md to html&quot;</span>
+        <span class="kw">if</span> !<span class="kw">note_exec_time</span>! LEQ !note_update_time! ( 
+            <span class="kw">call</span>:del_note_in_archive_tmp_files %1       
+            <span class="kw">call</span>:update_note_html_and_archive_tmp_files %1
+        )
+    )    
+    <span class="kw">endlocal</span>
+<span class="kw">goto</span> end
+
+:<span class="kw">update_note_html_and_archive_tmp_files</span>
+    <span class="kw">setlocal</span> enabledelayedexpansion
+    <span class="kw">rem</span> <span class="st">&quot;the max tags is 5 for md file&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;tags are in the 1st line of md file. &quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;like comments in html, but splits by dash if have more than one&quot;</span> 
+
+    <span class="kw">rem</span> <span class="st">&quot;set tag&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;only read the 1st line&quot;</span>
+    <span class="kw">for</span> <span class="kw">/f</span> <span class="st">&quot;tokens=1-6 delims=-&gt;&quot;</span> %%a in (<span class="st">&#39;more ^&lt; %1&#39;</span>) <span class="kw">do</span> <span class="kw">(</span>
+        <span class="kw">set</span> <span class="ot">tmp=</span><span class="kw">%%a</span>
+        <span class="kw">set</span> <span class="ot">tag1=</span><span class="kw">%%b</span>
+        <span class="kw">set</span> <span class="ot">tag2=</span><span class="kw">%%c</span>
+        <span class="kw">set</span> <span class="ot">tag3=</span><span class="kw">%%d</span>
+        <span class="kw">set</span> <span class="ot">tag4=</span><span class="kw">%%e</span>
+        <span class="kw">set</span> <span class="ot">tag5=</span><span class="kw">%%f</span>
+        <span class="kw">)&amp;(goto</span> :next<span class="kw">)</span>
+        :<span class="kw">next</span>
+    <span class="kw">rem</span> <span class="st">&quot;set the relative path and name&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;file_full_path=%~dp1&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;file_relative_path=!file_full_path:%wiki_path%=!&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;file_relative_name=!file_relative_path!%~n1&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;set the name of note&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;note_file_name_with_html=%~n1&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;note_file_name=!note_file_name_with_html:~0,-5!&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;add a list to catalogy tmp file&quot;</span>
+    <span class="kw">call</span>:add_catalogy_item <span class="st">&quot;!file_relative_path!&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;add a list to the tag tmp file if the tag is not null&quot;</span>
+    <span class="kw">if</span> <span class="kw">not</span> <span class="st">&quot;!tag1!&quot;</span> == <span class="st">&quot;&quot;</span> ( call :add_tag_item <span class="st">&quot;!tag1!&quot;</span>
+        <span class="kw">if</span> <span class="kw">not</span> <span class="st">&quot;!tag2!&quot;</span> == <span class="st">&quot;&quot;</span> ( call :add_tag_item <span class="st">&quot;!tag2!&quot;</span>
+            <span class="kw">if</span> <span class="kw">not</span> <span class="st">&quot;!tag3!&quot;</span> == <span class="st">&quot;&quot;</span> ( call :add_tag_item <span class="st">&quot;!tag3!&quot;</span>
+                <span class="kw">if</span> <span class="kw">not</span> <span class="st">&quot;!tag4!&quot;</span> == <span class="st">&quot;&quot;</span> ( call :add_tag_item <span class="st">&quot;!tag4!&quot;</span>
+                    <span class="kw">if</span> <span class="kw">not</span> <span class="st">&quot;!tag5!&quot;</span> == <span class="st">&quot;&quot;</span> ( call :add_tag_item <span class="st">&quot;!tag5!&quot;</span> ) ) ) ) )
+
+    <span class="kw">rem</span> <span class="st">&quot;set creation time&quot;</span>
+    <span class="kw">set</span> <span class="ot">md_file=</span><span class="kw">%1</span>
+    <span class="kw">for</span> <span class="kw">/f</span> <span class="st">&quot;tokens=2 delims==.&quot;</span> %%b in (<span class="st">&#39;wmic datafile where name^=%md_file:\=\\% get CreationDate/value&#39;</span>) <span class="kw">do</span> <span class="kw">set</span> <span class="ot">creation_time_temp=</span><span class="kw">%%b</span>
+    <span class="kw">set</span> <span class="ot">creation_time=</span>!<span class="kw">creation_time_temp</span>:~0,4!/!creation_time_temp:~4,2!/!creation_time_temp:~6,2! !creation_time_temp:~8,2!:!creation_time_temp:~10,2!
+    <span class="kw">set</span> <span class="st">&quot;date_type=creation&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;add a list to creation date tmp file&quot;</span>
+    <span class="kw">call</span>:add_date_item <span class="st">&quot;!creation_time!&quot;</span> !date_type!
+    <span class="kw">rem</span> <span class="st">&quot;set update time&quot;</span>
+    <span class="kw">set</span> <span class="ot">update_time=</span><span class="kw">%</span>~t1
+    <span class="kw">set</span> <span class="st">&quot;date_type=update&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;add a list to update date tmp file&quot;</span>
+    <span class="kw">call</span>:add_date_item <span class="st">&quot;!update_time!&quot;</span> !date_type!
+    <span class="kw">rem</span> <span class="st">&quot;convert md file to html&quot;</span>
+    <span class="kw">pandoc</span> -f markdown -t html --toc --toc-depth=5 -V wiki_dir=<span class="st">&quot;%wiki_path_pandoc%&quot;</span> -V wiki_title=<span class="st">&quot;!note_file_name!&quot;</span> -V creation_time=<span class="st">&quot;!creation_time!&quot;</span> -V update_time=<span class="st">&quot;!update_time!&quot;</span> -V tag1=<span class="st">&quot;!tag1!&quot;</span> -V tag2=<span class="st">&quot;!tag2!&quot;</span> -V tag3=<span class="st">&quot;!tag3!&quot;</span> -V tag4=<span class="st">&quot;!tag4!&quot;</span> -V tag5=<span class="st">&quot;!tag5!&quot;</span> --highlight-style=haddock --template=<span class="st">&quot;template.html&quot;</span> --include-before-body=<span class="st">&quot;header.html&quot;</span> --include-after-body=<span class="st">&quot;footer.html&quot;</span> <span class="st">&quot;%~f1&quot;</span> -o <span class="st">&quot;%~dpn1&quot;</span>
+    <span class="kw">echo</span> <span class="st">&quot;!note_file_name! update successed!&quot;</span>
+    <span class="kw">endlocal</span>
+<span class="kw">goto</span> end
+
+<span class="kw">rem</span> <span class="st">&quot;-------------------------------------------------------------------------------------------------&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;-----------------------------------------archive-temp--------------------------------------------&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;-------------------------------------------------------------------------------------------------&quot;</span>
+
+:<span class="kw">add_catalogy_item</span>
+    <span class="kw">set</span> <span class="st">&quot;catalogy_file_name=%~1&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;catalogy_file_name=%catalogy_file_name:\=_%&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;catalogy_file_name=%catalogy_file_name:~0,-1%&quot;</span>
+    <span class="kw">set</span> <span class="ot">archive_file_tmp=</span><span class="st">&quot;archive/catalogy/%catalogy_file_name%.html.mkd.tmp&quot;</span>
+    <span class="kw">echo</span> ^<span class="kw">&lt;</span>li^<span class="kw">&gt;</span>[!note_file_name!]^(..<span class="dt">\\</span>..\!file_relative_name!^)^<span class="kw">&lt;</span>/<span class="kw">li</span>^<span class="kw">&gt;&gt;&gt;</span>%archive_file_tmp%
+<span class="kw">goto</span> end
+
+:<span class="kw">add_tag_item</span>
+    <span class="kw">set</span> <span class="ot">archive_file_tmp=</span><span class="st">&quot;archive/tags/%~1.html.mkd.tmp&quot;</span>
+    <span class="kw">echo</span> ^<span class="kw">&lt;</span>li^<span class="kw">&gt;</span>[!note_file_name!]^(..<span class="dt">\\</span>..\!file_relative_name!^)^<span class="kw">&lt;</span>/<span class="kw">li</span>^<span class="kw">&gt;&gt;&gt;</span>%archive_file_tmp%
+<span class="kw">goto</span> end
+
+:<span class="kw">add_date_item</span>
+    <span class="kw">set</span> <span class="st">&quot;date_file_name=%~1&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;date file sort to day&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;date_file_name=%date_file_name:~0,10%&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;date sort to month&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;set &quot;</span>date_file_name=%date_file_name:~0,7%<span class="st">&quot;&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;in win7, update time auto be slas, xp will be dash&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;date_file_name=%date_file_name:/=_%&quot;</span>
+    <span class="kw">set</span> <span class="ot">archive_file_tmp=</span><span class="st">&quot;archive/%~2_date/%date_file_name%.html.mkd.tmp&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;remind the double slash&quot;</span>
+    <span class="kw">echo</span> ^<span class="kw">&lt;</span>li^<span class="kw">&gt;</span>[!note_file_name!]^(..<span class="dt">\\</span>..\!file_relative_name!^)^<span class="kw">&lt;</span>/<span class="kw">li</span>^<span class="kw">&gt;&gt;&gt;</span>%archive_file_tmp%
+<span class="kw">goto</span> end
+
+<span class="kw">rem</span> <span class="st">&quot;-------------------------------------------------------------------------------------------------&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;-----------------------------------------archive_index-------------------------------------------&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;-------------------------------------------------------------------------------------------------&quot;</span>
+<span class="kw">rem</span>
+<span class="kw">rem</span> <span class="st">&quot;archive index is make for all archive tmp files&quot;</span>
+:<span class="kw">update_archive_index</span>
+    <span class="kw">rem</span> <span class="st">&quot;defined the archive index file&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;archive_index=archive/archive.html.mkd&quot;</span>
+    <span class="kw">if</span> <span class="kw">exist</span> <span class="st">&quot;archive</span><span class="dt">\\</span><span class="st">archive.html.mkd&quot;</span> (
+    <span class="kw">del</span> /q <span class="st">&quot;archive</span><span class="dt">\\</span><span class="st">archive.html.mkd&quot;</span> )
+    <span class="kw">rem</span> <span class="st">&quot;header file for css&quot;</span>
+    <span class="kw">echo</span> <span class="co">###archive&gt;&gt;%archive_index%</span>
+    <span class="kw">echo.&gt;&gt;</span>%archive_index%
+    <span class="kw">echo</span> -----<span class="kw">&gt;&gt;</span>%archive_index%
+    <span class="kw">echo.&gt;&gt;</span>%archive_index%
+    <span class="kw">set</span> <span class="st">&quot;archive_tpye=creation_date&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;the 2nd para means the size of a set&quot;</span>
+    <span class="kw">call</span>:make_specific_archive %archive_tpye% <span class="st">&quot;7&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;archive_tpye=update_date&quot;</span>
+    <span class="kw">call</span>:make_specific_archive %archive_tpye% <span class="st">&quot;7&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;archive_tpye=tags&quot;</span>
+    <span class="kw">call</span>:make_specific_archive %archive_tpye% <span class="st">&quot;3&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;archive_tpye=catalogy&quot;</span>
+    <span class="kw">call</span>:make_specific_archive %archive_tpye% <span class="st">&quot;2&quot;</span>
+<span class="kw">goto</span> end
+
+:<span class="kw">make_specific_archive</span>
+    <span class="kw">set</span> <span class="ot">specific_archive=</span><span class="kw">%1</span>
+    <span class="kw">echo</span> make %1 index .....
+    <span class="kw">echo</span> ^<span class="kw">&lt;</span>div id=<span class="st">&quot;wiki_%1_archive&quot;</span>^<span class="kw">&gt;&gt;&gt;</span>%archive_index%
+    <span class="kw">echo</span> <span class="co">####%1&gt;&gt;%archive_index%</span>
+    <span class="kw">echo</span> ^<span class="kw">&lt;</span>ul^<span class="kw">&gt;&gt;&gt;</span>%archive_index%
+    <span class="kw">setlocal</span> enabledelayedexpansion
+    <span class="kw">rem</span> <span class="st">&quot;add a list in archive index for each archive tmp file&quot;</span>
+    <span class="kw">set</span> <span class="kw">/a</span> %1_count=0
+    <span class="kw">for</span> <span class="kw">/r</span> <span class="st">&quot;archive/%1&quot;</span> %%i in (*.html.mkd.tmp) <span class="kw">do</span> <span class="kw">(</span>
+        <span class="kw">set</span> <span class="kw">/a</span> %1_count+=1
+        <span class="kw">set</span> <span class="kw">%1_file_name_tmp</span>=%%~ni
+        <span class="kw">set</span> <span class="kw">%1_file_name_with_html</span>=!%1_file_name_tmp:~0,-4!
+        <span class="kw">set</span> <span class="kw">%1_file_name</span>=!%1_file_name_with_html:~0,-5!
+        <span class="kw">echo</span> ^<span class="kw">&lt;</span>li^<span class="kw">&gt;</span>[!%1_file_name!]^(%1\!%1_file_name_with_html!^<span class="kw">)&gt;&gt;%archive_index%</span>
+        <span class="kw">rem</span> <span class="st">&quot;add the number of item in archive tmp file&quot;</span>
+        <span class="kw">call</span> :count_archive_file <span class="st">&quot;%%i&quot;</span>
+        <span class="kw">echo</span> ^<span class="kw">&lt;</span>^/li^<span class="kw">&gt;&gt;&gt;</span>%archive_index%
+        <span class="kw">set</span> <span class="kw">/a</span> flag=!%1_count! %% %2
+        <span class="kw">if</span> [!<span class="kw">flag</span>!]==[0] (echo ^<span class="kw">&lt;</span>p^<span class="kw">&gt;&gt;&gt;</span>%archive_index%)
+    )
+    <span class="kw">echo</span> ^<span class="kw">&lt;</span>^/ul^<span class="kw">&gt;&gt;&gt;</span>%archive_index%
+    <span class="kw">echo</span> ^<span class="kw">&lt;</span>^/div^<span class="kw">&gt;&gt;&gt;</span>%archive_index%
+    <span class="kw">endlocal</span>
+<span class="kw">goto</span> end
+
+<span class="kw">rem</span> <span class="st">&quot;count the list in archive tmp file&quot;</span>
+:<span class="kw">count_archive_file</span>
+    <span class="kw">setlocal</span> enabledelayedexpansion
+    <span class="kw">set</span> <span class="kw">/a</span> line=0
+    <span class="kw">for</span> <span class="kw">/f</span> <span class="st">&quot;tokens=1,2* delims=:&quot;</span> %%i in (<span class="st">&#39;more ^&lt; %1&#39;</span>) <span class="kw">do</span> <span class="kw">(</span> <span class="kw">set</span> <span class="kw">/a</span> line+=1 <span class="kw">)</span> 
+    <span class="kw">echo</span> ^<span class="kw">&lt;</span>span^<span class="kw">&gt;</span>^(!line!^)^<span class="kw">&lt;</span>/<span class="kw">span</span>^<span class="kw">&gt;&gt;&gt;</span>%archive_index%
+    <span class="kw">endlocal</span>
+<span class="kw">goto</span> end
+
+<span class="kw">rem</span> <span class="st">&quot;-------------------------------------------------------------------------------------------------&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;------------------------------------update-archive-file------------------------------------------&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;-------------------------------------------------------------------------------------------------&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;for a give md name, walk through lines in all archive tmp file&quot;</span> 
+<span class="kw">rem</span> <span class="st">&quot;if the name in a archive tmp file, del the line&quot;</span>
+
+:<span class="kw">del_note_in_archive_tmp_files</span>
+    <span class="kw">set</span> <span class="st">&quot;note_file_name_with_html=%~n1&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;note_file_name=%note_file_name_with_html:~0,-5%&quot;</span>
+    <span class="kw">setlocal</span> enabledelayedexpansion
+    <span class="kw">rem</span> <span class="st">&quot;look through all lines in a archive tmp file&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;if the line dont match the md name, write the line to archive tmp1 file, else just set the tmp file need update&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;if the tmp file need update, del the old tmp file, and rename the tmp1 file to tmp file, else del the tmp1 file&quot;</span>
+    <span class="kw">for</span> <span class="kw">/r</span> <span class="st">&quot;archive&quot;</span> %%a in (*html.mkd.tmp) <span class="kw">do</span> <span class="kw">(</span> 
+        <span class="kw">set</span> <span class="ot">flag=</span>0
+        <span class="kw">for</span> <span class="kw">/f</span> <span class="st">&quot;tokens=1,2,3* delims=[]&quot;</span> %%i in (<span class="st">&#39;more ^&lt; %%a&#39;</span><span class="kw">)</span> <span class="kw">do</span> <span class="kw">(</span>
+            <span class="kw">if</span> <span class="kw">not</span> [<span class="st">&quot;%%j&quot;</span>]==[<span class="st">&quot;%note_file_name%&quot;</span>] ( echo %%i[%%j]%%k<span class="kw">&gt;&gt;</span>%%a1
+            <span class="kw">)</span> <span class="kw">else</span> <span class="kw">(set</span> <span class="ot">flag=</span>1<span class="kw">)</span>
+        )
+        <span class="kw">rem</span> <span class="st">&quot;the condition is need because some archive file only have one list before update, and dont exist after update&quot;</span>
+        <span class="kw">if</span> !<span class="kw">flag</span>!==1 ( del /q %%a
+            <span class="kw">if</span> <span class="kw">exist</span> %%~fa1 (
+                <span class="kw">ren</span> <span class="st">&quot;%%~fa1&quot;</span> <span class="st">&quot;%%~nxa&quot;</span>
+                <span class="kw">echo</span> tag file <span class="st">&quot;%%~na&quot;</span> update )
+        ) <span class="kw">else</span> <span class="kw">(</span> <span class="kw">if</span> <span class="kw">exist</span> %%a1 ( del /q %%a1 <span class="kw">)</span>)
+    )
+<span class="kw">endlocal</span>
+<span class="kw">goto</span> end     
+
+<span class="kw">rem</span> <span class="st">&quot;if the archive tmp file updated, call function to convert the tmp file to md file and the to html&quot;</span>
+:<span class="kw">check_archive_tmp_files</span>
+    <span class="kw">set</span> <span class="st">&quot;archive_html_file_temp=%~dpn1&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;archive_html_file=%archive_html_file_temp:~0,-4%&quot;</span>
+    <span class="kw">if</span> <span class="kw">not</span> exist %archive_html_file% ( 
+        <span class="kw">call</span>:update_archive_html %1
+    ) <span class="kw">else</span> <span class="kw">(</span>
+        <span class="kw">set</span> <span class="ot">archive_update_time=</span><span class="kw">%</span>~t1
+        <span class="kw">setlocal</span> enabledelayedexpansion
+        <span class="kw">FOR</span> %%f IN (%archive_html_file%<span class="kw">)</span> <span class="kw">DO</span> SET archive_exec_time=%%~tf
+        <span class="kw">if</span> !<span class="kw">archive_exec_time</span>! LEQ !archive_update_time! ( 
+        <span class="kw">call</span>:update_archive_html %1
+        )
+    )    
+    <span class="kw">endlocal</span>
+<span class="kw">goto</span> end
+
+<span class="kw">rem</span> <span class="st">&quot;convert archive tmp file to md file and then to html&quot;</span>
+:<span class="kw">update_archive_html</span>
+    <span class="kw">set</span> <span class="st">&quot;archive_mkd_file=%~dpn1&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;archive_html_file_name_temp=%~n1&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;archive_html_file_name=%archive_html_file_name_temp:~0,-9%&quot;</span>
+    
+    <span class="kw">set</span> <span class="st">&quot;archive_relative_path_temp=%~p1&quot;</span>
+        
+    <span class="kw">setlocal</span> enabledelayedexpansion
+    <span class="kw">set</span> <span class="st">&quot;file_full_path=%~dp1&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;file_relative_path=!file_full_path:%wiki_path%=!&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;id_temp=!file_relative_path:~0,-1!&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;id=!id_temp:\=_!&quot;</span>
+    
+    <span class="kw">rem</span> <span class="st">&quot;del md file if areadly exist&quot;</span>
+    <span class="kw">if</span> <span class="kw">exist</span> %archive_mkd_file% ( del /q %archive_mkd_file% )
+    <span class="kw">echo</span> <span class="co">###%archive_html_file_name%&gt;&gt;%archive_mkd_file%</span>
+    <span class="kw">echo.&gt;&gt;</span>%archive_mkd_file%
+    <span class="kw">echo</span> ^-^-^-^-^-^-<span class="kw">&gt;&gt;</span>%archive_mkd_file%
+    <span class="kw">echo.&gt;&gt;</span>%archive_mkd_file%
+    <span class="kw">echo</span> ^<span class="kw">&lt;</span>div id=!id!^<span class="kw">&gt;&gt;&gt;</span>%archive_mkd_file%
+    <span class="kw">echo</span> ^<span class="kw">&lt;</span>ul^<span class="kw">&gt;&gt;&gt;</span>%archive_mkd_file%
+    <span class="kw">for</span> <span class="kw">/f</span> <span class="st">&quot;tokens=1* delims=:&quot;</span> %%i in (<span class="st">&#39;more ^&lt; %1&#39;</span>) <span class="kw">do</span> <span class="kw">(</span> <span class="kw">echo</span> %%i<span class="kw">&gt;&gt;</span>%archive_mkd_file% <span class="kw">)</span>
+    <span class="kw">echo</span> ^<span class="kw">&lt;</span>^/ul^<span class="kw">&gt;&gt;&gt;</span>%archive_mkd_file%
+    <span class="kw">echo</span> ^<span class="kw">&lt;</span>^/div^<span class="kw">&gt;&gt;&gt;</span>%archive_mkd_file%
+    <span class="kw">call</span>:archive_md_to_html <span class="st">&quot;%archive_mkd_file%&quot;</span>
+    <span class="kw">endlocal</span>
+<span class="kw">goto</span> end
+
+<span class="kw">rem</span> <span class="st">&quot;this function almost the same whit md_to_html except dont have tag variables&quot;</span>
+:<span class="kw">archive_md_to_html</span>
+    <span class="kw">set</span> <span class="ot">archive_mkd_file=</span><span class="st">&quot;%~f1&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;archive_html_file=%~dpn1&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;archive_html_file_name_temp=%~n1&quot;</span>
+    <span class="kw">set</span> <span class="st">&quot;archive_html_file_name=%archive_html_file_name_temp:~0,-5%&quot;</span>
+    <span class="kw">rem</span> <span class="st">&quot;set creation time&quot;</span>
+    <span class="kw">setlocal</span> enabledelayedexpansion
+    <span class="kw">for</span> <span class="kw">/f</span> <span class="st">&quot;tokens=2 delims==.&quot;</span> %%b in (<span class="st">&#39;wmic datafile where name^=%archive_mkd_file:\=\\% get CreationDate/value&#39;</span>) <span class="kw">do</span> <span class="kw">set</span> <span class="ot">creation_time_temp=</span><span class="kw">%%b</span>
+    <span class="kw">set</span> <span class="ot">creation_time=</span>!<span class="kw">creation_time_temp</span>:~0,4!/!creation_time_temp:~4,2!/!creation_time_temp:~6,2! !creation_time_temp:~8,2!:!creation_time_temp:~10,2!
+    <span class="kw">rem</span> <span class="st">&quot;set update time&quot;</span>
+    <span class="kw">set</span> <span class="ot">update_time=</span><span class="kw">%</span>~t1
+    <span class="kw">pandoc</span> -f markdown -t html --toc --toc-depth=5 -V wiki_dir=<span class="st">&quot;%wiki_path_pandoc%&quot;</span> -V wiki_title=<span class="st">&quot;%archive_html_file_name%&quot;</span> -V creation_time=<span class="st">&quot;!creation_time!&quot;</span> -V update_time=<span class="st">&quot;!update_time!&quot;</span> --highlight-style=haddock --template=<span class="st">&quot;template.html&quot;</span> --include-before-body=<span class="st">&quot;header.html&quot;</span> --include-after-body=<span class="st">&quot;footer.html&quot;</span> <span class="st">&quot;%~f1&quot;</span> -o <span class="st">&quot;%~dpn1&quot;</span>
+    <span class="kw">endlocal</span>
+<span class="kw">goto</span> end
+
+:<span class="kw">end</span></code></pre>
+<h3 id="模板关键词">模板关键词</h3>
+<ul>
+<li><code>setlocal</code></li>
+</ul>
+<blockquote>
+<blockquote>
+<p>这个很重要 在一般的 <code>bat</code> 文件中, 变量是用 <code>set var=&quot;some thing&quot;</code>, 引用变量是用 <code>echo %var%</code>. 但是在 <code>for</code> loop 中, 是不支持这种变量的定义及引用的. 所以要做这个设置, 然后引用的时候用 <code>!</code> 代替 <code>%</code>, 比如说不要字符串 <code>str</code> 的后面5个字符, <code>new str = %str:~0,-5%</code>, 现在要改成 <code>new str = !str:~0,-5!</code>.</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>标签</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>在写 <code>md</code> 的时候, 在第一行写入<code>&lt;!--tag1-tag2-tag3--&gt;</code>的形式, 最多支持5个标签.</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>更新时间</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>这个容易, 在 <code>for</code> loop 中的扩展属性就有, 而且格式非常对口味, 同样的标题也是如此, 直接取用了文件名字(去掉了所有后缀)</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>创建时间</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>这个稍微麻烦, 我其实也没有看懂 <code>wmic</code> 中的这部分, 找了点代码改了几次就可以用了, 这部分应该是要进行双重循环, 如果每次都全部生成一次, 速度会很慢, 因此没办法, 只好增加一个判断是否修改的功能</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>判断是否修改</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>在在外面的 <code>for</code> loop, 得到单个文件后, 比较 <code>md</code> 文件和 <code>html</code> 两个同名文件的修改时间, 如果 md 文档的修改时间比较晚, 就说明更新过了, 重新生成 <code>html</code>. 如果 md 文档的修改时间早于 <code>html</code> 的修改时间, 说明不需要更新. <em>(更新: 因为文件更新时间是分钟, 如果严格小于会存在刚改了不会更新的情况, 现在改为小于或等于)</em></p>
+</blockquote>
+</blockquote>
+<h3 id="归档">归档</h3>
+<p>归档实现起来稍微复杂, 涉及到对遍历所有的md文档, 读取文档中的标签, 文档更新和创建时间, 文档路径等归档信息, 把每个归档信息写入相应的归档文件, 再根据归档文件生成归档主页. 这部分还好解决, 但是不能每次都这样来一次, 太慢了. 大部分的文档没有变化, 要实现对归档文件的更新才是难点. 比如说修改一个文档, 执行命令后要判断标签是否改变, 就涉及到对所有标签页的所有行进行搜索, 删掉错误的链接, 再生成新的. 因为 <code>batch</code> 本身语言的很多限制, 或者说是对它不熟悉, 真正的实现过程远没有逻辑上的简洁, 还是有很多操作是啰嗦的. 所以这里也不细说了, 有兴趣的话可以直接看代码中的注释.</p>
+<h3 id="问题">问题</h3>
+<p><code>batch</code> 写入文件不能以 <code>utf-8</code> 编码处理中文, 所以文章的标题, wiki 下面的子目录 以及 tag 都得是英文, 这也是没有办法的事情, 个人来说, 虽然六级都没考过, 但是这个习惯还是一直有的.</p>
+<p>另外, 只在 win 7 使用, xp 下可能会有问题, 有可能 xp 下的更新时间的分隔符号不是用 <code>/</code>, 而是用 <code>-</code></p>
+<h3 id="简单版本">简单版本</h3>
+<p>如果不需要归档功能, 可以用下面这个, 真的只对修改或者创建的 md 文件进行操作, 速度非常快. 功能上就是没有归档页面, 转换的 html 有标签, 有各种时间, 有标题. 代码也是短小简单明了.</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">@echo</span> off
+<span class="kw">cd</span> /d %~dp0
+<span class="kw">rem</span> <span class="st">&quot;find the update or new md file, convert to html&quot;</span>
+<span class="kw">for</span> <span class="kw">/r</span> <span class="st">&quot;note&quot;</span> %%i in (*html.mkd) <span class="kw">do</span> <span class="kw">(</span> <span class="kw">call</span> :update_html <span class="st">&quot;%%i&quot;</span><span class="kw">)</span>
+<span class="kw">rem</span> <span class="st">&quot;wait for a while&quot;</span>
+<span class="kw">ping</span> 1.1.1.1 -n 1 -w 500 <span class="kw">&gt;</span> nul
+<span class="kw">goto</span> end
+
+:<span class="kw">update_html</span>
+<span class="kw">rem</span> <span class="st">&quot;the for loop below is to find all new or modified md file&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;walk through all md file, get the path and name of matched html file for each md file&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;md note need update if html file dont exist or the update time of html is earlier.&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;compare update time of md file and html file which have the same name with md file&quot;</span>
+<span class="kw">set</span> <span class="ot">htmlfile=</span><span class="st">&quot;%~dpn1&quot;</span>
+<span class="kw">if</span> <span class="kw">not</span> exist %htmlfile% ( 
+    <span class="kw">call</span> :md_to_html %1
+) <span class="kw">else</span> <span class="kw">(</span>
+    <span class="kw">set</span> <span class="ot">update_time=</span><span class="kw">%</span>~t1
+    <span class="kw">setlocal</span> enabledelayedexpansion
+    <span class="kw">FOR</span> %%f IN (%htmlfile%<span class="kw">)</span> <span class="kw">DO</span> SET exec_time=%%~tf
+    <span class="kw">if</span> !<span class="kw">exec_time</span>! LEQ !update_time! ( call :md_to_html %1)
+)
+    <span class="kw">endlocal</span>
+<span class="kw">goto</span> :end
+
+<span class="kw">rem</span> <span class="st">&quot;convert md to html with pandoc, all the variables are key points&quot;</span>
+:<span class="kw">md_to_html</span>
+<span class="kw">setlocal</span> enabledelayedexpansion
+
+<span class="kw">rem</span> <span class="st">&quot;set tags&quot;</span>
+<span class="kw">for</span> <span class="kw">/f</span> <span class="st">&quot;tokens=1-6 delims=-&gt;&quot;</span> %%a in (<span class="st">&#39;more ^&lt; %1&#39;</span>) <span class="kw">do</span> <span class="kw">(</span>
+    <span class="kw">set</span> <span class="ot">tmp=</span><span class="kw">%%a</span>
+    <span class="kw">set</span> <span class="ot">tag1=</span><span class="kw">%%b</span>
+    <span class="kw">set</span> <span class="ot">tag2=</span><span class="kw">%%c</span>
+    <span class="kw">set</span> <span class="ot">tag3=</span><span class="kw">%%d</span>
+    <span class="kw">set</span> <span class="ot">tag4=</span><span class="kw">%%e</span>
+    <span class="kw">set</span> <span class="ot">tag5=</span><span class="kw">%%f</span>
+    <span class="kw">)&amp;(goto</span> :next<span class="kw">)</span>
+:<span class="kw">next</span>
+
+<span class="kw">rem</span> <span class="st">&quot;set creation time&quot;</span>
+<span class="kw">set</span> <span class="ot">md_file=</span><span class="kw">%1</span>
+<span class="kw">for</span> <span class="kw">/f</span> <span class="st">&quot;tokens=2 delims==.&quot;</span> %%b in (<span class="st">&#39;wmic datafile where name^=%md_file:\=\\% get CreationDate/value&#39;</span>) <span class="kw">do</span> <span class="kw">set</span> <span class="ot">creation_time_temp=</span><span class="kw">%%b</span>
+<span class="kw">set</span> <span class="ot">creation_time=</span>!<span class="kw">creation_time_temp</span>:~0,4!/!creation_time_temp:~4,2!/!creation_time_temp:~6,2! !creation_time_temp:~8,2!:!creation_time_temp:~10,2!
+<span class="kw">rem</span> <span class="st">&quot;set update time&quot;</span>
+<span class="kw">set</span> <span class="ot">update_time=</span><span class="kw">%</span>~t1
+<span class="kw">set</span> <span class="ot">wiki_dir_tmp=</span><span class="kw">%</span>~dp0
+<span class="kw">rem</span> <span class="st">&quot;set wiki path; that&#39;s the fuck windows&quot;</span>
+<span class="kw">set</span> <span class="ot">wiki_dir=</span>!<span class="kw">wiki_dir_tmp</span>:\=<span class="dt">\\</span>!
+<span class="kw">rem</span> <span class="st">&quot;set name&quot;</span>
+<span class="kw">set</span> <span class="st">&quot;name=%~n1&quot;</span>
+<span class="kw">set</span> <span class="st">&quot;nameshort=!name:~0,-5!&quot;</span>
+<span class="kw">rem</span> <span class="st">&quot;here we arrived pandoc&quot;</span>
+<span class="kw">pandoc</span> -f markdown -t html --toc --toc-depth=5 -V wiki_dir=<span class="st">&quot;!wiki_dir!&quot;</span> -V wiki_title=<span class="st">&quot;!nameshort!&quot;</span> -V creation_time=<span class="st">&quot;!creation_time!&quot;</span> -V update_time=<span class="st">&quot;!update_time!&quot;</span> -V tag1=<span class="st">&quot;!tag1!&quot;</span> -V tag2=<span class="st">&quot;!tag2!&quot;</span> -V tag3=<span class="st">&quot;!tag3!&quot;</span> -V tag4=<span class="st">&quot;!tag4!&quot;</span> -V tag5=<span class="st">&quot;!tag5!&quot;</span> --highlight-style=haddock --template=<span class="st">&quot;template.html&quot;</span> --include-before-body=<span class="st">&quot;header.html&quot;</span> --include-after-body=<span class="st">&quot;footer.html&quot;</span> <span class="st">&quot;%~f1&quot;</span> -o <span class="st">&quot;%~dpn1&quot;</span>
+<span class="kw">echo</span> <span class="st">&quot;!nameshort! update successed!&quot;</span>
+<span class="kw">Endlocal</span>
+
+:<span class="kw">end</span></code></pre>
+<p><a href="../batch/batch%20wiki.html">这里</a>是更早以前的版本, 已经废弃</p>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

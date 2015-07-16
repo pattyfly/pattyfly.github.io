@@ -1,0 +1,72 @@
+<!--c-linux-->
+### clang
+
+----
+
+#### clang 实例
+
+```bash
+clang -o hello hello.c
+```
+
+> > 最简单的编译，全默认，稍微复杂点的见下面
+
+```bash
+clang -ggdb3 -O0 -std=c99 -Wall -Werror crack.c -lcs50 -lm -lcrypt -o crack
+```
+
+> > -ggdb3 -O0 -std=c99 分别是调用生成gdb debug有关的东西、优化等级、c标准<br>
+> > -Wall -Werror  所有提醒都设置为错误<br>
+> > crack.c是源程序 -lcs50 -lm -lcrypt 库<br>
+> > -o carck是目标
+> > 对于gcc 如果要生成64位的 -m64
+
+#### Makefile 完整写法
+
+set6 文件包括一个Makefile的范例, 实际上还是挺复杂的 `-Qunused-arguments`  是忽略文件路径变量未使用的 warning. 
+
+ **注意**  Makefile 不能随用用空格代替 tab, 两者的作用是不同的.  
+ 
+```bash
+#
+# Makefile
+#
+# Computer Science 50
+# Problem Set 6
+#
+
+
+# compiler to use
+CC = clang
+
+# flags to pass compiler
+CFLAGS = -ggdb3 -O0 -Qunused-arguments -std=c99 -Wall -Werror
+
+# name for executable
+EXE = speller
+
+# space-separated list of header files
+HDRS = dictionary.h
+
+# space-separated list of libraries, if any,
+# each of which should be prefixed with -l
+LIBS =
+
+# space-separated list of source files
+SRCS = speller.c dictionary.c
+
+# automatically generated list of object files
+OBJS = $(SRCS:.c=.o)
+
+
+# default target
+$(EXE): $(OBJS) $(HDRS) Makefile
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
+
+# dependencies 
+$(OBJS): $(HDRS) Makefile
+
+# housekeeping
+clean:
+	rm -f core $(EXE) *.o
+```

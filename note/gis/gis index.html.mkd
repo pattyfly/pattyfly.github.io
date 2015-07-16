@@ -1,0 +1,9 @@
+<!--gis-->
+### GIS
+
+------
+
+* 现在catalog, toolbox, results, search 这些工具集成, 非常好用.
+* arcgis 10 对 python 的集成已经非常好了, 所有的工具都有相关的命令, 在python窗口输入 `arcpy.function_name(` 就能看到各种参数提醒, 再也不用用 `model building` 了, 之前用 arcpy 写过一个根据DEM, 提取河流纵剖面的小脚本, 有时间细说一下 arcpy 的主要功能及常见函数.
+* 以前的生成3d曲线菜单命令, 现在已经变成了工具, Interpolate Shape, 在 3D Analyst Tools下面的 Fucntional Surface 下面.
+* 数据 [SRTM](ftp://ftp.glcf.umd.edu/glcf/SRTM/), 数据来源是这个[网站](http://glcfapp.glcf.umd.edu:8080/esdi/)里面能下到ETM, TM, SRTM, ETM-mosaic (但是我以前下载的是已经投影好了, 前两天试了一下居然不知道怎么弄好投影了), 要下srtm也可以到[这里](http://dds.cr.usgs.gov/srtm/), [官网](http://www2.jpl.nasa.gov/srtm/cbanddataproducts.html), 这个地方也能下到SWBD数据, 比如说 dds.cr.usgs.gov/srtm/version2_1/SWBD/SWBDeast/e095n29e.zip 就是下载E95N29的水体数据, 恩, 这个网站的好处是可以批量下载.

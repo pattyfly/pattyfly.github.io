@@ -1,0 +1,38 @@
+﻿<!--c-->
+### date structure
+
+----
+
+#### strcut 定义
+
+```cpp
+typedef  struct
+{
+  int a
+  char b
+  node* c
+} __attribute__((__packed__))
+node；
+```
+上面的 `__attribute__((__packed__))` 是 gcc 下特有的, 表示里面数据是紧凑模式, 每个成员之间没有对齐
+
+#### link list
+
+#### hash
+
+#### trie
+
+#### stack
+
+* struct { int size; int layer[CAP] }
+* 后入先出
+
+#### queue
+
+-   struct{int size; int layer[CAP]; int front}
+-   先进先出
+-   增加一个front, 表示最前的一个数在layer数组中的位置, 这样再由size就可以推出所有排队单位的在数组的位置, 操作队列的时候不需要移动排队者. 
+
+#### 二叉树
+
+-   搜索二叉树

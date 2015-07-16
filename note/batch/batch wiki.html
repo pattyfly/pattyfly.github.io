@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>batch wiki</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#batch-wiki">batch wiki</a></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/batch.html">batch</a></li>
+                <li><a href="/wiki/archive/tags/wiki.html">wiki</a></li>
+                <li><a href="/wiki/archive/tags/pandoc.html">pandoc</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/06 15:27</div>
+<!--batch-wiki-pandoc-->
+<h3 id="batch-wiki">batch wiki</h3>
+<hr />
+<p>命令支持0-9个参数, 0表示自己, 所以把这个 bat 文件放到 note 同级目录就能运行了. for 的命令见这里的<a href="batch%20for.html">详细说明</a>, 或者参考这个<a href="http://stackoverflow.com/questions/5034076/what-does-dp0-mean-and-how-does-it-work">问题</a>或者<a href="http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/percent.mspx?mfr=true">微软的说明</a></p>
+<p>由于之前把 index 和 diary 也设置成 html 结尾的, 所以这样所有的 <code>mkd</code> 文件都已经转变, 上面的 <code>%%~ti</code> 表示 <code>i</code> 文件的修改日期, 其实我也想搞到创立日期, 但是在网上没找到bat 命令怎么写.</p>
+<p>关于 <code>bat</code> 其他的一些例子:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="kw">/r</span> <span class="st">&quot;note&quot;</span> %%i in (*.html) <span class="kw">do</span> <span class="kw">del</span> <span class="st">&quot;%%~fi&quot;</span> 
+<span class="kw">for</span> <span class="kw">/r</span> <span class="st">&quot;note&quot;</span> %%i in (*.html.html) <span class="kw">do</span> <span class="kw">ren</span> <span class="st">&quot;%%~fi&quot;</span> <span class="st">&quot;%%~ni&quot;</span></code></pre>
+<p>第一行删除所有后缀名为 <code>html</code> 的文件, 第二行是将所有的 .html.html 重命名为 .html, 另个命令为 <code>del</code> <code>ren</code>, 注意 <code>ren</code> 非常不好用, 第一个参数可以使绝对路径, 第二个参数只能是相对路径. 另外如果命名的时候已经存在该文件了, 命名也不能成功.</p>
+<p>把 html 转成 md</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cd</span> /d %~dp0
+<span class="kw">for</span> <span class="kw">/r</span> <span class="st">&quot;note&quot;</span> %%i in (*.html) <span class="kw">do</span> <span class="kw">pandoc</span> -f html -t markdown <span class="st">&quot;%%~fi&quot;</span> -o <span class="st">&quot;%%~dpni.mkd&quot;</span></code></pre>
+<p>老的处理日记脚本</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">setlocal</span> enabledelayedexpansion
+<span class="kw">cd</span> /d %~dp0
+<span class="kw">for</span> <span class="kw">/r</span> <span class="st">&quot;note/diary&quot;</span> %%i in (*html.mkd) <span class="kw">do</span> <span class="kw">(</span>
+<span class="kw">set</span> <span class="ot">name=</span><span class="st">&quot;%%~ni&quot;</span>
+<span class="kw">set</span> <span class="ot">nameshort=</span>!<span class="kw">name</span>:~1,-6!
+<span class="kw">pandoc</span> -f markdown -t html --toc --toc-depth 5 -V wiki_dir=%~dp0 -V wiki_title=<span class="st">&quot;!nameshort!&quot;</span>  -V update_time=<span class="st">&quot;%%~ti&quot;</span> --highlight-style haddock --template template.html  --include-before-body header.html --include-after-body footer.html <span class="st">&quot;%%~fi&quot;</span> -o <span class="st">&quot;%%~dpni&quot;</span>
+<span class="kw">)</span></code></pre>
+<p>老的处理其他文档的脚本</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">setlocal</span> enabledelayedexpansion
+<span class="kw">cd</span> /d %~dp0
+<span class="kw">for</span> <span class="kw">/r</span> <span class="st">&quot;note&quot;</span> %%i in (*html.mkd) <span class="kw">do</span> <span class="kw">if</span> <span class="kw">not</span> [%%~dpi]==[e:\Copy\wiki\note\diary<span class="dt">\]</span> (
+<span class="kw">set</span> <span class="ot">name=</span><span class="st">&quot;%%~ni&quot;</span>
+<span class="kw">set</span> <span class="ot">nameshort=</span>!<span class="kw">name</span>:~1,-6!
+<span class="kw">pandoc</span> -f markdown -t html --toc --toc-depth 5 -V wiki_dir=%~dp0 -V wiki_title=<span class="st">&quot;!nameshort!&quot;</span>  -V update_time=<span class="st">&quot;%%~ti&quot;</span> --highlight-style haddock --template template.html  --include-before-body header.html --include-after-body footer.html <span class="st">&quot;%%~fi&quot;</span> -o <span class="st">&quot;%%~dpni&quot;</span>
+)</code></pre>
+<p>最新的脚本前往 <a href="../wiki/wiki%20batch.html">这里</a></p>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

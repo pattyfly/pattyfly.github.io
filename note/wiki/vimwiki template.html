@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>vimwiki template</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#vimwiki-template">vimwiki template</a></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/wiki.html">wiki</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/06 15:26</div>
+<!--wiki-->
+<h3 id="vimwiki-template">vimwiki template</h3>
+<hr />
+<p><del>因为只记日记了, 所以模板改了一些</del> 彻底不用啦</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;<span class="dt">&gt;</span>
+<span class="kw">&lt;html&gt;</span>
+<span class="kw">&lt;head&gt;</span>
+<span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">&quot;Stylesheet&quot;</span><span class="ot"> type=</span><span class="st">&quot;text/css&quot;</span><span class="ot"> href=</span><span class="st">&quot;%root_path%static/css/bootstrap.min.css&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">&quot;Stylesheet&quot;</span><span class="ot"> type=</span><span class="st">&quot;text/css&quot;</span><span class="ot"> href=</span><span class="st">&quot;%root_path%static/css/style.css&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;script</span><span class="ot"> type=</span><span class="st">&quot;text/javascript&quot;</span><span class="ot"> src=</span><span class="st">&quot;%root_path%static/js/jquery-1.11.1.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+<span class="kw">&lt;script</span><span class="ot"> type=</span><span class="st">&quot;text/javascript&quot;</span><span class="ot"> src=</span><span class="st">&quot;%root_path%static/js/bootstrap.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+<span class="kw">&lt;title&gt;</span>MyWiki<span class="kw">&lt;/title&gt;</span>
+<span class="kw">&lt;meta</span><span class="ot"> http-equiv=</span><span class="st">&quot;Content-Type&quot;</span><span class="ot"> content=</span><span class="st">&quot;text/html; charset=utf-8&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/head&gt;</span>
+<span class="kw">&lt;body&gt;</span>
+<span class="kw">&lt;nav</span><span class="ot"> class=</span><span class="st">&quot;navbar navbar-default navbar-inverse&quot;</span><span class="ot"> role=</span><span class="st">&quot;navigation&quot;</span><span class="kw">&gt;</span>
+ <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;container&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;navbar-header&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;button</span><span class="ot"> data-target=</span><span class="st">&quot;.bs-navbar-collapse&quot;</span><span class="ot"> data-toggle=</span><span class="st">&quot;collapse&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> class=</span><span class="st">&quot;navbar-toggle&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;sr-only&quot;</span><span class="kw">&gt;&lt;/span&gt;</span>
+        <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;icon-bar&quot;</span><span class="kw">&gt;&lt;/span&gt;</span>
+        <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;icon-bar&quot;</span><span class="kw">&gt;&lt;/span&gt;</span>
+        <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;icon-bar&quot;</span><span class="kw">&gt;&lt;/span&gt;</span>
+      <span class="kw">&lt;/button&gt;</span>
+        <span class="kw">&lt;a</span><span class="ot"> class=</span><span class="st">&quot;navbar-brand&quot;</span><span class="ot"> href=</span><span class="st">&quot;file:///E:/Copy/wiki/markdown/note/index.html&quot;</span><span class="kw">&gt;</span>Pattyfly<span class="kw">&lt;/a&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;collapse navbar-collapse&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;nav navbar-nav&quot;</span><span class="kw">&gt;</span>
+            <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;file:///E:/Copy/wiki/markdown/note/index.html&quot;</span><span class="kw">&gt;</span>首页<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+            <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;file:///E:/Copy/wiki/markdown/note/cs50/Cs50_note.html&quot;</span><span class="kw">&gt;</span>CS50<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+            <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;file:///E:/Copy/wiki/mywiki_html/diary/diary.html&quot;</span><span class="kw">&gt;</span>日记<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+            <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;file:///E:/Copy/wiki/markdown/note/TODO.html&quot;</span><span class="kw">&gt;</span>TODO<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+            <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;file:///E:/Copy/wiki/markdown/note/wiki/关于wiki.html&quot;</span><span class="kw">&gt;</span>Wiki<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="kw">&lt;/ul&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+ <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/nav&gt;</span>
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;container content-body&quot;</span><span class="kw">&gt;</span>
+    %content%
+<span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/script&gt;</span>
+<span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></code></pre>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

@@ -1,0 +1,9 @@
+###read
+
+------
+
+<div id=archive_tags>
+<ul>
+<li>[read index](/wiki/note/read/read index.html)</li> 
+</ul>
+</div>

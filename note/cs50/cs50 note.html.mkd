@@ -1,0 +1,37 @@
+<!--c-html-php-css-js-->
+### 课程讲义 
+
+----
+#### 简介
+
+
+[CS50](https://cs50.harvard.edu) 是harvard的一门计算机科学基础课程,主要是C语言基础, 后面讲了一点网页开发的东西. [网上资料](http://cdn.cs50.net/2013/fall/)非常丰富, 最近正在网上学习, 下面是学习笔记
+
+-   linxu基础命令
+    -   [shell基础命令](shell intro.html)
+    -   [make](make.html)
+    -   [clang](clang.html)
+    -   [GDB](GDB.html)
+    -   [valgrind](valgrind.html)
+-   C语言基础
+    -   [入门](C intro.html)
+    -   [指针](point.html)
+    -   [数据结构](data structure.html)
+-   算法
+    -   [排序](sort.html)
+-   [W3C](W3C.html)
+    -   [服务器搭建](server.html)
+    -   [html](html.html)
+    -   [css](css.html)
+    -   [php](php.html)
+    -   [javasript](js.html)
+-   Pset
+    -   [pset1](pset1.html)
+    -   [pset2](pset2.html)
+    -   [pset3](pset3.html)
+    -   [pset4](pset4.html)
+    -   [pset5](pset5.html)
+    -   [pset6](pset6.html)
+    -   [pset7](pset7.html)
+    -   [pset8](pset8.html)
+

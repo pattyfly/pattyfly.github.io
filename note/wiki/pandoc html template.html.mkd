@@ -1,0 +1,168 @@
+<!--pandoc-->
+###pandoc 模板
+
+-------------
+
+####Template
+
+这里是我暂时的模板, 非常简陋, 以后有时间再慢慢完善. 由于模板能支持变量, 所以为了获得绝对路径, 都把head, header 以及 footer 都整在 template 里面了.
+
+增加了 `toc` 的设置
+
+```html
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+    $for(author-meta)$
+        <meta name="author" content="$author-meta$" />
+    $endfor$
+    $if(date-meta)$
+        <meta name="date" content="$date-meta$" />
+    $endif$
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    $if(quotes)$
+        <style type="text/css">q { quotes: "“" "”" "‘" "’"; }</style>
+    $endif$
+    $if(highlighting-css)$
+        <style type="text/css">
+            $highlighting-css$
+        </style>
+    $endif$
+
+    $for(css)$
+        <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
+    $endfor$
+
+    $if(math)$
+    $math$
+    $endif$
+
+    $for(header-includes)$
+    $header-includes$
+    $endfor$
+
+    <link rel="Stylesheet" type="text/css" href="file:///$wiki_dir$static\css\bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="file:///$wiki_dir$static\css\style.css">
+    <script type="text/javascript" src="file:///$wiki_dir$static\js\jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="file:///$wiki_dir$static\js\bootstrap.min.js"></script>
+    <script type="text/javascript" src="file:///$wiki_dir$static\js\vimwiki.js"></script>
+    <title>$wiki_title$</title>
+</head>
+
+<body>
+    $for(include-before)$
+    $include-before$
+    $endfor$
+    <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="file:///E:/Copy/wiki/note/Wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="file:///$wiki_dir$note/Wiki.html">首页</a></li>
+                        <li><a href="file:///$wiki_dir$note/cs50/Cs50_note.html">CS50</a></li>
+                        <li><a href="file:///$wiki_dir$note/diary/diary.html">日记</a></li>
+                        <li><a href="file:///$wiki_dir$note/TODO.html">TODO</a></li>
+                        <li><a href="file:///$wiki_dir$note/wiki/关于wiki.html">Wiki</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    $if(title)$
+        <div id="$idprefix$header">
+            <h1 class="title">$title$</h1>
+            $if(subtitle)$
+                <h1 class="subtitle">$subtitle$</h1>
+            $endif$
+            $for(author)$
+                <h2 class="author">$author$</h2>
+            $endfor$
+            $if(date)$
+                <h3 class="date">$date$</h3>
+            $endif$
+        </div>
+    $endif$
+
+    $if(toc)$
+        <div class="toc">
+        $toc$
+        </div>
+    $endif$
+
+    <div class="container content-body">
+        <div id=update_time>更新时间: $update_time$</div>
+$body$
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+    $for(include-after)$
+        $include-after$
+    $endfor$
+</body>
+</html>
+```
+####head
+
+------
+
+```html
+<link rel="Stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+<link rel="Stylesheet" type="text/css" href="static/css/style.css">
+<script type="text/javascript" src="static/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="static/js/vimwiki.js"></script>
+<title>MyWiki</title>
+```
+#### header
+
+--------
+
+header 就是添加导航栏, 用的是 bootstrap 家的东西, 忘了是从哪里看到的了, 这里这些链接真的是没办法, 没有找到好的方法, 如果用相对目录的话, 多点两次就会出问题.
+vimwiki 能有全局变量, 操作起来非常方便. 算了, 这个东西有时间再改吧.
+```html
+<nav class="navbar navbar-default navbar-inverse" role="navigation">
+ <div class="container">
+    <div class="navbar-header">
+<button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+        <span class="sr-only"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a class="navbar-brand" href="file:///E:/Copy/wiki/note/index.html">Pattyfly</a>
+    </div>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="file:///E:/Copy/wiki/note/index.html">首页</a></li>
+            <li><a href="file:///E:/Copy/wiki/note/cs50/Cs50_note.html">CS50</a></li>
+            <li><a href="file:///E:/Copy/wiki/note/diary/diary.html">日记</a></li>
+            <li><a href="file:///E:/Copy/wiki/note/TODO.html">TODO</a></li>
+            <li><a href="file:///E:/Copy/wiki/note/wiki/关于wiki.html">Wiki</a></li>
+        </ul>
+    </div>
+ </div>
+</nav>
+```

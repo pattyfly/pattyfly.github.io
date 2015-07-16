@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>dialog controler</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#toc_0.0.1">Dialog 控件</a></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/fortran.html">fortran</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/06 15:26</div>
+<!--fortran-->
+<h3 id="toc_0.0.1">Dialog 控件</h3>
+<hr />
+<ul>
+<li>Order</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>改变窗口的控件的默认顺序, C+D, 然后鼠标点要的顺序</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>快捷方式</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>要在某个控件上加,在标题某个字前面用&amp;</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>radio</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>每组都需要在顺序排名第一的设置成group. 两组之间的顺序不能交叉</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>text读写</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">retlog <span class="kw">=</span> DLGGET (dlg, IDC_EDITBOX1, text)
+<span class="fu">READ (</span>text, <span class="fu">*)</span> 
+<span class="fu">WRITE (</span>text,<span class="st">&#39;(I4)&#39;</span><span class="fu">)</span>
+retlog <span class="kw">=</span> DLGSET (dlg, IDC_EDITBOX1, text)</code></pre>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>Button</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">retlog <span class="kw">=</span> DlgSetSub( dlg, IDC_BUTTON_TIME, DisplayTime)</code></pre>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>Scroll Bar</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">MaxScrollPos <span class="kw">=</span> MaxRangeValue <span class="kw">-</span> (PageSize <span class="kw">-</span> <span class="dv">1</span>)</code></pre>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>List and Combo Box</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>两者都分为sorted和unsorted 遍历选择:</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">int</span> select_index<span class="kw">=</span><span class="dv">1</span>
+<span class="kw">int</span> item_value
+<span class="kw">DO</span>
+   retlog <span class="kw">=</span> dlgget(dlg,idc_listbox1,item_value,select_index)
+   <span class="kw">if</span> item_value <span class="kw">=</span> <span class="dv">0</span>, <span class="kw">break</span>
+   retlog <span class="kw">=</span> dlgget(dlg,idc_listbox1,str,item_value)
+   select_index<span class="kw">++</span>
+<span class="kw">ENDDO</span></code></pre>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><strong>注意</strong>Combo box 要将下来菜单变长一点, 否则出不来东西</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>picture</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>先添加bitmap资源, 然后在picture控件属性那里选择bitmap</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<ul>
+<li>tab
+<ul>
+<li>tab的窗口属性要设置成child, border要选none, titlebar取消</li>
+<li>tab实例</li>
+</ul></li>
+</ul>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>初始主窗口并回调:</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">lret <span class="kw">=</span> DlgInit(IDD_DIALOG, gdlg)
+lret <span class="kw">=</span> DlgSetSub(gdlg, IDD_DIALOG, ShowMainSub)</code></pre>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>设置tab:</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">lret <span class="kw">=</span> DlgSet(gdlg, IDC_TAB, <span class="dv">2</span>)
+lret <span class="kw">=</span> DlgSet(gdlg, IDC_TAB, <span class="st">&quot;Sex&quot;</span>, <span class="dv">1</span>)
+lret <span class="kw">=</span> DlgSet(gdlg, IDC_TAB, <span class="st">&quot;Account&quot;</span>, <span class="dv">2</span>)
+lret <span class="kw">=</span> DlgSet(gdlg, IDC_TAB, IDD_TAB_DIALOG1, <span class="dv">1</span>)
+lret <span class="kw">=</span> DlgSet(gdlg, IDC_TAB, IDD_TAB_DIALOG2, <span class="dv">2</span>)</code></pre>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>初始tab窗口并设置回调(如果有):</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">lret <span class="kw">=</span> DlgInit(IDD_TAB_DIALOG1,  gdlg_tab1)
+lret <span class="kw">=</span> DlgInit(IDD_TAB_DIALOG1,  gdlg_tab1)</code></pre>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>run window:</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">lret <span class="kw">=</span> DlgModal(gdlg)</code></pre>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">ShowMainSub( dlg, id, callbacktype )
+   <span class="kw">if</span> (callbacktype <span class="kw">==</span> dlg_init) <span class="kw">then</span>
+       hwnd <span class="kw">=</span> GetDlgItem(dlg % hwnd, IDC_TAB)
+       lret <span class="kw">=</span> DlgModeless(gdlg_tab1, SW_HIDE, hwnd)
+       lret <span class="kw">=</span> DlgModeless(gdlg_tab2, SW_HIDE, hwnd)
+       <span class="co">! 申明默认的tab </span>
+       lret <span class="kw">=</span> DlgSet(dlg, IDC_TAB, <span class="dv">1</span>, dlg_state)
+   <span class="kw">end if</span>
+<span class="kw">end</span> </code></pre>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>text</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>一般来说, 静态文本框不能修改, 因为head文件里没有id. 可以修改动态框当静态用, 属性style中border和readonly修改就行. 或者修改要编辑的静态文本框属性, 改名(他没有id是因为他没有唯一的名字)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>Spin</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Spin和text一起用, 把spin的属性修改成alignment=right align;auto buddy=true,set buddy integer=true.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

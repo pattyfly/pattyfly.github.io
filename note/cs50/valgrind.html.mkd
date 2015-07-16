@@ -1,0 +1,14 @@
+﻿<!--c-linux-->
+### valgrind {#toc_0.0.0.1}
+
+----
+
+#### usage
+
+```bash
+valgrind ./hello
+```
+-   可以用这个程序来检查是否有内存泄露的问题, 比如说GetString, 用完需要free. 
+-   下面的参数可以显示详细一点的信息 `--leak-check = full ./test `
+-   还可以用来检查非法写入, 比如说数组越界 `int x[10]; x[10] = 0;`
+-   这样的错误编译的时候不会出错, 运行的时候可能也难查出, 即使用GDB, 用valgrind就很容易了

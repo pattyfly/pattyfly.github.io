@@ -1,0 +1,45 @@
+<!--batch-wiki-pandoc-->
+### batch wiki
+
+---------
+
+命令支持0-9个参数, 0表示自己, 所以把这个 bat 文件放到 note 同级目录就能运行了. for 的命令见这里的[详细说明](batch for.html), 或者参考这个[问题](http://stackoverflow.com/questions/5034076/what-does-dp0-mean-and-how-does-it-work)或者[微软的说明](http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/percent.mspx?mfr=true)
+
+由于之前把 index 和 diary 也设置成 html 结尾的, 所以这样所有的 `mkd` 文件都已经转变, 上面的 `%%~ti` 表示 `i` 文件的修改日期, 其实我也想搞到创立日期, 但是在网上没找到bat 命令怎么写. 
+
+关于 `bat` 其他的一些例子:
+```bash
+for /r "note" %%i in (*.html) do del "%%~fi" 
+for /r "note" %%i in (*.html.html) do ren "%%~fi" "%%~ni"
+```
+第一行删除所有后缀名为 `html` 的文件, 第二行是将所有的 .html.html 重命名为 .html, 另个命令为 `del` `ren`, 注意 `ren` 非常不好用, 第一个参数可以使绝对路径, 第二个参数只能是相对路径. 另外如果命名的时候已经存在该文件了, 命名也不能成功.
+
+把 html 转成 md
+```bash
+cd /d %~dp0
+for /r "note" %%i in (*.html) do pandoc -f html -t markdown "%%~fi" -o "%%~dpni.mkd"
+```
+
+老的处理日记脚本
+```bash
+setlocal enabledelayedexpansion
+cd /d %~dp0
+for /r "note/diary" %%i in (*html.mkd) do (
+set name="%%~ni"
+set nameshort=!name:~1,-6!
+pandoc -f markdown -t html --toc --toc-depth 5 -V wiki_dir=%~dp0 -V wiki_title="!nameshort!"  -V update_time="%%~ti" --highlight-style haddock --template template.html  --include-before-body header.html --include-after-body footer.html "%%~fi" -o "%%~dpni"
+)
+```
+
+老的处理其他文档的脚本
+```bash
+setlocal enabledelayedexpansion
+cd /d %~dp0
+for /r "note" %%i in (*html.mkd) do if not [%%~dpi]==[e:\Copy\wiki\note\diary\] (
+set name="%%~ni"
+set nameshort=!name:~1,-6!
+pandoc -f markdown -t html --toc --toc-depth 5 -V wiki_dir=%~dp0 -V wiki_title="!nameshort!"  -V update_time="%%~ti" --highlight-style haddock --template template.html  --include-before-body header.html --include-after-body footer.html "%%~fi" -o "%%~dpni"
+)
+```
+
+最新的脚本前往 [这里](../wiki/wiki batch.html)

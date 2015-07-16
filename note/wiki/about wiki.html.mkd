@@ -1,0 +1,304 @@
+﻿<!--wiki-markdown-batch-pandoc-vim-->
+### about wiki
+
+--------
+
+最开始是完全用 [vimwiki](#vimwiki) 来记录东西, 语法非常少, 利用vim以及wiki的一些快捷键, 操作非常爽快, 文件管理方面更是十分出色. 然而简单的语法导致缺点也是一大堆：
+
+* 比如说 `pre` 里面不能加任何格式
+* 功能不能嵌套用, 现在这个列表就不能实现
+* 代码高亮不会设置
+* 不是**通用**语法, 基本上没有任何其他支持
+
+后来接触到 [markdown](#markdown), 觉得 markdown 才算是基本上满足这些要求, 更重要的是 markdown 受到普遍支持, 很多在线编辑, 许多著名网站也可以直接支持, 更有 [pandoc](#pandoc) 这样牛逼的转换软件
+
+所以想都改成 markdown, 但是 vimwiki 不完全支持 markdown, 只能支持语法文件, 也就是说只能写出来 markdown, 但是从 markdown 到 html 得想其他办法. pandoc 是能方便的把 md 转成 html, 但是对于 wiki 这样的体系来说, 文件太多, 只能用[批处理](#batch)才现实. ~~pandoc 转单一文件的模板, header, footer, css 都比较好设置, 但是多个文件, 特别是多个目录下, 我没有找到好的解决方案, 最后也不想折腾了, 用了最笨的方案, 绝对路径 + 多个 static 文件夹.~~ *注: 已经用 pendoc 的变量参数解决*
+
+[批处理](#batch)也是挺麻烦的, markdown 的链接和 wiki 的链接是不同的, wiki 里面建一个页面, 得这样写【链接名字】（链接名字.html）, 这样生成的 html 才能真的链接过去. 但这样一处理后, vimwiki 里就会新建一个 XXXX.html.mkd 的文件(有人给出了编写 `vim` 函数的方法, 但是要求光标在 xxxx.html 位置, 不是很方便用), ~~批处理的时候目标文件选择比较麻烦, 如果选择 html.mkd 后缀的, 有些网页不能生成, 比如说 index. 如果选 mkd 文件, 则会生成 html.html, 我之前不懂 bat. 只能用非常笨的方法. 现在由于日记已经不再这个 wiki 中了, 所以整个目录也就 index 正常, 因此现在改为现生产其他的, 在单独生成 index 就行了.~~ 为了统一, 我想把 index.mkd 和 diary.mkd 都修改成 index.html.mkd 和 diary.html.mkd, 于是去修改 vimwiki 插件的函数, 结果看了一会, 发现已经设好了全局变量, 这两个值都可以直接在 `vimrc` 中设置
+
+另外, 改成 markdown 以后, vimwiki 的日历功能不能实现, 他自己形成的 daily 主页并不是 markdown 语言, 没有办法, ~~只好建立两个 wiki 目录, 第一个专门记日记, 第二个写笔记. 具体见~~[vim的设置](#vim) . 后来修改了一下 vimwiki 中的 diary.vim 插件, 虽然没怎么看懂, 但是改了之后还是非常有效的, 见 [vimwiki](#vimwiki). 
+
+综上, 非常非常的折腾. 综合了 markdown, pandoc, 批处理 之后终于方便用了. 具体的一些东西见下面.
+
+*最近用批处理搞归档功能, 感觉更加爽了, 具体见*[批处理](#batch)
+
+### vimwiki
+
+------------
+
+[vimwiki](http://www.vim.org/scripts/script.php?script_id=2226) 是一个非常小巧的 vim 插件, 安装很方便, 按照官网操作就行, 我安装的版本是2.1, **注意**, 安装之后要在 `.vimrc` 中设置
+```vimrc
+set nocompatible
+filetype plugin on
+syntax on
+```
+**注意** 如果是在 Windows 下面, vim 的 很多文件实际上位于用户文件夹中, 要修改或者重装的时候留意一下.
+
+vimwiki 操作起来也十分爽快. 但是他用的语法是 markup（好像和 wikimedia 的语法有点关系）, [这里](vimwiki synatx.html)有些例子. 它是一种几乎不被其他任何支持的语言, 所以最终被我放弃了, 只用它来管理文件. vimwiki 在操作和文件管理方面还是非常好用的, 下面主要介绍一下操作方式等. 
+
+* `\ww` 到主页
+* `\wi` 到日历页
+* `\w\w` 写当天日记
+* `\w\i` 在日历页面生成日历文件检索
+* 数字 + 上面的 进入相应的 wiki
+* `TAB` / `S-TAB` 在链接之间跳转
+* `Enter` 进入条目 (改用 md 之后, 条目应该 [显示内容] (名称.html))
+
+因为 `markdown` 语法不能自动实现日记文件, ~~现在用第一个 wiki 来写日记, 用的还是 markup 模板用的~~[这个](vimwiki template.html)
+
+现在彻底不用啦, 修改了 `dairy.vim`, 在文件开头加入模板定义.
+```ruby
+let g:vimwiki_rxWeblink_my_Prefix = '['
+let g:vimwiki_rxWeblink_my_Suffix = ')'
+let g:vimwiki_rxWeblink_my_Separator = ']('
+" [DESCRIPTION](URL)
+let g:vimwiki_Weblink_my_Template = g:vimwiki_rxWeblink_my_Prefix . '__LinkDescription__'.
+    \ g:vimwiki_rxWeblink_my_Separator. '__LinkUrl__'.
+    \ g:vimwiki_rxWeblink_my_Suffix
+```
+之后的 `format` 函数也要修改一下, 把模板改成刚才定义的就行.
+```ruby
+" for [fl, cap] in s:rev(sort(items(g_files[year][month])))
+for [fl, cap] in s:sort(items(g_files[year][month]))
+  if empty(cap)
+  let entry = substitute(g:vimwiki_Weblink_my_Template, '__LinkUrl__', fl, '')
+  let entry = substitute(entry, '__LinkDescription__', cap, '')
+  call add(result, repeat(' ', &sw).'* '.entry)
+  else
+  let entry = substitute(g:vimwiki_Weblink_my_Template, '__LinkUrl__', fl, '')
+  let entry = substitute(entry, '__LinkDescription__', cap, '')
+  call add(result, repeat(' ', &sw).'* '.entry)
+  endif
+endfor
+```
+这样新建的日记就是有 `markdown` 的格式了, 但是生成的格式是这种 `[dairy](2014-08-02)`. 生成的网页时没法链接的, 每次去在后面加上 `html` 后缀太不现实了, 其实只要修改 `\w\w` 的那个命令, 也是在 diary.vim 里面有个 make_note 的函数, 把最后的 `link` 补上 `.'.html'` 就行了. 另外这个函数里面还有一个东西非常sb, `format` 函数有个地方是 `repeat(' ',&sw). xxxx`, 使得生成的日记条目, 每个最前面的空格数目是 `vimrc` 中的 `sw`, 但是这个数目一般是设置的4或者8, 至少我是这样的, 这样一来日历就变成pre了, 所以把 `&sw` 改为 3 好了.
+
+### markdown 
+
+------------
+
+markdown 是一个轻量级的标记性语言, 其实在一两年以前就在小众上看过介绍, 并且在 pocket 中一直流着 markdown 的 wiki.  也在无聊的时候看过几次, 当时不知道怎么的觉得好难. 可能是最近学了下 html, 一下子觉得 markdown 好简单. 
+
+markdown (以下简称md) 现在已经被很多著名的网站支持, 但是由于还是太简单, 比如说不支持表格等. 很多社区都有分支, 比如 php markdown extra, github markdown,  pandoc markdown 等. 
+
+关于语法可以参考这个 [markdown 中文文档](http://wowubuntu.com/markdown/), 有意思的是这个文档本身就是 markdown, 所以非常具有参考性. 文档在此 [`html`](syntax.html) [`markdown`](syntax.html.mkd).
+
+也可以看下面两个网站, 有一些基本的示例, 或者直接在网站上用鼠标点. 只是要注意, 语法还是有些不同的, 比如说分段不要空行. 
+
+* [StackEdit](https://stackedit.io/)
+* [Cmd Markdown](https://www.zybuluo.com/mdeditor)
+
+[stackEdit](https://stackedit.io/) 是一个在线的md编辑网站, 其实挺好用的：
+  
+- 支持 md extra 和 github md
+- 能自动同步到 dropbox 和 gdrive
+- 能发布到一大推云服务和 bolg
+- 所见即所得, 两边页面同步非常牛逼
+- 能离线使用
+- toc也做得非常不错 
+
+但是文件管理非常差, 所有的文件都只能在一个文件夹中. 这里是 [stackEdit welcome](stackEdit welcome.html) 页面
+
+[Cmd Markdown](https://www.zybuluo.com/mdeditor) 是一个中文的在线 md编辑网站, 基本上是山寨的 stackedit, 但是也有一些自己的东西, 比如说 tag, 流程图, vim 模式等, 不能离线使用是败笔.  这里是 [cmd markdown 欢迎](cmd markdown welcome.html) 页面.
+  
+要搞点什么测试的话, 可以点[markdown test](markdown test.html)
+
+pandoc 默认是使用 pandoc markdown, 相比原生的, pandoc 多了很多功能, 常见的新增功能见 [pandoc markdown](pandoc markdown.html)
+
+
+### pandoc 
+
+------
+
+[pandoc](http://johnmacfarlane.net/pandoc/README.html) 是牛逼哄哄的 haskell 编成的, 功能非常的完善, 能转换非常多的文本格式, 光 md 就支持好几种, 我主要是用它把 `markdown` 文档转成 `html`. 
+
+#### 安装
+
+Window 下面安装是非常方便的, 已经有安装包下载, 直接下载了之后点击安装就行, 需要注意一点, 生成的程序并没有加入注册表, 也没有进入 `PATH`, 所以需要手动复制到 `Window` 目录.
+
+Mac os 也有编译好的安装包, 不过没有安装过. Linxu 下安装是比较麻烦的, 反正我找了很久没找到可以直接安装的, 需要先安装 haskell 平台, 而且有一大堆依赖关系. 就是因为这个原因, 放弃了在 linux 上写这些东西, 当然, linxu 用的其实也非常少.
+
+#### 运行
+
+最一般的命令是这个: 
+```bash 
+pandoc -f markdown -t html src -o dst
+```
+* -f 来源类型
+* -t 目标类型
+* src 来源 
+* dst 目标
+
+下面这条命令能讲这个文档生成 `docx`:
+```bash
+pandoc -f markdown -t docx "关于wiki.html.mkd" -o "关于wiki.docx"
+```
+为了生成的 `html` 比较好看, 需要加一些参数, 常用的有下面一些:
+
+* --template 
+* --toc  自动生成目录
+* --css  指定css文件, 由于用了 template, 直接在模板里面加载就行了
+* --include-beforer-body header.html 
+* --include-after-body footer.html 
+* --include-in-header 加载一些特殊的css, js 等
+* --toc-depth toc目录的深度, 默认为3
+* --highlight-style code颜色, 我选的haddock
+
+具体的命令查看 `--help` 或者[官网](http://johnmacfarlane.net/pandoc/README.html). 我只用到这些:
+```bash
+pandoc -f markdown -t html --toc --toc-depth 5 --highlight-style haddock --template template.html --include-in-header head.html --include-before-body header.html src -o dst
+```
+
+####模板{#template}
+
+这里说的模板是广义的东西, 包括template, header, footer 以及一些js文本, 是 `md` 文件转换成漂亮 `html` 的必需品. 先放上[我的模板](pandoc html template.html), 具体东西见下面.
+**注意** template 上的`$body$`一定要顶格, 非常坑爹, 否则pre会出错.
+
+* Template
+
+template 在[这里](https://github.com/jgm/pandoc-templates)下载, 这只是一个非常一般的模板, 如果需要干别的需要特殊定制, 模板主要是一些变量, 刚开始最长的那部分是代码高亮用的, 之后有一些文档信息, 另外就是 head, header, footer, body, toc了, 前面三个对应着 pandoc 的命令参数, 最后的 body 就是 md 文件, toc 是文档结构, 还是比较简单.我把下载下来的 template 修改了下, 主要是删除了一些现在用不上的东西, 修改了header, toc, body.
+
+* title
+  
+设置 title 为 md 的文件名, 通过批处理实现, 具体见[批处理](#batch)
+
+* Header
+
+在 header 上实现导航栏, 借用的是 bootstrap.
+
+* toc
+
+在 toc 上搞了一个 `js` 文档, 实现在侧边栏显示 toc, 并且实现隐藏, 显示, 淡入, 高亮. 参考的[这里](http://wiki.ktmud.com/tips/vim/vimwiki-guide.html). 其实具体的 `js` 文档没有搞懂, 反正他的作用是在 `class=toc` 那个标签上面加入两个标签, 然后通过两个函数实现的.
+```javascript
+$(document).ready(function() {
+  if (window.innerWidth >= 460) {
+    var toggler = $('<div class="toggler" title="点击展开/收起，Shift+Z 隐藏或打开">目录</div>'),
+    toc = $('.toc');
+    toc.wrap('<div class="tocWrap">');
+
+    $('.tocWrap').prepend(toggler)
+    .delay(500)
+    .fadeTo(500, '0.25')
+    .hover(function() {
+      $(this).stop().fadeTo(300, '0.9');
+    }, function() {
+      $(this).stop().fadeTo(300, '0.25');
+    });
+
+    $('html').keypress(function(e) {
+      if (e.shiftKey && (e.charCode || e.keyCode) == '90') {
+        e.preventDefault();
+        $('div.tocWrap').toggle(200);
+      }
+    });
+
+    toggler.click(function() {
+      $('div.toc').slideToggle(300);
+    });
+  }
+});
+```
+* body
+
+先加入一个 div, 存放更新时间, 这个时间是 bat 通过for 循环得到, 然后传给 pandoc 关键字参数, 放到模板中.
+
+在 body 上简单的加了一个 div, 以方便加载css.
+
+####问题
+
+~~上面说的搞单一文件是没有问题的, 如果所有文件都在一个文件夹里面, 也是可以的. 但是 wiki 这种有树状结构的, 如果用批处理生成的 html 也在同一个文件中, 里面的 css, js 都是当前目录, 所以非常蛋疼, 只能在每一个文件夹中放入一个静态文件夹, 放这些静态文件.~~
+
+已经解决, 在模板中加入变量就行了.
+
+### 批处理 {#batch}
+
+------------
+
+由于 wiki 里面文件比较多, 一个一个的来生成肯定不现实, 要是在 Linxu 下面, shell 命令还是比较熟悉的, `Makefile` 也是好用的一笔. Windows 的批处理一直想学, 但一直没学, 只好借这次先学点. 这里是[批处理文件](wiki batch.html)
+
+> 功能
+
+>> 支持自动判断文档是否修改, 如果没有修改, 不对该文档进行操作, 如果修改了, 就转成html
+<br>配合模板实现标题, 创建日期, 更新日期, 标签的功能, 以及设定相对目录, [静态文件](#static)不要到处放了.
+<br>实现归档功能: 归档页面包括所有的标签页面, 所有目录页面, 以及创建时间和更新时间页面, 每个归档条目都生成一个子页面, 可以链接到相应的文档. 支持最大5个标签.
+
+来张图片吧, 下面是我的归档页面. 条目设计了`hover`动态效果, 截图的时候看不到. 配色可能有点难看...
+
+![归档页面](archive.png)
+
+其他的一些简单的 [batch 命令](../batch/batch wiki.html)
+
+### vim及其他设置 
+
+----------
+
+`vim` 的配置如下:
+```vimrc
+let g:vimwiki_list = [{'path': 'E:/Copy/wiki/note',  
+  \ 'diary_path': 'E:/Copy/wiki/diary',
+  \ 'syntax': 'markdown',
+  \ 'ext': '.mkd',
+  \ 'index': 'wiki.html',
+  \ 'diary_index': 'diary.html'}]
+map <F4> :silent ! e:\Copy\wiki\wiki_archive.cmd<cr>
+```
+在 vim 里面 F4 可以运行那个批处理, 本来想直接生成单独的文件, 但是各种模板, 静态文件的路径什么的太难搞了, 而且现在速度也是非常快速, 就先这样吧.
+md 文件和 html 都在note里面, 整个目录结构如下:
+```tree
+  wiki
+    │  footer.html
+    │  header.html
+    │  template.html
+    │  wiki_archive.cmd
+    │  
+    ├─archive
+    │  │  archive.html
+    │  │  archive.html.mkd
+    │  │  
+    │  ├─catalogy
+    │  ├─creation_date
+    │  ├─tags
+    │  └─update_date
+    ├─note
+    │  │  wiki.html
+    │  │  wiki.html.mkd
+    │  │  
+    │  ├─diary
+    │  └─subfolder
+    └─static
+        ├─css
+        │      bootstrap.min.css
+        │      header-sunset.jpg
+        │      style.css
+        │      
+        └─js
+                bootstrap.min.js
+                jquery-1.11.1.min.js
+                vimwiki.js
+
+```
+
+### 静态文件
+
+----------
+
+现在用了两个 `css` 和两个 `js`, `js` 文件没有修改, [`bootstrap.min.js`](static/js/bootstrap.min.js) 和 [`bootstrap.min.js`](static/js/bootstrap.min.js)
+
+又加了一个 [`vimwiki.js`](static/js/vimwiki.js)
+
+`css` 中的 [`style.css`](static/css/style.css)主要是参考[这个](http://wiki.ktmud.com/tips/vim/vimwiki-guide.html), 也用了 [`bootstrap.min.css`](static/css/bootstrap.min.css), 然后看着那个地方不爽就拿出firefox, 随便乱改. 反正觉得更新时间和 tag 还是做的非常漂亮的.
+
+### 改进
+
+--------
+
+1. ~~静态文件到处放不是很爽快~~
+2. ~~加上 footer 和 侧边栏, 以及可以隐藏的 toc~~
+3. ~~把日记也搞好, 放在一起~~
+3. ~~对每个页面设置标题, 设置更新时间~~
+3. ~~设置创建日期~~
+4. ~~在 vim 中快速生成当前 html~~
+6. ~~实现 tag 功能~~
+5. 本地全文搜索
+
+前6个都完美的解决了, 第7个更是高出了要求, 实现了整个归档页面. 最后一个可以用 google 的 [自定义搜索](https://developers.google.com/custom-search/docs/tutorial/introduction)解决, 但是我这是本地wiki, 就不要想搞了, vimwiki 的 `:VimwikiSearch` 也够用了, 搜索东西找到后, 可以用 `:lopen` 来打开所有内容.  而且最近看了 [`hexo`](http://hexo.io/)能做出非常棒的 blog, 所以 vimwiki 就这样吧, 有时间再来折腾`hexo`

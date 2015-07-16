@@ -1,0 +1,40 @@
+﻿<!--c-linux-->
+### pipe
+
+----
+
+```bash
+history | grep "touch"
+```
+
+在历史中找到所有`touch`的命令，实际上可以写成下面两个命令:
+
+```bash
+history > blah
+grep "touch" < blah
+```
+
+In turns out you can automate this process of providing hay, though, by
+"piping" the output of generate into find as input. For instance, the
+command below passes 1,000 pseudorandom numbers to find, which then
+searches those values for 42.
+
+``` {.code}
+./generate 1000 | ./find 42
+```
+
+Note that, when piping output from generate into find in this manner,
+you won’t actually see generate's numbers, but you will see find's
+prompts. Alternatively, you can "redirect" generate's output to a file
+with a command like the below.
+
+``` {.code}
+./generate 1000 > numbers.txt
+```
+
+You can then redirect that file’s contents as input to find with the
+command below.
+
+``` {.code}
+./find 42 < numbers.txt
+```

@@ -1,0 +1,421 @@
+﻿<!--c-->
+## pset 5 
+
+----
+
+[pset5](https://cdn.cs50.net/2014/spring/psets/5/hacker5/hacker5.html)
+
+### bitmap(Whodunit)
+
+* 要求：破解（修改）bmp图像，BMP放大
+* 掌握：栅格图像处理，xxd 命令，文件读写，结构体struct, 十六进制
+* 难点：
+    - paddle计算
+    - 文件处理，光标处理
+    - 结构体
+    - BMP缩小
+
+[xxd](shell intro.html), [文件读写](C intro.html), [struct](data structure.html)
+
+24位的bitmap, (位是bit, 字节是byte, 1 byte=8 bit, 32位机就是4 byte, 下面的编译器int就是4 byte, char 是 1 byte, 16进制单个数字是4bit)颜色是RGB模式(每8bit代表一种颜色, 8bit  可以表示2位16进制, 从0x00-0xff, 也就是从0到255.
+
+不过bitmap的颜色是倒过来的, 即BGR. 0000ff代表纯红)  bitmap在数据最前方有一些元数据, 一般是两个结构体, 一个bitmapfileheader,14  byte,一个bitmapinfoheader, 40  byte. 之后就是像素颜色了, 从上到下, 从左到右. 
+
+但是有个地方值得注意, 如果每行像素是4的倍数, 数据就是上面所说的. 如果不是, 比如说3×3, 就会在右侧自动补3个 > 00, 变成4×3., 也就是说每行只能是4的倍数, 否则就在最后补0. 比如说10×9, 实际数据是30×9, 会变成32×9  有比如说10×8, 实际是30×8, 会变成32×9.
+ 
+
+还有一点值得注意, bmp默认是行倒置的, 就是图像的第一行是数据的最后一行. 
+
+```cpp
+/**
+ * bmp.h
+ *
+ * Computer Science 50
+ * Problem Set 5
+ *
+ * BMP-related data types based on Microsoft's own.
+ */
+
+#include <stdint.h>
+
+/**
+ * Common Data Types 
+ *
+ * The data types in this section are essentially aliases for C/C++ 
+ * primitive data types.
+ *
+ * Adapted from http://msdn.microsoft.com/en-us/library/cc230309.aspx.
+ * See http://en.wikipedia.org/wiki/Stdint.h for more on stdint.h.
+ */
+typedef uint8_t  BYTE;
+typedef uint32_t DWORD;
+typedef int32_t  LONG;
+typedef uint16_t WORD;
+
+/**
+ * BITMAPFILEHEADER
+ *
+ * The BITMAPFILEHEADER structure contains information about the type, size,
+ * and layout of a file that contains a DIB [device-independent bitmap].
+ *
+ * Adapted from http://msdn.microsoft.com/en-us/library/dd183374(VS.85).aspx.
+ */
+typedef struct 
+{ 
+    WORD   bfType; 
+    DWORD  bfSize; 
+    WORD   bfReserved1; 
+    WORD   bfReserved2; 
+    DWORD  bfOffBits; 
+} __attribute__((__packed__)) 
+BITMAPFILEHEADER; 
+
+/**
+ * BITMAPINFOHEADER
+ *
+ * The BITMAPINFOHEADER structure contains information about the 
+ * dimensions and color format of a DIB [device-independent bitmap].
+ *
+ * Adapted from http://msdn.microsoft.com/en-us/library/dd183376(VS.85).aspx.
+ */
+typedef struct
+{
+    DWORD  biSize; 
+    LONG   biWidth; 
+    LONG   biHeight; 
+    WORD   biPlanes; 
+    WORD   biBitCount; 
+    DWORD  biCompression; 
+    DWORD  biSizeImage; 
+    LONG   biXPelsPerMeter; 
+    LONG   biYPelsPerMeter; 
+    DWORD  biClrUsed; 
+    DWORD  biClrImportant; 
+} __attribute__((__packed__))
+BITMAPINFOHEADER; 
+
+/**
+ * RGBTRIPLE
+ *
+ * This structure describes a color consisting of relative intensities of
+ * red, green, and blue.
+ *
+ * Adapted from http://msdn.microsoft.com/en-us/library/aa922590.aspx.
+ */
+typedef struct
+{
+    BYTE  rgbtBlue;
+    BYTE  rgbtGreen;
+    BYTE  rgbtRed;
+} __attribute__((__packed__))
+RGBTRIPLE;
+```
+
+```cpp
+/**
+ * copy.c
+ *
+ * Computer Science 50
+ * Problem Set 5
+ *
+ * Copies a BMP piece by piece, just because.
+ */
+       
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "bmp.h"
+
+int main(int argc, char* argv[])
+{
+    // ensure proper usage
+    if (argc != 3)
+    {
+        printf("Usage: ./copy infile outfile\n");
+        return 1;
+    }
+
+    // remember filenames
+    char* infile = argv[1];
+    char* outfile = argv[2];
+
+    // open input file 
+    FILE* inptr = fopen(infile, "r");
+    if (inptr == NULL)
+    {
+        printf("Could not open %s.\n", infile);
+        return 2;
+    }
+
+    // open output file
+    FILE* outptr = fopen(outfile, "w");
+    if (outptr == NULL)
+    {
+        fclose(inptr);
+        fprintf(stderr, "Could not create %s.\n", outfile);
+        return 3;
+    }
+
+    // read infile's BITMAPFILEHEADER
+    BITMAPFILEHEADER bf;
+    fread(&bf, sizeof(BITMAPFILEHEADER), 1, inptr);
+
+    // read infile's BITMAPINFOHEADER
+    BITMAPINFOHEADER bi;
+    fread(&bi, sizeof(BITMAPINFOHEADER), 1, inptr);
+
+    // ensure infile is (likely) a 24-bit uncompressed BMP 4.0
+    if (bf.bfType != 0x4d42 || bf.bfOffBits != 54 || bi.biSize != 40 || 
+        bi.biBitCount != 24 || bi.biCompression != 0)
+    {
+        fclose(outptr);
+        fclose(inptr);
+        fprintf(stderr, "Unsupported file format.\n");
+        return 4;
+    }
+
+    // write outfile's BITMAPFILEHEADER
+    fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
+
+    // write outfile's BITMAPINFOHEADER
+    fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
+
+    // determine padding for scanlines
+    int padding =  (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+
+    // iterate over infile's scanlines
+    for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
+    {
+        // iterate over pixels in scanline
+        for (int j = 0; j < bi.biWidth; j++)
+        {
+            // temporary storage
+            RGBTRIPLE triple;
+
+            // read RGB triple from infile
+            fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+            if (triple.rgbtRed == 0xff)
+            {
+                triple.rgbtRed = 0x00;
+                triple.rgbtGreen = 0x00;
+                triple.rgbtBlue = 0x00;
+            }
+            // write RGB triple to outfile
+            fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+        }
+
+        // skip over padding, if any
+        fseek(inptr, padding, SEEK_CUR);
+
+        // then add it back (to demonstrate how)
+        for (int k = 0; k < padding; k++)
+        {
+            fputc(0x00, outptr);
+        }
+    }
+
+    // close infile
+    fclose(inptr);
+
+    // close outfile
+    fclose(outptr);
+
+    // that's all folks
+    return 0;
+}
+```
+
+```cpp
+/**
+ * copy.c
+ *
+ * Computer Science 50
+ * Problem Set 5
+ *
+ * Copies a BMP piece by piece, just because.
+ */
+       
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "bmp.h"
+
+int main(int argc, char* argv[])
+{
+    // ensure proper usage
+    if (argc != 4)
+    {
+        printf("Usage: ./resize d infile outfile\n");
+        return 1;
+    }
+
+    // remember filenames
+    int f = atoi(argv[1]);
+    char* infile = argv[2];
+    char* outfile = argv[3];
+
+    // open input file 
+    FILE* inptr = fopen(infile, "r");
+    if (inptr == NULL)
+    {
+        printf("Could not open %s.\n", infile);
+        return 2;
+    }
+
+    // open output file
+    FILE* outptr = fopen(outfile, "w");
+    if (outptr == NULL)
+    {
+        fclose(inptr);
+        fprintf(stderr, "Could not create %s.\n", outfile);
+        return 3;
+    }
+
+    // read infile's BITMAPFILEHEADER
+    BITMAPFILEHEADER bf;
+    fread(&bf, sizeof(BITMAPFILEHEADER), 1, inptr);
+
+    // read infile's BITMAPINFOHEADER
+    BITMAPINFOHEADER bi;
+    fread(&bi, sizeof(BITMAPINFOHEADER), 1, inptr);
+
+    // ensure infile is (likely) a 24-bit uncompressed BMP 4.0
+    if (bf.bfType != 0x4d42 || bf.bfOffBits != 54 || bi.biSize != 40 || 
+        bi.biBitCount != 24 || bi.biCompression != 0)
+    {
+        fclose(outptr);
+        fclose(inptr);
+        fprintf(stderr, "Unsupported file format.\n");
+        return 4;
+    }
+
+    int row = bi.biHeight;
+    int col = bi.biWidth;
+    // determine padding for scanlines
+    int padding_in =  (4 - (col * sizeof(RGBTRIPLE)) % 4) % 4;
+    int padding_out;
+    if (f >= 1)
+    {
+        // change some data in bf and bi
+        bi.biWidth *= f;
+        bi.biHeight *= f;
+        padding_out =  (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+        bi.biSizeImage = (bi.biWidth + padding_out) * abs(bi.biHeight) * bi.biBitCount / 8;
+        bf.bfSize = bi.biSizeImage + bf.bfOffBits;
+        // write outfile's BITMAPFILEHEADER
+        fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
+
+        // write outfile's BITMAPINFOHEADER
+        fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
+    }
+
+    // iterate over infile's scanlines
+    for (int i = 0, biHeight = abs(row); i < biHeight; i++)
+    {
+        // iterate over pixels in scanline
+        for (int n = 0; n < f; n++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                // temporary storage
+                RGBTRIPLE triple;
+
+                // read RGB triple from infile
+                fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+
+                for (int m = 0; m < f; m++ )
+                    // write RGB triple to outfile
+                    fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+            }
+
+            // then add it back (to demonstrate how)
+            for (int k = 0; k < padding_out; k++)
+            {
+                fputc(0x00, outptr);
+            }
+            fseek(inptr, - col * 3, SEEK_CUR);
+        }
+        fseek(inptr, col * 3, SEEK_CUR);
+        // skip over padding, if any
+        fseek(inptr, padding_in, SEEK_CUR);
+    }
+
+    // close infile
+    fclose(inptr);
+
+    // close outfile
+    fclose(outptr);
+
+    // that's all folks
+    return 0;
+}
+```
+
+### CSI
+
+* 要求：恢复已经删除的jpg数据
+* 掌握：文件储存，文件类型引导数据(JPEGs signatures)
+* 难点：
+    - 文件读写
+    - 光标处理
+    - 用fread读出来的数是反着的，不知道怎么搞得
+```cpp
+/**
+ * recover.c
+ *
+ * Computer Science 50
+ * Problem Set 5
+ *
+ * Recovers JPEGs from a forensic image.
+ */
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
+
+int main(void)
+{
+    FILE* inptr = fopen("card.raw","r");
+    if (inptr == NULL)
+    {
+        printf("cant open input file./n");
+        return 1;
+    }
+
+    uint32_t t;
+    do
+    {
+        fread(&t, sizeof(uint32_t), 1, inptr);
+    }
+    while((t != 0xe0ffd8ff)&&(t != 0xe1ffd8ff));
+    fseek(inptr, -sizeof(uint32_t), SEEK_CUR);
+    
+    char output[8];
+    char byte[512];
+    int notend = 512;
+    int i = 0;
+    while (notend == 512)
+    {
+        sprintf(output, "%03d.jpg", i++);
+        FILE* outptr = fopen(output,"w");
+        if (outptr == NULL)
+        {
+            printf("cant open output file./n");
+            return 2;
+        }
+        do
+        {
+            notend = fread(&byte, sizeof(char), 512, inptr);
+            if(notend != 512)
+                break;
+            fwrite(&byte, sizeof(char), 512, outptr);
+            fread(&t, sizeof(uint32_t), 1, inptr);
+            fseek(inptr, -sizeof(uint32_t), SEEK_CUR);
+        }
+        while((t != 0xe0ffd8ff)&&(t != 0xe1ffd8ff));
+
+        fclose(outptr);
+    }
+
+    fclose(inptr);
+}
+```

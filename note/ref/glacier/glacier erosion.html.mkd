@@ -1,0 +1,47 @@
+<!--glacier-erosion-->
+
+## glacier Erosion and Sedimentation
+
+-------------------------
+
+Endogenetic processes 内力过程 exogenetic (exogenic) processes 外力过程
+
+Denudation include weathering, erosion, and mass wasting. 实际上 denudation 和 erosion 应该没有多大的区别
+
+Denudation rates are usually much lower than the rates of uplift. The only areas at which there could be equal rates of denudation and uplift are active plate margins with an extended period of continuous deformation. ^[Burbank, D.W., and Beck, R.A. 1991. Rapid long term rates of denudation. Geology 19:1169-72]
+
+### erosion
+
+[wiki](http://en.wikipedia.org/wiki/Erosion)
+
+Glaciers erode predominantly by three different processes: abrasion/scouring, plucking, and ice thrusting.....冰川在构造山峰中的作用 see [wiki](http://en.wikipedia.org/wiki/Erosion#Glaciers), 另外, 
+与冰川有关的构造抬升 [wiki](http://en.wikipedia.org/wiki/Isostatic_rebound) 
+
+plucking: 拔蚀，冰川底部岩石受到冰川的压力和其他作用力如构造或者冷却形成微小节理。冰川运动时，摩擦使得底部的冰融化进入这些节理中并重新冻结，这个冻融过程会使岩石节理变大形成裂缝，使得岩石破碎松散。如果冰川运动的时候松动的岩石和冰川冻结在一起，冰川运动就会把岩石拔起来带走。
+
+abrasion/scouring. 磨蚀作用，冰川运动时，冰川里含有的泥沙物质对岩石的消磨abrasion和刻蚀scouring统称为磨蚀作用
+ 
+
+Mass movement is an important part of the erosional process, and is often the first stage in the breakdown and transport of weathered materials in mountainous areas. It moves material from higher elevations to lower elevations where other eroding agents such as streams and glaciers can then pick up the material and move it to even lower elevations. [wiki](http://en.wikipedia.org/wiki/Erosion#Mass_movement) 
+When water in cracked rock is rapidly heated by a lightning strike, the resulting steam explosion can erode rock and shift boulders. It may be a significant factor in erosion of tropical and subtropical mountains that have never been glaciated. Evidence of lightning strikes include craters, partially melted rock and erratic magnetic fields
+
+Water and wind erosion are now the two primary causes of land degradation; combined, they are responsible for 84% of degraded acreage (wiki)
+
+###Sediment transfer rates of two active rockglaciers in the Swiss Alps
+
+[文章][ref1] 研究的是 [rock glacier][rock glacier], 通过研究多年的高分辨率影像资料, 从图像中提取运动速度, 然后再根据实地考察, 搞到厚度, 宽度, 长度, 配合估计的泥沙含量(30%-50%), 来计算整个碎屑冰川的 sediment transfer rates. 文章计算了两个冰川^[(1) 46 26’N  9 49’E (2) 46 13'N 7 38'E], 一个堆积体大, 但是运动速度较慢, 另一个堆积体小, 但是运动速度快, 暗示了不能用一个地方的运动速度来推算其他地方的速度, 因为速度的差异能有1-2个量级.
+
+Based on the givenfindings, and due to the high number of active rockglaciers (more than 2000) in the Swiss Alps (Delaloye et al., 2010) and probably several thousand in the entire Alps, it can be concluded that rockglaciers depict an important part of the sediment budget in the periglacial belt. The temporal dynamics of the landforms, the resulting variability of sediment transport rates as well as the potential consequences regarding natural hazards in the densely populated Alps, require a continuous monitoring of these landforms (PERMOS, 2010); especially in view of increasing air temperatures and related changes in rockglacier dynamics.
+
+文中给出的产沙量大概为0.24-1.1 Mt/a, 但文中没有给出具体的流域面积, 第一个冰川面积约为0.5 km<sup>2</sup>  [^a1], 第二个冰川的面积wiki上有, 整个面积为6.8, 但是冰川面积我在google map上粗略的看了一下, 约 1 km<sup>2</sup>. 
+
+我算的那个约是 0.2 Mt/(a·km<sup>2</sup>)
+
+上面的那个文章是研究冰川地质做功的, 看能量都在什么地方. 采用的是 terrestrial laser scanning (TLS) 来计算堆积体变化, 说是在4年里面运动了 2 Mm<sup>3</sup>, 文中并没有给出泥沙产生量或者剥蚀量.
+
+[rock glacier]: http://en.wikipedia.org/wiki/Rock_glacier
+
+
+[ref1]: Sediment transfer rates of two active rockglaciers in the Swiss Alps.pdf
+
+[^a1]: [Sediment storage and transfer on a periglacial mountain slope](http://www.sciencedirect.com/science/article/pii/S0169555X13005953)

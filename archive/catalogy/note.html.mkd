@@ -1,0 +1,10 @@
+###note
+
+------
+
+<div id=archive_catalogy>
+<ul>
+<li>[todo](/wiki/note/todo.html)</li> 
+<li>[wiki](/wiki/note/wiki.html)</li> 
+</ul>
+</div>

@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>sort</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#sort">sort</a><ul>
+        <li><a href="#二分法">二分法</a></li>
+        <li><a href="#bubble">bubble</a></li>
+        <li><a href="#selection">selection</a></li>
+        <li><a href="#insertion">insertion</a></li>
+        <li><a href="#merge">merge</a></li>
+        <li><a href="#counting">counting</a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/c.html">c</a></li>
+                <li><a href="/wiki/archive/tags/algoritm.html">algoritm</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/28 15:36</div>
+<!--c-algoritm-->
+<h2 id="sort">sort</h2>
+<hr />
+<p>常见的排序方法有<a href="#bubble">冒泡法</a>, <a href="#selection">选择法</a>, <a href="#insertion">插入法</a> 等等，在介绍这些排序法之前，先说一个最基本的：在排序列表中查询。</p>
+<h3 id="二分法">二分法</h3>
+<p>在已经排好序列的数列中（从小到大），查询某个元素是否存在。非常基本的算法思想：分制法。常见的实现方法是用循环，当然也可以用迭代，不优雅。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">int</span> binary_search(<span class="dt">int</span> value, <span class="dt">int</span>* arr, <span class="dt">int</span> n)
+{
+    <span class="dt">int</span> beginning = <span class="dv">0</span>;
+    <span class="dt">int</span> ending = n - <span class="dv">1</span>;
+    <span class="dt">int</span> middle; 
+
+    <span class="kw">while</span> (ending &gt;= beginning)
+    {
+        middle = (beginning + ending) / <span class="dv">2</span>; 
+        <span class="kw">if</span> (value == *(arr + middle))
+            <span class="kw">return</span> <span class="dv">1</span>; 
+        <span class="kw">else</span> <span class="kw">if</span> (value &lt; *(arr + middle))
+            ending = middle - <span class="dv">1</span>;
+        <span class="kw">else</span>
+            beginning = middle + <span class="dv">1</span>;
+    }
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<p>顺便说一下插入，也是排好序的，找到要插入位置的序号，基本跟前面一样</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">int</span> get_insertion_index(<span class="dt">int</span> value, <span class="dt">int</span>* arr, <span class="dt">int</span> n)
+{
+    <span class="dt">int</span> beginning = <span class="dv">0</span>;
+    <span class="dt">int</span> ending = n - <span class="dv">1</span>;
+    <span class="dt">int</span> middle; 
+
+    <span class="kw">while</span> (ending &gt;= beginning)
+    {
+        middle = (beginning + ending) / <span class="dv">2</span>; 
+        <span class="kw">if</span> (value == *(arr + middle))
+            <span class="kw">return</span> middle; 
+        <span class="kw">else</span> <span class="kw">if</span> (value &lt; *(arr + middle))
+            ending = middle - <span class="dv">1</span>;
+        <span class="kw">else</span>
+            beginning = middle + <span class="dv">1</span>;
+    }
+    <span class="kw">if</span> (value &lt; *(arr + middle))
+        <span class="kw">return</span> middle;
+    <span class="kw">else</span>
+        <span class="kw">return</span> middle + <span class="dv">1</span>;
+}</code></pre>
+<h3 id="bubble">bubble</h3>
+<p>最容易接触的排序方法，基本是进行一系列的遍历，每次移动都比较相邻两个元素的大小，把大者移动到后面。复杂度是<span class="math"><em>O</em>(<em>n</em><sup>2</sup>)</span>，<span class="math">Ω(<em>n</em>)</span></p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">void</span> bubble_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n)
+{
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++)
+    {
+        <span class="dt">int</span> swaped = <span class="dv">0</span>;
+        <span class="kw">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; n - <span class="dv">1</span>; j++)
+        {
+            <span class="kw">if</span> (*(arr + j) &gt; *(arr + j + <span class="dv">1</span>))
+            {
+                swap(arr + j, arr + j + <span class="dv">1</span>);
+                swaped++;
+            }
+        }
+        <span class="kw">if</span>(!swaped)
+            <span class="kw">break</span>;
+    }
+}</code></pre>
+<h3 id="selection">selection</h3>
+<p>选择法是非常容易理解的方法，对每次循环，选择最小的数，放在数列的前端，复杂度是<span class="math"><em>O</em>(<em>n</em><sup>2</sup>)</span>, <span class="math">Ω(<em>n</em><sup>2</sup>)</span>，虽然实际上最坏的情况下计算量是 bubble sort 的一半，但是再最坏的情况下也是平方次的，所以一般情况下没有冒泡法好。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">void</span> selection_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n)
+{
+    <span class="dt">int</span> index;
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++)
+    {
+        index = i;
+        <span class="kw">for</span> (<span class="dt">int</span> j = i + <span class="dv">1</span>; j &lt; n; j++)
+            <span class="kw">if</span> (*(arr + index) &gt; *(arr + j))
+                index = j; 
+        swap(arr + i, arr + index);
+    }
+}</code></pre>
+<h3 id="insertion">insertion</h3>
+<p>插入法大概是把数组分成两部分，前面一部分是排好的，后面一部分是待排序的，每次主循环选择待排序的第一个元素，将它插入到排好的序列中，这个过程就需要依次移动插入位置后面的所有元素，如果用链表什么的来存储，可以对插入部分进行优化。复杂度<span class="math"><em>O</em>(<em>n</em><sup>2</sup>)</span>，<span class="math">Ω(<em>n</em><sup>2</sup>)</span>, 优化后，可以变成<span class="math"><em>O</em>(<em>n</em>log<em>n</em>)</span></p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">void</span> insertion_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n)
+{
+    <span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n - <span class="dv">1</span>; i++)
+        <span class="kw">for</span>(<span class="dt">int</span> j = i; j &gt;= <span class="dv">0</span>; j--)
+            <span class="kw">if</span> (*(arr + j + <span class="dv">1</span>) &lt; *(arr + j))
+                swap(arr + j, arr + j + <span class="dv">1</span>);
+}</code></pre>
+<h3 id="merge">merge</h3>
+<p>前面3种基本都是<span class="math"><em>O</em>(<em>n</em><sup>2</sup>)</span>的复杂度，merge sort 是一个<span class="math"><em>O</em>(<em>n</em>log<em>n</em>)</span>复杂度的算法，基本思想就是分制，要排序一个数组，先排好前面一半，再排好后面一半，最后进行融合，需要格外的<span class="math"><em>O</em>(<em>n</em>)</span>的空间，下面这个是用递归实现的(融合的部分还是有点技巧的)：</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">void</span> merge_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n)
+{
+    <span class="kw">if</span> (<span class="dv">1</span> == n)
+    NULL;
+    <span class="kw">else</span>
+    {
+        <span class="co">// spit in half</span>
+        <span class="dt">int</span> m = n / <span class="dv">2</span>;
+        merge_sort(arr, m);
+        merge_sort(arr + m, n - m);
+
+        <span class="co">// make a copy</span>
+        <span class="dt">int</span>* tmp = malloc(<span class="kw">sizeof</span>(<span class="dt">int</span>) * n);
+        <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++)
+            *(tmp + i) = *(arr + i);
+
+        <span class="co">// merge</span>
+        <span class="dt">int</span> i = <span class="dv">0</span>, j = m, k = <span class="dv">0</span>;
+        <span class="kw">while</span> (i &lt; m &amp;&amp; j &lt; n)
+            *(arr + k++) = (*(tmp + i) &lt; *(tmp + j)) ? *(tmp + i++) : *(tmp + j++);
+
+        <span class="co">// finish left part if didnot finished yet</span>
+        <span class="kw">while</span> (i &lt; m)
+            *(arr + k++) = *(tmp + i++);
+
+        free(tmp);
+    }
+}</code></pre>
+<h3 id="counting">counting</h3>
+<p>终于来了，<span class="math"><em>O</em>(<em>n</em>)</span>的算法，前面所有的算法都是<strong>基于比较的</strong>，也就是说要进行比较，有证明表明所有基于比较的算法的复杂度不会低于<span class="math">$O(n \long n)$</span>，如果要实现 <span class="math"><em>O</em>(<em>n</em>)</span>的算法，就要采用不需要比较的，常见的有counting，bucket，基数法等。当然复杂度上的优势是有一些代价的，基本都有数的大小限制，部分限用于整数。这里先只说counting：</p>
+<p>针对一个所有元素不超过M的正整数序列，可以创建M个计数格，如果某个数出现一次，就在这个格子的计数上加一。非常简单，输出也有缺陷，首先，限制挺多，其次，输入和输出其实不是一个东西（输出的数其实是新建的），所以仅对数排序还行，如果是复杂的结构体，就丢失了所以其他信息。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">void</span> counting_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n)
+{
+    <span class="dt">int</span>* bucket = malloc(<span class="kw">sizeof</span>(<span class="dt">int</span>) * LIMIT);
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++)
+        (*(bucket + *(arr + i)))++;
+    <span class="dt">int</span> j = <span class="dv">0</span>;
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; LIMIT; i++)
+        <span class="kw">while</span> ((*(bucket + i))--)
+            *(arr + j++) = i;
+    free(bucket);
+}</code></pre>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

@@ -1,0 +1,85 @@
+<!--ref-uplift-incision-->
+## tectonic aneurysm model
+
+来源: <http://www.ees.lehigh.edu/groups/corners/cornerdocs/aneurysm.shtml>
+
+-----------------
+
+### crust
+
+crust 大洋地壳只有一层, 硅酸镁(玄武岩). 大陆包括两层, 有硅酸镁和硅酸铝(花岗岩), 厚度在5-75km之间.
+
+crust 和 mantle 之间存在一个莫氏不连续面(莫霍面). 莫霍面之下就是地幔了, 地幔可以分为上下两层, 分界面大约在600公里附近, 上层地幔从上往下是脆性地幔, 软流圈. 软流圈之上的地幔是固体状态, 这部分和地壳总称为岩石圈. 至于板块运动是在软流圈之上运动, 还是在地幔以上运动并不是十分清楚. 
+
+![地壳[^1]](Earth-cutaway-schematic-english.svg)
+
+地壳中岩石的压力温度都随度深度增加, 但当达到一定程度时, 岩石开始从脆性到韧性转化, 这个深度带叫脆韧转换带, 是地壳强度最大的部分。对于富含石英和长石的大陆地壳而言，脆韧转换带出现在大约13到18公里深度（大致对应于250到400°C的温度）。在这一深度，岩石变得不容易破裂，而更容易由蠕变而造成韧性变形。这是因为材料的脆性强度随围压的增加而增加，而韧性强度随温度的增加而降低。地壳中，脆性强度越向下越大、韧性强度越向上越大；脆韧转换带出现在二者大小相等的深度；在这个带，地壳强度随深度的变化曲线呈现典型的“锯齿状”。因此，这个带是地壳强度最大的带，也是很多地震发生的深度。脆韧转换带的深度取决于应变速率和地温梯度；应变速率小、热流高的时候，深度小；应变速率大、热流低的时候，深度大。脆韧转换带出现的深度也受地壳岩石组成的影响.[^2]
+
+Crustal Strength 如下图所示[^3]
+
+![Crustal Strength](Strength-Depth_diagram.jpg)
+
+这里给出的强度实际上是剪切强度, 由上面文献知道 $\sigma _{S}=0.85 \sigma _{N}$ 或者 $\sigma _{S}=50 Mpa + 0.6 \sigma _{N}$
+这个关系实际上是由土力学中的摩尔库仑定理推出来的, 剪切强度 $$\tau =c + \sigma \tan {\theta}$$
+上面的sigma是破坏面上的法相应力, 这个值在理想的弹性材料内, 跟主应力是成正比的, 也就是说跟高度成正比.
+
+[^1]: <http://commons.wikimedia.org/wiki/File:Earth-cutaway-schematic-english.svg#mediaviewer/File:Earth-cutaway-schematic-english.svg>
+[^2]: <http://zh.wikipedia.org/zh-cn/%E8%84%86%E9%9F%A7%E8%BD%AC%E6%8D%A2%E5%B8%A6>
+[^3]: [LITHOSPHERIC STRENGTH PROFILES](LITHOSPHERIC STRENGTH PROFILES.pdf)
+
+### subduction
+via [wiki](http://en.wikipedia.org/wiki/Subduction)
+
+--------------
+
+convergent  boundaries 汇聚边界 tectonic plate   subduction zones 隐没带
+
+ This sinking is driven by the temperature difference between the subducting oceanic lithosphere and the surrounding mantle asthenosphere, as the colder oceanic lithosphere is, on average, more dense. At a depth of approximately 80–120 kilometres, the basalt of the oceanic crust is converted to a metamorphic rock called eclogite. At this point, the density of the oceanic crust increases and provides additional negative buoyancy (downwards force). It is at subduction zones that Earth's lithosphere, oceanic crust, sedimentary layers, and some trapped water are recycled into the deep mantle. Earth is thus far the only planet where subduction is known to occur. Subduction is the driving force behind plate tectonics, and without it plate tectonics could not occur.
+
+隐没带发生的动力是洋壳和软流层之间的密度差, 这里说了隐没带是板块运动的动力.
+
+在80公里到120公里附近, 玄武岩在压力下变质成榴辉岩, 密度变大, 在这个过程中, 水被分馏出来. 这些水上升, 并降低局部的压力, 导致上层地幔岩石融化, 形成岩浆. (另外, 沉积板块进入地幔也会放出大量的水)
+
+*note:*
+
+* the average rate of convergence being approximately two to eight centimetres per year (科普书)
+* Seismicity shows that the slab can be tracked down to the upper mantle/lower mantle boundary (approximately six hundred kilometre depth).
+
+#### Oceanic crust
+via [wiki](http://en.wikipedia.org/wiki/Oceanic_crust)
+
+这里的海洋地壳是跟陆地地壳对应的, 实际上可能跟地壳地幔这个概念有点不同, 厚度很均匀, 约为7-8公里, 密度为2.9. 分为3层, 第一层是不固结或者半固结的泥沙(0.4km), 大部分是生物遗体形成,  大洋中间没有这部分, 陆地附近是厚厚的泥沙. 第二层是0.5km的玄武岩和1.5km的辉绿岩. 第三层是约5公里的 magma 形成的辉绿岩等其他镁质基性岩.
+
+海洋地壳在大洋中脊持续的生长, 地壳也因此在洋脊处向两侧移动(海洋地壳移动的原因尚有分歧, 有学者认为洋壳在隐没带进入地幔是运动力的来源, 洋脊的补充只是被动的), 岩浆从地幔中冒出来后, 冷却时间和上升距离基本确定, 所以一般洋壳厚度比较稳定, 只有当板块分离的速度太小时, 岩浆才能形成较厚的洋壳. 在洋脊的推力以及软流圈的运动的带动下, 洋壳向隐没带运动, 最终在隐没带插入地幔中而消失. 大陆(陆壳)在洋壳随之运动, 形成超大陆或解体的旋回. 由于洋壳持续运动, 其年龄都较小, 绝大数洋壳的年龄小于1.8亿年. 
+
+相似的还有[热柱学说](http://en.wikipedia.org/wiki/Mantle_plume), 但是两者是独立的, 热柱是发生在整个地幔的热交流, 甚至涉及到地核, 板块运动只是软流层以上的运动, 但是比较普遍. 热柱的发生点还是比较少的, 全球也就十来个地方发生过, 但是影响都比较大, 证据非常充分.
+
+![大洋年龄](Strength-Depth_diagram.jpg)
+
+#### continental crust
+via [wiki](http://en.wikipedia.org/wiki/Continental_crust)
+
+-----------
+
+The continental crust is the layer of igneous, sedimentary, and metamorphic rocks which forms the continents and the areas of shallow seabed close to their shores, known as continental shelves. This layer is sometimes called sial while Oceanic crust called sima. (硅铝硅镁), 平均密度为2.7. 厚度为25-70公里. 大陆地壳的年龄比大洋年龄老的多, 局部地区可以到二十五到三十亿年, 个别岩石的年龄可以追溯到40多亿年.
+
+New material can be added to the continents by the partial melting of oceanic crust at subduction zones, causing the lighter material to rise as magma, forming volcanoes. Also, material can be accreted horizontally when volcanic island arcs, seamounts or similar structures collide with the side of the continent as a result of plate tectonic movements. Continental crust is also lost through erosion and sediment subduction, tectonic erosion of forearcs, delamination, and deep subduction of continental crust in collision zones
+
+*当海洋地壳在隐没带的地幔中融化后, 里面的水汽上升到地幔顶部, 降低局部压强, 使得一些地幔的熔点降低并融化, 形成岩浆变成火山, 能够补充大陆地壳. 在板块运动中, 也能形成火山群, 海岛等大陆壳. 侵蚀, 沉积, 以及大陆板块之间的相撞等则会造成大陆壳物质的减少.  *
+
+Many theories of crustal growth are controversial, including rates of crustal growth and recycling, whether the lower crust is recycled differently from the upper crust, and over how much of Earth history plate tectonics has operated and so could be the dominant mode of continental crust formation and destruction.
+
+*关于陆壳生长消亡的理论都存在争议, 包括地壳的生长和循环的速度, 上下层的循环是否有差异, 过去的板块构造对现在地壳形成和消失有多大的影响等等.*
+
+#### Lithosphere
+via [wiki](http://en.wikipedia.org/wiki/Lithosphere)
+
+The temperature at which olivine begins to deform viscously (~1000 °C) is often used to set this isotherm because olivine is generally the weakest mineral in the upper mantle. Oceanic lithosphere is typically about 50–140 km thick (but beneath the mid-ocean ridges is no thicker than the crust), while continental lithosphere has a range in thickness from about 40 km to perhaps 280 km;[8] the upper ~30 to ~50 km of typical continental lithosphere is crust. The mantle part of the lithosphere consists largely of peridotite. The crust is distinguished from the upper mantle by the change in chemical composition that takes place at the Moho discontinuity.
+
+*这里挺奇怪的, 既然岩石圈的下限是由稳定决定的, 为什么大陆和海洋的厚度会有这么大的差别呢, 热传导系数不同吗 *
+
+海洋岩石圈主要镁铁质矿物和超镁铁质矿物, 因此密度比主要成分为长英质的大陆岩石圈大, 大洋岩石圈随着年龄的增长, 离洋脊越来越远, 温度也逐渐降低, 部分软流圈的物质会转化成岩石圈, 因此大洋岩石圈的厚度和密度都随着时间增加, 甚至会超过之下的软流圈. 失稳发生, 大洋岩石圈进入隐没
+
+Oceanic lithosphere is less dense than asthenosphere for a few tens of millions of years but after this becomes increasingly denser than asthenosphere. This is because the chemically differentiated oceanic crust is lighter than asthenosphere, but thermal contraction of the mantle lithosphere makes it more dense than the asthenosphere. The gravitational instability of mature oceanic lithosphere has the effect that at subduction zones
+
+The oldest parts of continental lithosphere underlie cratons, and the mantle lithosphere there is thicker and less dense than typical; the relatively low density of such mantle "roots of cratons" helps to stabilize these regions.

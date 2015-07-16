@@ -1,0 +1,381 @@
+<!--batch-->
+## wiki batch
+
+-------------
+
+```bash
+@echo off
+rem "cover md to html with a tmeplate and variables (multi tag, update time, creation time, relative path and title)"
+rem "archive: analyse all md file and make a bounch of archive files(tags, update date, creation date catalogy) and a archive index"
+rem "all the archive maybe have to change if any single md file change like update tags or create a new md"
+rem "so if you need archive function, pls dont use other tools or batch file mixly."
+rem "todo batch cant hand utf8, so all the tags and name of md file could not use chinese."
+cd /d %~dp0
+set wiki_path=%~dp0
+set wiki_path_pandoc=%wiki_path:\=\\%
+
+rem "walk through all md file, update archive tmp files and covert md files to html if md file is new or changed"
+for /r "note" %%i in (*html.mkd) do ( call:check_note "%%i")
+rem "walk through all archive tmp file, update archive files and covert archive files to html if archive tmp file is new or changed"
+for /r "archive" %%i in (*html.mkd.tmp) do ( call:check_archive_tmp_files "%%i")
+rem "update archive index file"
+call:update_archive_index
+rem "conver archive index file to html"
+call:archive_md_to_html "archive/archive.html.mkd"
+rem "wait for a while"
+ping 1.1.1.1 -n 1 -w 500 > nul
+goto end
+
+:check_note
+    rem "for given md file, get the path and name of matched html file"
+    rem "compare update time of md file and html file"
+    rem "md note need update if html file dont exist or the update time of html is earlier."
+    set html_file="%~dpn1"
+    if not exist %html_file% ( 
+        call:update_note_html_and_archive_tmp_files %1
+    ) else (
+        set note_update_time=%~t1
+        setlocal enabledelayedexpansion
+        FOR %%f IN (%html_file%) DO SET note_exec_time=%%~tf
+        rem "del md archive list in all archive files and and add new archive list to archive files and convert md to html"
+        if !note_exec_time! LEQ !note_update_time! ( 
+            call:del_note_in_archive_tmp_files %1       
+            call:update_note_html_and_archive_tmp_files %1
+        )
+    )    
+    endlocal
+goto end
+
+:update_note_html_and_archive_tmp_files
+    setlocal enabledelayedexpansion
+    rem "the max tags is 5 for md file"
+    rem "tags are in the 1st line of md file. "
+    rem "like comments in html, but splits by dash if have more than one" 
+
+    rem "set tag"
+    rem "only read the 1st line"
+    for /f "tokens=1-6 delims=->" %%a in ('more ^< %1') do (
+        set tmp=%%a
+        set tag1=%%b
+        set tag2=%%c
+        set tag3=%%d
+        set tag4=%%e
+        set tag5=%%f
+        )&(goto :next)
+        :next
+    rem "set the relative path and name"
+    set "file_full_path=%~dp1"
+    set "file_relative_path=!file_full_path:%wiki_path%=!"
+    set "file_relative_name=!file_relative_path!%~n1"
+    rem "set the name of note"
+    set "note_file_name_with_html=%~n1"
+    set "note_file_name=!note_file_name_with_html:~0,-5!"
+    rem "add a list to catalogy tmp file"
+    call:add_catalogy_item "!file_relative_path!"
+    rem "add a list to the tag tmp file if the tag is not null"
+    if not "!tag1!" == "" ( call :add_tag_item "!tag1!"
+        if not "!tag2!" == "" ( call :add_tag_item "!tag2!"
+            if not "!tag3!" == "" ( call :add_tag_item "!tag3!"
+                if not "!tag4!" == "" ( call :add_tag_item "!tag4!"
+                    if not "!tag5!" == "" ( call :add_tag_item "!tag5!" ) ) ) ) )
+
+    rem "set creation time"
+    set md_file=%1
+    for /f "tokens=2 delims==." %%b in ('wmic datafile where name^=%md_file:\=\\% get CreationDate/value') do set creation_time_temp=%%b
+    set creation_time=!creation_time_temp:~0,4!/!creation_time_temp:~4,2!/!creation_time_temp:~6,2! !creation_time_temp:~8,2!:!creation_time_temp:~10,2!
+    set "date_type=creation"
+    rem "add a list to creation date tmp file"
+    call:add_date_item "!creation_time!" !date_type!
+    rem "set update time"
+    set update_time=%~t1
+    set "date_type=update"
+    rem "add a list to update date tmp file"
+    call:add_date_item "!update_time!" !date_type!
+    rem "convert md file to html"
+    pandoc -f markdown -t html --toc --toc-depth=5 -V wiki_dir="%wiki_path_pandoc%" -V wiki_title="!note_file_name!" -V creation_time="!creation_time!" -V update_time="!update_time!" -V tag1="!tag1!" -V tag2="!tag2!" -V tag3="!tag3!" -V tag4="!tag4!" -V tag5="!tag5!" --highlight-style=haddock --template="template.html" --include-before-body="header.html" --include-after-body="footer.html" "%~f1" -o "%~dpn1"
+    echo "!note_file_name! update successed!"
+    endlocal
+goto end
+
+rem "-------------------------------------------------------------------------------------------------"
+rem "-----------------------------------------archive-temp--------------------------------------------"
+rem "-------------------------------------------------------------------------------------------------"
+
+:add_catalogy_item
+    set "catalogy_file_name=%~1"
+    set "catalogy_file_name=%catalogy_file_name:\=_%"
+    set "catalogy_file_name=%catalogy_file_name:~0,-1%"
+    set archive_file_tmp="archive/catalogy/%catalogy_file_name%.html.mkd.tmp"
+    echo ^<li^>[!note_file_name!]^(..\\..\!file_relative_name!^)^</li^>>>%archive_file_tmp%
+goto end
+
+:add_tag_item
+    set archive_file_tmp="archive/tags/%~1.html.mkd.tmp"
+    echo ^<li^>[!note_file_name!]^(..\\..\!file_relative_name!^)^</li^>>>%archive_file_tmp%
+goto end
+
+:add_date_item
+    set "date_file_name=%~1"
+    rem "date file sort to day"
+    set "date_file_name=%date_file_name:~0,10%"
+    rem "date sort to month"
+    rem "set "date_file_name=%date_file_name:~0,7%""
+    rem "in win7, update time auto be slas, xp will be dash"
+    set "date_file_name=%date_file_name:/=_%"
+    set archive_file_tmp="archive/%~2_date/%date_file_name%.html.mkd.tmp"
+    rem "remind the double slash"
+    echo ^<li^>[!note_file_name!]^(..\\..\!file_relative_name!^)^</li^>>>%archive_file_tmp%
+goto end
+
+rem "-------------------------------------------------------------------------------------------------"
+rem "-----------------------------------------archive_index-------------------------------------------"
+rem "-------------------------------------------------------------------------------------------------"
+rem
+rem "archive index is make for all archive tmp files"
+:update_archive_index
+    rem "defined the archive index file"
+    set "archive_index=archive/archive.html.mkd"
+    if exist "archive\\archive.html.mkd" (
+    del /q "archive\\archive.html.mkd" )
+    rem "header file for css"
+    echo ###archive>>%archive_index%
+    echo.>>%archive_index%
+    echo ----->>%archive_index%
+    echo.>>%archive_index%
+    set "archive_tpye=creation_date"
+    rem "the 2nd para means the size of a set"
+    call:make_specific_archive %archive_tpye% "7"
+    set "archive_tpye=update_date"
+    call:make_specific_archive %archive_tpye% "7"
+    set "archive_tpye=tags"
+    call:make_specific_archive %archive_tpye% "3"
+    set "archive_tpye=catalogy"
+    call:make_specific_archive %archive_tpye% "2"
+goto end
+
+:make_specific_archive
+    set specific_archive=%1
+    echo make %1 index .....
+    echo ^<div id="wiki_%1_archive"^>>>%archive_index%
+    echo ####%1>>%archive_index%
+    echo ^<ul^>>>%archive_index%
+    setlocal enabledelayedexpansion
+    rem "add a list in archive index for each archive tmp file"
+    set /a %1_count=0
+    for /r "archive/%1" %%i in (*.html.mkd.tmp) do (
+        set /a %1_count+=1
+        set %1_file_name_tmp=%%~ni
+        set %1_file_name_with_html=!%1_file_name_tmp:~0,-4!
+        set %1_file_name=!%1_file_name_with_html:~0,-5!
+        echo ^<li^>[!%1_file_name!]^(%1\!%1_file_name_with_html!^)>>%archive_index%
+        rem "add the number of item in archive tmp file"
+        call :count_archive_file "%%i"
+        echo ^<^/li^>>>%archive_index%
+        set /a flag=!%1_count! %% %2
+        if [!flag!]==[0] (echo ^<p^>>>%archive_index%)
+    )
+    echo ^<^/ul^>>>%archive_index%
+    echo ^<^/div^>>>%archive_index%
+    endlocal
+goto end
+
+rem "count the list in archive tmp file"
+:count_archive_file
+    setlocal enabledelayedexpansion
+    set /a line=0
+    for /f "tokens=1,2* delims=:" %%i in ('more ^< %1') do ( set /a line+=1 ) 
+    echo ^<span^>^(!line!^)^</span^>>>%archive_index%
+    endlocal
+goto end
+
+rem "-------------------------------------------------------------------------------------------------"
+rem "------------------------------------update-archive-file------------------------------------------"
+rem "-------------------------------------------------------------------------------------------------"
+rem "for a give md name, walk through lines in all archive tmp file" 
+rem "if the name in a archive tmp file, del the line"
+
+:del_note_in_archive_tmp_files
+    set "note_file_name_with_html=%~n1"
+    set "note_file_name=%note_file_name_with_html:~0,-5%"
+    setlocal enabledelayedexpansion
+    rem "look through all lines in a archive tmp file"
+    rem "if the line dont match the md name, write the line to archive tmp1 file, else just set the tmp file need update"
+    rem "if the tmp file need update, del the old tmp file, and rename the tmp1 file to tmp file, else del the tmp1 file"
+    for /r "archive" %%a in (*html.mkd.tmp) do ( 
+        set flag=0
+        for /f "tokens=1,2,3* delims=[]" %%i in ('more ^< %%a') do (
+            if not ["%%j"]==["%note_file_name%"] ( echo %%i[%%j]%%k>>%%a1
+            ) else (set flag=1)
+        )
+        rem "the condition is need because some archive file only have one list before update, and dont exist after update"
+        if !flag!==1 ( del /q %%a
+            if exist %%~fa1 (
+                ren "%%~fa1" "%%~nxa"
+                echo tag file "%%~na" update )
+        ) else ( if exist %%a1 ( del /q %%a1 ))
+    )
+endlocal
+goto end     
+
+rem "if the archive tmp file updated, call function to convert the tmp file to md file and the to html"
+:check_archive_tmp_files
+    set "archive_html_file_temp=%~dpn1"
+    set "archive_html_file=%archive_html_file_temp:~0,-4%"
+    if not exist %archive_html_file% ( 
+        call:update_archive_html %1
+    ) else (
+        set archive_update_time=%~t1
+        setlocal enabledelayedexpansion
+        FOR %%f IN (%archive_html_file%) DO SET archive_exec_time=%%~tf
+        if !archive_exec_time! LEQ !archive_update_time! ( 
+        call:update_archive_html %1
+        )
+    )    
+    endlocal
+goto end
+
+rem "convert archive tmp file to md file and then to html"
+:update_archive_html
+    set "archive_mkd_file=%~dpn1"
+    set "archive_html_file_name_temp=%~n1"
+    set "archive_html_file_name=%archive_html_file_name_temp:~0,-9%"
+    
+    set "archive_relative_path_temp=%~p1"
+        
+    setlocal enabledelayedexpansion
+    set "file_full_path=%~dp1"
+    set "file_relative_path=!file_full_path:%wiki_path%=!"
+    set "id_temp=!file_relative_path:~0,-1!"
+    set "id=!id_temp:\=_!"
+    
+    rem "del md file if areadly exist"
+    if exist %archive_mkd_file% ( del /q %archive_mkd_file% )
+    echo ###%archive_html_file_name%>>%archive_mkd_file%
+    echo.>>%archive_mkd_file%
+    echo ^-^-^-^-^-^->>%archive_mkd_file%
+    echo.>>%archive_mkd_file%
+    echo ^<div id=!id!^>>>%archive_mkd_file%
+    echo ^<ul^>>>%archive_mkd_file%
+    for /f "tokens=1* delims=:" %%i in ('more ^< %1') do ( echo %%i>>%archive_mkd_file% )
+    echo ^<^/ul^>>>%archive_mkd_file%
+    echo ^<^/div^>>>%archive_mkd_file%
+    call:archive_md_to_html "%archive_mkd_file%"
+    endlocal
+goto end
+
+rem "this function almost the same whit md_to_html except dont have tag variables"
+:archive_md_to_html
+    set archive_mkd_file="%~f1"
+    set "archive_html_file=%~dpn1"
+    set "archive_html_file_name_temp=%~n1"
+    set "archive_html_file_name=%archive_html_file_name_temp:~0,-5%"
+    rem "set creation time"
+    setlocal enabledelayedexpansion
+    for /f "tokens=2 delims==." %%b in ('wmic datafile where name^=%archive_mkd_file:\=\\% get CreationDate/value') do set creation_time_temp=%%b
+    set creation_time=!creation_time_temp:~0,4!/!creation_time_temp:~4,2!/!creation_time_temp:~6,2! !creation_time_temp:~8,2!:!creation_time_temp:~10,2!
+    rem "set update time"
+    set update_time=%~t1
+    pandoc -f markdown -t html --toc --toc-depth=5 -V wiki_dir="%wiki_path_pandoc%" -V wiki_title="%archive_html_file_name%" -V creation_time="!creation_time!" -V update_time="!update_time!" --highlight-style=haddock --template="template.html" --include-before-body="header.html" --include-after-body="footer.html" "%~f1" -o "%~dpn1"
+    endlocal
+goto end
+
+:end
+```
+
+### 模板关键词
+
+- `setlocal` 
+
+>>这个很重要 在一般的 `bat` 文件中, 变量是用 `set var="some thing"`, 引用变量是用 `echo %var%`. 但是在 `for` loop 中, 是不支持这种变量的定义及引用的. 所以要做这个设置, 然后引用的时候用 `!` 代替 `%`, 比如说不要字符串 `str` 的后面5个字符, `new str = %str:~0,-5%`, 现在要改成 `new str = !str:~0,-5!`.
+
+- 标签
+
+>> 在写 `md` 的时候, 在第一行写入`<!--tag1-tag2-tag3-->`的形式, 最多支持5个标签.
+
+- 更新时间
+
+>> 这个容易, 在 `for` loop 中的扩展属性就有, 而且格式非常对口味, 同样的标题也是如此, 直接取用了文件名字(去掉了所有后缀)
+
+- 创建时间
+
+>> 这个稍微麻烦, 我其实也没有看懂 `wmic` 中的这部分, 找了点代码改了几次就可以用了, 这部分应该是要进行双重循环, 如果每次都全部生成一次, 速度会很慢, 因此没办法, 只好增加一个判断是否修改的功能
+
+- 判断是否修改
+
+>> 在在外面的 `for` loop, 得到单个文件后, 比较 `md` 文件和 `html` 两个同名文件的修改时间, 如果 md 文档的修改时间比较晚, 就说明更新过了, 重新生成 `html`. 如果 md 文档的修改时间早于 `html` 的修改时间, 说明不需要更新.  *(更新: 因为文件更新时间是分钟, 如果严格小于会存在刚改了不会更新的情况, 现在改为小于或等于)*
+
+### 归档
+
+归档实现起来稍微复杂, 涉及到对遍历所有的md文档, 读取文档中的标签, 文档更新和创建时间, 文档路径等归档信息, 把每个归档信息写入相应的归档文件, 再根据归档文件生成归档主页. 这部分还好解决, 但是不能每次都这样来一次, 太慢了. 大部分的文档没有变化, 要实现对归档文件的更新才是难点. 比如说修改一个文档, 执行命令后要判断标签是否改变, 就涉及到对所有标签页的所有行进行搜索, 删掉错误的链接, 再生成新的. 因为 `batch` 本身语言的很多限制, 或者说是对它不熟悉, 真正的实现过程远没有逻辑上的简洁, 还是有很多操作是啰嗦的. 所以这里也不细说了, 有兴趣的话可以直接看代码中的注释.
+
+### 问题
+
+`batch` 写入文件不能以 `utf-8` 编码处理中文, 所以文章的标题, wiki 下面的子目录 以及 tag 都得是英文, 这也是没有办法的事情, 个人来说, 虽然六级都没考过, 但是这个习惯还是一直有的.
+
+另外, 只在 win 7 使用, xp 下可能会有问题, 有可能 xp 下的更新时间的分隔符号不是用 `/`, 而是用 `-`
+
+### 简单版本
+
+如果不需要归档功能, 可以用下面这个, 真的只对修改或者创建的 md 文件进行操作, 速度非常快. 功能上就是没有归档页面, 转换的 html 有标签, 有各种时间, 有标题. 代码也是短小简单明了.
+
+```bash
+@echo off
+cd /d %~dp0
+rem "find the update or new md file, convert to html"
+for /r "note" %%i in (*html.mkd) do ( call :update_html "%%i")
+rem "wait for a while"
+ping 1.1.1.1 -n 1 -w 500 > nul
+goto end
+
+:update_html
+rem "the for loop below is to find all new or modified md file"
+rem "walk through all md file, get the path and name of matched html file for each md file"
+rem "md note need update if html file dont exist or the update time of html is earlier."
+rem "compare update time of md file and html file which have the same name with md file"
+set htmlfile="%~dpn1"
+if not exist %htmlfile% ( 
+    call :md_to_html %1
+) else (
+    set update_time=%~t1
+    setlocal enabledelayedexpansion
+    FOR %%f IN (%htmlfile%) DO SET exec_time=%%~tf
+    if !exec_time! LEQ !update_time! ( call :md_to_html %1)
+)
+    endlocal
+goto :end
+
+rem "convert md to html with pandoc, all the variables are key points"
+:md_to_html
+setlocal enabledelayedexpansion
+
+rem "set tags"
+for /f "tokens=1-6 delims=->" %%a in ('more ^< %1') do (
+    set tmp=%%a
+    set tag1=%%b
+    set tag2=%%c
+    set tag3=%%d
+    set tag4=%%e
+    set tag5=%%f
+    )&(goto :next)
+:next
+
+rem "set creation time"
+set md_file=%1
+for /f "tokens=2 delims==." %%b in ('wmic datafile where name^=%md_file:\=\\% get CreationDate/value') do set creation_time_temp=%%b
+set creation_time=!creation_time_temp:~0,4!/!creation_time_temp:~4,2!/!creation_time_temp:~6,2! !creation_time_temp:~8,2!:!creation_time_temp:~10,2!
+rem "set update time"
+set update_time=%~t1
+set wiki_dir_tmp=%~dp0
+rem "set wiki path; that's the fuck windows"
+set wiki_dir=!wiki_dir_tmp:\=\\!
+rem "set name"
+set "name=%~n1"
+set "nameshort=!name:~0,-5!"
+rem "here we arrived pandoc"
+pandoc -f markdown -t html --toc --toc-depth=5 -V wiki_dir="!wiki_dir!" -V wiki_title="!nameshort!" -V creation_time="!creation_time!" -V update_time="!update_time!" -V tag1="!tag1!" -V tag2="!tag2!" -V tag3="!tag3!" -V tag4="!tag4!" -V tag5="!tag5!" --highlight-style=haddock --template="template.html" --include-before-body="header.html" --include-after-body="footer.html" "%~f1" -o "%~dpn1"
+echo "!nameshort! update successed!"
+Endlocal
+
+:end
+```
+[这里](../batch/batch wiki.html)是更早以前的版本, 已经废弃

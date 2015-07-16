@@ -1,0 +1,66 @@
+<!--pandoc-markdown-->
+### pandoc markdown
+
+----------
+
+#### 表格
+
+| Fruit   | Price  | Advntages |
+| -----   | ------ | --------  |
+| banans  | $1.34  | bright    |
+| oranges | $2.1   | tasty     |
+
++---------------+---------------+--------------------+
+| Fruit         | Price         | Advantages         |
++===============+===============+====================+
+| Bananas       | $1.34         | - built-in wrapper |
+|               |               | - bright color     |
++---------------+---------------+--------------------+
+| Oranges       | $2.10         | - cures scurvy     |
+|               |               | - tasty            |
++---------------+---------------+--------------------+
+
+pandoc markdown 支持好几种表格, 上面两个是用起来比较舒服的, 特别是第一个, 输入非常容易, 就是 | 和 tab 相互用就行, 中间的短划线也没有长度要求
+
+#### 注脚
+
+pandoc markdown 支持注脚[^pandoc], 像这个一样.
+
+常见的语法就是一个`[^key]`跟在要注释的地方, 然后再其他地方在写上`[^key]: balablah`什么的. 另外还有一种简单的方法, 就是这样 `^[blablah]`, 不要 `key`, 直接在文中就写, 只需要将 caret 移动到前面来就行.
+
+**注意** 这种方式就是适合来注脚, 并不能拿着去做参考, 认为没出现一个注脚, 都会自动排号, 也就是说在文中引用多少次, 这个注脚就会出来多少次.
+
+[^pandoc]: 具体来说有好几种语法
+
+#### 引用 cite
+
+pandoc 自身是不支持引用的, 但安装pandoc的时候, 如果是windows, 会在同目录同时安装一个pandoc-citeproc, 这个东西可以用来处理引用.
+
+引用设置到两个方面, 一是得到引用条的各种项目的值, 二是将这些项目按某格式输出. 第一个可以用`--bibliography=FILE`来指定一个bibtex file来解决. 这个命令相当于 `--metadata bibliography=FILE --filter pandoc-citeproc`. 一般的数据库或者文献管理工具都提供bibtex输出, 所以要做的是先保证要引用的文献在这个 bibtex file 里面, 然后在要引用的地方 输入如下格式 `Blah blah [see @doe99, pp. 33-35; also @smith04, ch. 1].` `@doe99`就是这条引用在 bibtex file 里面的key 值(在每个数据的第一行)
+```bib
+@article{Purdie201441,
+title = "Franz Josef and Fox Glaciers, New Zealand: Historic length records ",
+journal = "Global and Planetary Change ",
+volume = "121",
+number = "0",
+pages = "41 - 52",
+year = "2014",
+note = "",
+issn = "0921-8181"
+......
+```
+>> 这里的引用就是 `@Purdie201441`
+
+得到这个值后, 怎样输出是个关键问题, pandoc 用vim 中的宏 和 csl 来解决的, 内置的只有一个格式, 但是引用的格式太多了, 几乎是一个期刊一个格式, 而且这个东西没有功底不要去尝试自己写. 引用点的格式, 引用内容的格式, 还有些奇葩用数字的, 作者数量, 分隔符等等麻烦的很. 幸好已经有人已经写好了, 在[这里](https://github.com/citation-style-language/styles)基本上有全部的(额, 英文的)可以下载, . 对了使用方法就是 `--csl=csl_file`. 支持中文的就3个, 而且有2个还有些问题, 要用的话只能自己再改改了. 当然, 那种又有中文又有英文的, 还是直接改成品吧.
+
+可以直接用这个来生成md文件, 生成的md文件就没有这些site的东西了, 都改为了人见人爱的html.
+
+### 公式
+
+这是一个行内公式 $e^{ix}=\cos x+i \sin x$.
+这是一个普通公式:
+ $$ e^{ix}=\cos x+i \sin x $$
+另外，希腊字母这样表示，全小写就是小写，首字母大写就是大写，注意，乘号不要写。
+ $$ \Omega = \omega n $$ 
+再配合 css, 例如`br+span.math{margin-left: 45%}`就能使普通公式有类似居中的效果
+

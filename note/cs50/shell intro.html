@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>shell intro</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#shell">Shell</a><ul>
+        <li><a href="#常用命令">常用命令</a></li>
+        <li><a href="#常用参数">常用参数</a></li>
+        <li><a href="#其他">其他</a></li>
+        <li><a href="#xxd">xxd</a></li>
+        <li><a href="#示例">示例</a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/linux.html">linux</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/07/08 16:37</div>
+<!--linux-->
+<h3 id="shell">Shell</h3>
+<hr />
+<h4 id="常用命令">常用命令</h4>
+<p><code>cd  ls  cp  mkdir  rmdir  rm  touch  mv  man</code></p>
+<blockquote>
+<p>. 当前目录<br> .. 上一级目录<br> -a 所有的(包括隐藏)ls -al<br> -l 长信息<br> -f 不要确认, 不显示信息 rm xxx -rf<br> -r 递归, 文件夹中间所有的东西<br> - 上次的目录 cd -</p>
+</blockquote>
+<h4 id="常用参数">常用参数</h4>
+<p><code>. .. -a -l -f -r -</code></p>
+<h4 id="其他">其他</h4>
+<pre><code>-   重定位 \&gt;
+-   [参数传递](pipe.html) |
+-   grep echo
+-   history
+-   重复上次参数 ！
+-   chmod</code></pre>
+<h4 id="xxd">xxd</h4>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">xxd</span> [options] [infile [outfile]]
+<span class="kw">xxd</span> -r[evert] [options] [infile [outfile]]</code></pre>
+<blockquote>
+<blockquote>
+<p>xxd 命令用于用二进制或十六进制显示文件的内容, 如果没有指定outfile参数, 则把结果显示在屏幕上<br> 如果指定了outfile则把结果输出到 outfile中；如果infile参数为 – 或则没有指定infile参数, 则默认从标准输入读入<br></p>
+</blockquote>
+</blockquote>
+<p>比如bitmap信息读入(smiley.bmp 是8 ×8的图像)</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">xxd</span> -c 24 -g 3 -s 54 smiley.bmp</code></pre>
+<blockquote>
+<blockquote>
+<p>其中-g 3 是3byte 一组, 正好是一像素的颜色 -c 24 是24byte一行, 也就是8像素. -s 54 是不显示前面54byte数据, 也就是元数据不显示. xxd 显示前面数字表示偏离开始位置的距离, 用十六进制表示, 后面的...如果是asc字符就显示, 否则就是点. (c 24 就是一行会有24个点)</p>
+</blockquote>
+</blockquote>
+<p>用vim查看16进制</p>
+<blockquote>
+<blockquote>
+<p>vim 文件名 -b 采用二进制打开, 然后输入%!xxd 参数 回车就能显示16进制了. <br> 如果要修改, 注意不要用-s命令, 修改完了再%!xxd -r 参数 先转成2进制再保存.</p>
+</blockquote>
+</blockquote>
+<h4 id="示例">示例</h4>
+<ol style="list-style-type: decimal">
+<li><p>把目录权限改成适合网站建设的</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> . -type d <span class="kw">|</span> <span class="kw">xargs</span> chmod 711
+<span class="kw">find</span> . -type f <span class="kw">|</span> <span class="kw">xargs</span> chmod 644</code></pre></li>
+<li><p>删除某目录下面的某些文件, 详细见<a href="http://blog.csdn.net/caryaliu/article/details/8753028">这里</a></p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">find</span> . -name <span class="st">&quot;*.txt&quot;</span> -type f -print -exec rm -fr <span class="dt">{}</span> </code></pre></li>
+</ol>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

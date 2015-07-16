@@ -1,0 +1,9 @@
+###note_vim
+
+------
+
+<div id=archive_catalogy>
+<ul>
+<li>[vim](/wiki/note/vim/vim.html)</li> 
+</ul>
+</div>

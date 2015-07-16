@@ -1,0 +1,36 @@
+<!--c-->
+### copy
+
+----
+
+要求：输入两个参数，要读入的文件名，要写入的文件名，讲读入的文件一个字节一个字节的复制到写入的文件
+
+```cpp
+#include <stdio.h>
+#include <stdint.h>
+
+typedef uint8_t BYTE;
+
+int main(int argc, char* argv[])
+{
+    if (argc != 3)
+        return 1;
+    FILE* src = fopen(argv[1], "r");
+    FILE* dst = fopen(argv[2], "w");
+    if (src == NULL || dst == NULL)
+        return 2;
+
+    BYTE buffer;
+    while (fread(&buffer, sizeof(BYTE), 1, src))
+        fwrite(&buffer, sizeof(BYTE), 1, dst);
+
+    fclose(src);
+    fclose(dst);
+    return 0;
+}
+```
+*note:* 按照要求，byte by byte，简单的讲，可以让`buffer`为`char`类型，但是在不同的机器上，`char`的大小可能不同，为了达到要求，可以创建一个新类型，`typedef uint8_t BYTE`, 这样`BYTE`永远就是8个`bit`或者说一个`byte`
+
+另外, `BYTE buffer` 也可以写成这样 `BYTE* buffer`, 之后读写函数直接用指针，但是这里一定要注意一点，前面定义的`buffer`是没有初始化的，而且`fread`, `fwrite`也并没有在函数里面创立空间，所以指针`buffer`在用以前一定要初始化，可以用`BYTE* buffer = malloc(sizeof(BYTE))`。这样是在`heap`上创立了空间，实际上`buffer`只需要再局部应用，所以没有必要去`heap`上申请空间，能直接在`stack`上创立更好，或许可以`BYTE tmp; BYTE* buffer = &tmp;`, 这样实际上就是上面代码的啰嗦版本。
+
+所以，当要实用一些内存的时候，如果只在局部用，最好是能在当地的`stack`上分配，比如之前的`sort`函数，可以在当地建立一个新数组，但是如果是要用到字符串，由于它是*常量*，创立以后不能更改，所以只能用`malloc`(或许有办法建立字符串变量？)

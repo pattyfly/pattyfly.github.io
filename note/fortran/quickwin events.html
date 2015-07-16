@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>quickwin events</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#quickwin-events">QuickWin events</a><ul>
+        <li><a href="#捕获键盘">捕获键盘</a></li>
+        <li><a href="#捕获鼠标">捕获鼠标</a></li>
+        <li><a href="#编辑菜单">编辑菜单</a></li>
+        <li><a href="#其他">其他</a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/fortran.html">fortran</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/06 15:26</div>
+<!--fortran-->
+<h3 id="quickwin-events">QuickWin events</h3>
+<hr />
+<h4 id="捕获键盘">捕获键盘</h4>
+<pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="co">c=getcharqq()</span></code></pre>
+<h4 id="捕获鼠标">捕获鼠标</h4>
+<ul>
+<li>监控鼠标</li>
+</ul>
+<pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">do</span> <span class="kw">while</span>(<span class="kw">.ture.</span>)
+  iret <span class="kw">=</span> WaitOnMouseEvent(MouseEvents,keystate,x,y)
+<span class="kw">end do</span></code></pre>
+<ul>
+<li>事件注册</li>
+</ul>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">iret <span class="kw">=</span> RegisterMouseEvent(unit,MouseEvents,callbackroutine)</code></pre>
+<ul>
+<li>回调函数</li>
+</ul>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">MouseCallbackRoutine(unit,MouseEvents,keystate,MouseXpos,MouseYpos)</code></pre>
+<ul>
+<li>MouseEvents 鼠标事件</li>
+</ul>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">Mouse$LButtonDown
+Mouse$LButtonUp   
+Mouse$LButtonDBLCLK
+Mouse$Move</code></pre>
+<blockquote>
+<blockquote>
+<p>上面的L代表左键, 也可以用R, 下同</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>KeyState 状态</li>
+</ul>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">Mouse$KS_Lbutton  <span class="co">!事件中按下左右键</span>
+Mouse$KS_Shift
+Mouse$KS_Control
+<span class="dv">16</span>                <span class="co">!鼠标中键</span></code></pre>
+<blockquote>
+<p><strong>Note</strong></p>
+</blockquote>
+<blockquote>
+<blockquote>
+<ul>
+<li>这些参数都是integer(kind=4)</li>
+<li>MouseEvents 可以用函数IOR加以组合</li>
+<li>注册要写在监控之前</li>
+<li>监控和注册不需要的事件不需要对应, 只要对任何事件监测, 都是对鼠标所有事件的监测</li>
+<li>所以上述参数只要写监测的move就行, 其他复杂的东西在回调函数中写, 大量的参数不需要实例化</li>
+</ul>
+</blockquote>
+</blockquote>
+<h4 id="编辑菜单">编辑菜单</h4>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">lret <span class="kw">=</span> AppendMenuQQ(MenuID,flags,text,routine)  
+lret <span class="kw">=</span> InsertMenuQQ(MenuID,ItemID,flags,text,routine) 
+lret <span class="kw">=</span> DeleteMenuQQ(MenuID,ItemID)
+lret <span class="kw">=</span> ModifyMenuFlagsQQ(MenuID,ItemID,flags)
+lret <span class="kw">=</span> ModifyMenuRoutineQQ(MenuID,ItemID,Routine)
+lret <span class="kw">=</span> ModifyMenuStringQQ(MenuID,ItemID,Text)
+lret <span class="kw">=</span> InitialSettings()</code></pre>
+<blockquote>
+<p><strong>Note</strong></p>
+</blockquote>
+<blockquote>
+<blockquote>
+<ul>
+<li>编辑菜单函数返回值都是逻辑</li>
+<li>flags (<span class="math"><em>M</em><em>e</em><em>n</em><em>u</em><em>S</em><em>e</em><em>p</em><em>a</em><em>r</em><em>t</em><em>o</em><em>r</em>, </span>MenuEnabled,$MenuUnabled)</li>
+<li>text 是C字符串, 支持快捷方式, 如&quot;In&amp;sert+S&quot;C</li>
+<li>routine如果没有, 是用nul</li>
+<li>在修改菜单的时候, 如果有变化都会即时反映到顺序上, 如删除2, 3菜单, 程序要编成删除2, 2菜单.</li>
+<li>InitialSettings()是被系统自动调用的, 一般不需要自己调用, 只要改写`就行,</li>
+<li>可以把菜单的编辑都写在里面. 窗口的大小等属性也可以在里面.</li>
+</ul>
+</blockquote>
+</blockquote>
+<h4 id="其他">其他</h4>
+<ul>
+<li>自带函数 WinPrint WinSave WinAbout ……</li>
+<li>运行外部程序</li>
+</ul>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">iret <span class="kw">=</span> RunQQ(<span class="st">&#39;Explorer.exe&#39;</span>, <span class="st">&#39;http://www.google.com&#39;</span>C)
+iret <span class="kw">=</span> WinExec(<span class="st">&#39;NotePad.exe menu.f90&#39;</span>, sw_show)</code></pre>
+<blockquote>
+<blockquote>
+<p>后者要用dfwin, 如果要改成Runqq, 参数得为('NotePad.exe', 'menu.f90')</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>弹出窗口</li>
+</ul>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">MessageBoxQQ(Text_About, Text_Title, MB$IconExclamation . OR. MB$OK)</code></pre>
+<ul>
+<li>修改WinAbout的显示内容</li>
+</ul>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">AboutBoxQQ(<span class="st">&#39;Text_about&#39;</span>)  </code></pre>
+<ul>
+<li>字符串后面的C, 好像在cvf中没有必要</li>
+</ul>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

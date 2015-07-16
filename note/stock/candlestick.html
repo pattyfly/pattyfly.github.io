@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+        
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>candlestick</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#candlestick">Candlestick</a><ul>
+        <li><a href="#第一章-引-论">第一章 引 论</a></li>
+        <li><a href="#第二章-历史背景">第二章 历史背景</a></li>
+        <li><a href="#第三章-绘制蜡烛图的方法">第三章 绘制蜡烛图的方法</a></li>
+        <li><a href="#第四章-反转形态">第四章 反转形态</a></li>
+        <li><a href="#第五章-星线">第五章 星线</a></li>
+        <li><a href="#第六章-其它形态">第六章 其它形态</a></li>
+        <li><a href="#第七章-持续形态">第七章 持续形态</a></li>
+        <li><a href="#第八章-神奇的十字线">第八章 神奇的十字线</a></li>
+        <li><a href="#第九章-蜡烛图技术汇总">第九章 蜡烛图技术汇总</a></li>
+        <li><a href="#第十章-蜡烛图信号的汇聚">第十章 蜡烛图信号的汇聚</a></li>
+        <li><a href="#第十一章-蜡烛图与趋势线">第十一章 蜡烛图与趋势线</a></li>
+        <li><a href="#第十二章-蜡烛图与百分比回撤水平">第十二章 蜡烛图与百分比回撤水平</a></li>
+        <li><a href="#第十三章-蜡烛图与移动平均线">第十三章 蜡烛图与移动平均线</a></li>
+        <li><a href="#第十四章-蜡烛图与摆动指数">第十四章 蜡烛图与摆动指数</a></li>
+        <li><a href="#第十五章-蜡烛图与交易量持仓量">第十五章 蜡烛图与交易量、持仓量</a></li>
+        <li><a href="#第十六章-蜡烛图与艾略特波浪理论">第十六章 蜡烛图与艾略特波浪理论</a></li>
+        <li><a href="#第十七章-蜡烛图与市场剖面图">第十七章 蜡烛图与市场剖面图</a></li>
+        <li><a href="#第十八章-蜡烛图与期权交易">第十八章 蜡烛图与期权交易</a></li>
+        <li><a href="#第十九章-利用蜡烛图进行保值交易">第十九章 利用蜡烛图进行保值交易</a></li>
+        <li><a href="#第二十章-我是如何应用蜡烛图的">第二十章 我是如何应用蜡烛图的</a></li>
+        <li><a href="#结语">结语</a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/stock.html">stock</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/06 15:26</div>
+<!--stock-->
+<h2 id="candlestick">Candlestick</h2>
+<hr />
+<h3 id="第一章-引-论">第一章 引 论</h3>
+<p>p14: <strong>技术的重要性:</strong></p>
+<ol style="list-style-type: decimal">
+<li>在基本分析中，虽然可能包括了对市场供求状况的评估，对股票价格与每股盈利之比的测算，以及对其它各种经济指标等各方面内容的研究，但是，并没有把市场心理方面的影响因素考虑进去。问题恰恰在于有些时候市场在极大的程度上是受市场情绪支配的。</li>
+<li>在具备明确纪律约束的交易方式中，技术分析方法是其中的重要组成部分。所有的交易人员都逃不过情绪问题，这是我们天生的禀性，而严格的纪律有助于减缓其负面的影响。</li>
+</ol>
+<blockquote>
+<p><em>下面这样的悲剧不是一而再、再而三地在我们身边上演吗？起先，某位交易商买进了。随后，市场便开始下跌。他会马上“壮士断臂”，止损出市吗？通常不会。虽然在市场的逻辑里从来 就没有主观想象的地位，但是，这位交易商还是不遗余力地搜罗一切利好方面的基本面信息，一心将它们拼凑成一幅看涨的 图画来给自己打气，巴望市场回到自己的方向上来。与此同时，市场的价格继续下滑。或许，市场正在使劲给他发来什么信号。是的，市场的确能够与我们进行交流。通过技术分析方法，我们就能够耳闻目睹这样的市场语言和神态。现在，市场正向这位交易商传递着自己的信息，但他却视而不见，听而不闻。</em></p>
+</blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>退一步讲，即便您并不完全相信技术分析的一套，遵循它的交易信号也依然是非常重要的。这是因为，有的时候技术信号本身已经构成推动市场运动的主要动力。</li>
+<li>随机行走理论提出，前一天的市场价格变化，对第二天的市场行情毫无影响。但是，在这种学院式的理论中却遗漏了一项重要的市场成份——人。</li>
+<li>如果我们要观察总体的供给——需求关系，那么，观察价格变化显然是最直观、最容易进行的一种方法，有些基本面的消息，普通的投资大众可能根本无缘得知，但是您可以正确地预期，它们一定已经包含在价格信息之内了。</li>
+</ol>
+<h3 id="第二章-历史背景">第二章 历史背景</h3>
+<h3 id="第三章-绘制蜡烛图的方法">第三章 绘制蜡烛图的方法</h3>
+<p>P19: <strong>蜡烛图的型态：</strong><code>秃头</code>，<code>秃脚</code>，<code>纺锤</code>，<code>十字</code></p>
+<p>P20: 开市和收市的重要性</p>
+<blockquote>
+<p><em>日本人认为，在每个交易日里，开市和收市两个时刻，承载着最沉重的市场情绪。因此，开市价与收市价之间的相对高低具有非同小可的重要意义。</em> P20</p>
+</blockquote>
+<blockquote>
+<p><em>人群情绪是市场不可分割的组成部分而技术分析方法则是衡量这种成分对币场的影响的唯一手段。</em> P20</p>
+</blockquote>
+<p>前三章只是对蜡烛图的基本介绍，接下来的第四章到第八章会详细的讲解蜡烛图的特殊形态，是本文的重点——<a href="Candlestick%20Patterns.html">蜡烛图形态</a></p>
+<h3 id="第四章-反转形态">第四章 反转形态</h3>
+<p>本章主要是讲k线图的基本反转形态，包括锤子线和上吊线，吞没（抱线），乌云盖顶及刺透，详细见<a href="Candlestick%20Patterns.html#第四章-反转形态">基本反转形态</a>。</p>
+<h3 id="第五章-星线">第五章 星线</h3>
+<p>本章主要是讲k线图中的一种强反转——黄昏星、启明星以及十字。详细见<a href="Candlestick%20Patterns.html#第五章-星线">星线及星形</a>。</p>
+<h3 id="第六章-其它形态">第六章 其它形态</h3>
+<p>本章要讨论更多的反转形态。其中一部分形态通常——但并不总是——构成反转信号，因此，它们是较弱的反转信号。这些形态包括孕线形态、平头顶部形态和平头底部形态、捉腰带蜡烛线、向上跳空二只乌鸦、反击蜡烛线等。然后本章还要探讨一些强烈的反转信号，其中包括三只乌鸦、三山形态、三川形态，圆形顶、圆顶底、塔形顶和塔形底等。详细见<a href="Candlestick%20Patterns.html#第六章-其它形态">其它反转形态</a>。</p>
+<h3 id="第七章-持续形态">第七章 持续形态</h3>
+<p>本章将要讨论的持续形态有；窗口（以及含有窗口的一些蜡烛图形态）、上升三法和下降三法，以及白色三兵形态。</p>
+<h3 id="第八章-神奇的十字线">第八章 神奇的十字线</h3>
+<h3 id="第九章-蜡烛图技术汇总">第九章 蜡烛图技术汇总</h3>
+<h3 id="第十章-蜡烛图信号的汇聚">第十章 蜡烛图信号的汇聚</h3>
+<h3 id="第十一章-蜡烛图与趋势线">第十一章 蜡烛图与趋势线</h3>
+<h3 id="第十二章-蜡烛图与百分比回撤水平">第十二章 蜡烛图与百分比回撤水平</h3>
+<h3 id="第十三章-蜡烛图与移动平均线">第十三章 蜡烛图与移动平均线</h3>
+<h3 id="第十四章-蜡烛图与摆动指数">第十四章 蜡烛图与摆动指数</h3>
+<h3 id="第十五章-蜡烛图与交易量持仓量">第十五章 蜡烛图与交易量、持仓量</h3>
+<h3 id="第十六章-蜡烛图与艾略特波浪理论">第十六章 蜡烛图与艾略特波浪理论</h3>
+<h3 id="第十七章-蜡烛图与市场剖面图">第十七章 蜡烛图与市场剖面图</h3>
+<h3 id="第十八章-蜡烛图与期权交易">第十八章 蜡烛图与期权交易</h3>
+<h3 id="第十九章-利用蜡烛图进行保值交易">第十九章 利用蜡烛图进行保值交易</h3>
+<h3 id="第二十章-我是如何应用蜡烛图的">第二十章 我是如何应用蜡烛图的</h3>
+<h3 id="结语">结语</h3>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

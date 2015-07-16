@@ -1,0 +1,699 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>pset6</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#pset-6">pset 6</a><ul>
+        <li><a href="#misspellings">Misspellings</a><ul>
+        <li><a href="#dictionary.h">dictionary.h</a></li>
+        <li><a href="#speller.c">speller.c</a></li>
+        <li><a href="#dictionary.c_hash">dictionary.c_hash</a></li>
+        <li><a href="#dictionary.c_trie">dictionary.c_trie</a></li>
+        </ul></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/c.html">c</a></li>
+                <li><a href="/wiki/archive/tags/makefile.html">makefile</a></li>
+                <li><a href="/wiki/archive/tags/algorithm.html">algorithm</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/07/12 18:01</div>
+<!--c-makefile-algorithm-->
+<h2 id="pset-6">pset 6</h2>
+<hr />
+<h3 id="misspellings">Misspellings</h3>
+<ul>
+<li>要求：根据一个外部词典，判断输入的文本文件是否有拼写错误，文件组合编译，makefile.</li>
+<li>掌握：数据结构，文件读写，文本处理（单词切割），指针，makefile 完整写法, 头文件的定义方式。</li>
+<li>难点：
+<ul>
+<li>数据结构构造及建立
+<ul>
+<li>hash算法</li>
+<li>trie的建立，is_word 的由来</li>
+</ul></li>
+<li>单词切割</li>
+<li>内存管理</li>
+<li>时间复杂度</li>
+<li>全局变量</li>
+<li>代码优化</li>
+</ul></li>
+<li>note：
+<ul>
+<li>speller 里面的for循环 把一个txt切割成单词, 整个代码非常叼.</li>
+<li>Makefile <a href="clang.html">完整写法</a></li>
+<li>static <a href="C%20intro.html">变量</a></li>
+</ul></li>
+<li>常用的hash函数
+<ul>
+<li><a href="http://blog.csdn.net/jcwkyl/article/details/4088436">参考1</a></li>
+<li><a href="https://www.byvoid.com/blog/string-hash-compare">参考2</a></li>
+<li>hash值一般都是对素数取模, 这样好像能更加均匀</li>
+</ul></li>
+<li>优化</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>在这个例子中 hash取余到1000003比较好, 对于14万的单词表： 所以看起来10万或者100万都是不错的选择. hash会比trie要快, trie的功能、优点不在这. (load 和unload太久, 毕竟空间大) 但是对于稍微大一点的文章, 如果要检查的文字非常多, trie更有优势</p>
+</blockquote>
+</blockquote>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left">素数</td>
+<td align="left">1000万</td>
+<td align="left">100万</td>
+<td align="left">10万</td>
+</tr>
+<tr class="even">
+<td align="left">有冲突的桶子数目</td>
+<td align="left">1055</td>
+<td align="left">9759</td>
+<td align="left">6.7万</td>
+</tr>
+<tr class="odd">
+<td align="left">冲突的单词</td>
+<td align="left">1057</td>
+<td align="left">1万</td>
+<td align="left">8万</td>
+</tr>
+<tr class="even">
+<td align="left">最长的桶子</td>
+<td align="left">2</td>
+<td align="left">3</td>
+<td align="left">8</td>
+</tr>
+</tbody>
+</table>
+<p>另外，程序的代码可以进行较大的优化，最明显的是原来的dictionary_hash，用了非常繁杂的过程，循环，条件等等都没有很好的逻辑，重写以后，不仅少了一半的代码，而且逻辑更加清晰。</p>
+<ul>
+<li><a href="C%20intro.html">malloc</a></li>
+</ul>
+<blockquote>
+<blockquote>
+<p>对于malloc的内存的单位的默认值, bool 为 fasle, 指针是 NULL<br> 但是用valgrind检查, 就会出现错误, 所以必须要给这些变量赋值.</p>
+</blockquote>
+</blockquote>
+<h4 id="dictionary.h">dictionary.h</h4>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/****************************************************************************</span>
+<span class="co"> * dictionary.h</span>
+<span class="co"> *</span>
+<span class="co"> * Computer Science 50</span>
+<span class="co"> * Problem Set 6</span>
+<span class="co"> *</span>
+<span class="co"> * Declares a dictionary&#39;s functionality.</span>
+<span class="co"> ***************************************************************************/</span>
+
+<span class="ot">#ifndef DICTIONARY_H</span>
+<span class="ot">#define DICTIONARY_H</span>
+
+<span class="ot">#include &lt;stdbool.h&gt;</span>
+
+<span class="co">// maximum length for a word</span>
+<span class="co">// (e.g., pneumonoultramicroscopicsilicovolcanoconiosis)</span>
+<span class="ot">#define LENGTH 45</span>
+<span class="co">// ODDNUM should be primeNUM</span>
+<span class="co">//#define ODDNUM 10000019</span>
+<span class="co">//#define ODDNUM 1000003</span>
+<span class="co">//#define ODDNUM 99991</span>
+<span class="co">//#define ODDNUM 49999</span>
+<span class="ot">#define ODDNUM 9973</span>
+<span class="co">//#define ODDNUM 997</span>
+
+<span class="kw">typedef</span> <span class="kw">struct</span> node
+{
+    <span class="dt">char</span> word[LENGTH + <span class="dv">1</span>];
+    <span class="kw">struct</span> node* next;
+}
+node;
+
+<span class="co">/**</span>
+ * Returns <span class="kw">true</span> <span class="kw">if</span> word is in dictionary <span class="kw">else</span> <span class="kw">false</span>.
+ */
+<span class="dt">bool</span> check(<span class="dt">const</span> <span class="dt">char</span>* word);
+
+<span class="co">/**</span>
+ * Loads dictionary into memory.  Returns <span class="kw">true</span> <span class="kw">if</span> successful <span class="kw">else</span> <span class="kw">false</span>.
+ */
+<span class="dt">bool</span> load(<span class="dt">const</span> <span class="dt">char</span>* dictionary);
+
+<span class="co">/**</span>
+ * Returns number of words in dictionary <span class="kw">if</span> loaded <span class="kw">else</span> <span class="dv">0</span> <span class="kw">if</span> <span class="kw">not</span> yet loaded.
+ */
+<span class="dt">unsigned</span> <span class="dt">int</span> size(<span class="dt">void</span>);
+
+<span class="co">/**</span>
+ * Unloads dictionary from memory.  Returns <span class="kw">true</span> <span class="kw">if</span> successful <span class="kw">else</span> <span class="kw">false</span>.
+ */
+<span class="dt">bool</span> unload(<span class="dt">void</span>);
+
+<span class="co">/**</span>
+ * Get the order of alpha <span class="kw">and</span> <span class="st">&#39;, a = 0, &#39;</span> = <span class="dv">26</span>
+ */
+<span class="dt">int</span> getAlphaOrder(<span class="dt">char</span> c);
+
+<span class="co">/**</span>
+* SDBMHash
+**/
+<span class="dt">unsigned</span> <span class="dt">int</span> SDBMHash(<span class="dt">char</span> *str);
+
+<span class="co">/**</span>
+ * wordToLower
+ **/
+<span class="dt">void</span> wordToLower(<span class="dt">const</span> <span class="dt">char</span>* src, <span class="dt">char</span>* dst);
+<span class="ot">#endif </span><span class="co">// DICTIONARY_H</span></code></pre>
+<h4 id="speller.c">speller.c</h4>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/****************************************************************************</span>
+<span class="co"> * speller.c</span>
+<span class="co"> *</span>
+<span class="co"> * Computer Science 50</span>
+<span class="co"> * Problem Set 6</span>
+<span class="co"> *</span>
+<span class="co"> * Implements a spell-checker.</span>
+<span class="co"> ***************************************************************************/</span>
+
+<span class="ot">#include &lt;ctype.h&gt;</span>
+<span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;sys/resource.h&gt;</span>
+<span class="ot">#include &lt;sys/time.h&gt;</span>
+
+<span class="ot">#include &quot;dictionary.h&quot;</span>
+<span class="ot">#undef calculate</span>
+<span class="ot">#undef getrusage</span>
+
+<span class="co">// default dictionary</span>
+<span class="ot">#define DICTIONARY &quot;dictionaries/large&quot;</span>
+
+<span class="co">// prototype</span>
+<span class="dt">double</span> calculate(<span class="dt">const</span> <span class="kw">struct</span> rusage* b, <span class="dt">const</span> <span class="kw">struct</span> rusage* a);
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span>* argv[])
+{
+    <span class="co">// check for correct number of args</span>
+    <span class="kw">if</span> (argc != <span class="dv">2</span> &amp;&amp; argc != <span class="dv">3</span>)
+    {
+        printf(<span class="st">&quot;Usage: speller [dictionary] text</span><span class="ch">\n</span><span class="st">&quot;</span>);
+        <span class="kw">return</span> <span class="dv">1</span>;
+    }
+
+    <span class="co">// structs for timing data</span>
+    <span class="kw">struct</span> rusage before, after;
+
+    <span class="co">// benchmarks</span>
+    <span class="dt">double</span> ti_load = <span class="fl">0.</span><span class="dv">0</span>, ti_check = <span class="fl">0.</span><span class="dv">0</span>, ti_size = <span class="fl">0.</span><span class="dv">0</span>, ti_unload = <span class="fl">0.</span><span class="dv">0</span>;
+
+    <span class="co">// determine dictionary to use</span>
+    <span class="dt">char</span>* dictionary = (argc == <span class="dv">3</span>) ? argv[<span class="dv">1</span>] : DICTIONARY;
+
+    <span class="co">// load dictionary</span>
+    getrusage(RUSAGE_SELF, &amp;before);
+    <span class="dt">bool</span> loaded = load(dictionary);
+    getrusage(RUSAGE_SELF, &amp;after);
+
+    <span class="co">// abort if dictionary not loaded</span>
+    <span class="kw">if</span> (!loaded)
+    {
+        printf(<span class="st">&quot;Could not load </span><span class="ch">%s</span><span class="st">.</span><span class="ch">\n</span><span class="st">&quot;</span>, dictionary);
+        <span class="kw">return</span> <span class="dv">1</span>;
+    }
+
+    <span class="co">// calculate time to load dictionary</span>
+    ti_load = calculate(&amp;before, &amp;after);
+
+    <span class="co">// try to open text</span>
+    <span class="dt">char</span>* text = (argc == <span class="dv">3</span>) ? argv[<span class="dv">2</span>] : argv[<span class="dv">1</span>];
+    FILE* fp = fopen(text, <span class="st">&quot;r&quot;</span>);
+    <span class="kw">if</span> (fp == NULL)
+    {
+        printf(<span class="st">&quot;Could not open </span><span class="ch">%s</span><span class="st">.</span><span class="ch">\n</span><span class="st">&quot;</span>, text);
+        unload();
+        <span class="kw">return</span> <span class="dv">1</span>;
+    }
+
+    <span class="co">// prepare to report misspellings</span>
+    printf(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">MISSPELLED WORDS</span><span class="ch">\n\n</span><span class="st">&quot;</span>);
+
+    <span class="co">// prepare to spell-check</span>
+    <span class="dt">int</span> index = <span class="dv">0</span>, misspellings = <span class="dv">0</span>, words = <span class="dv">0</span>;
+    <span class="dt">char</span> word[LENGTH<span class="dv">+1</span>];
+
+    <span class="co">// spell-check each word in text</span>
+    <span class="kw">for</span> (<span class="dt">int</span> c = fgetc(fp); c != EOF; c = fgetc(fp))
+    {
+        <span class="co">// allow only alphabetical characters and apostrophes</span>
+        <span class="kw">if</span> (isalpha(c) || (c == <span class="st">&#39;</span><span class="ch">\&#39;</span><span class="st">&#39;</span> &amp;&amp; index &gt; <span class="dv">0</span>))
+        {
+            <span class="co">// append character to word</span>
+            word[index] = c;
+            index++;
+
+            <span class="co">// ignore alphabetical strings too long to be words</span>
+            <span class="kw">if</span> (index &gt; LENGTH)
+            {
+                <span class="co">// consume remainder of alphabetical string</span>
+                <span class="kw">while</span> ((c = fgetc(fp)) != EOF &amp;&amp; isalpha(c));
+
+                <span class="co">// prepare for new word</span>
+                index = <span class="dv">0</span>;
+            }
+        }
+
+        <span class="co">// ignore words with numbers (like MS Word can)</span>
+        <span class="kw">else</span> <span class="kw">if</span> (isdigit(c))
+        {
+            <span class="co">// consume remainder of alphanumeric string</span>
+            <span class="kw">while</span> ((c = fgetc(fp)) != EOF &amp;&amp; isalnum(c));
+
+            <span class="co">// prepare for new word</span>
+            index = <span class="dv">0</span>;
+        }
+
+        <span class="co">// we must have found a whole word</span>
+        <span class="kw">else</span> <span class="kw">if</span> (index &gt; <span class="dv">0</span>)
+        {
+            <span class="co">// terminate current word</span>
+            word[index] = <span class="st">&#39;</span><span class="ch">\0</span><span class="st">&#39;</span>;
+
+            <span class="co">// update counter</span>
+            words++;
+
+            <span class="co">// check word&#39;s spelling</span>
+            getrusage(RUSAGE_SELF, &amp;before);
+            <span class="dt">bool</span> misspelled = !check(word);
+            getrusage(RUSAGE_SELF, &amp;after);
+
+            <span class="co">// update benchmark</span>
+            ti_check += calculate(&amp;before, &amp;after);
+
+            <span class="co">// print word if misspelled</span>
+            <span class="kw">if</span> (misspelled)
+            {
+                printf(<span class="st">&quot;</span><span class="ch">%s\n</span><span class="st">&quot;</span>, word);
+                misspellings++;
+            }
+
+            <span class="co">// prepare for next word</span>
+            index = <span class="dv">0</span>;
+        }
+    }
+
+    <span class="co">// check whether there was an error</span>
+    <span class="kw">if</span> (ferror(fp))
+    {
+        fclose(fp);
+        printf(<span class="st">&quot;Error reading </span><span class="ch">%s</span><span class="st">.</span><span class="ch">\n</span><span class="st">&quot;</span>, text);
+        unload();
+        <span class="kw">return</span> <span class="dv">1</span>;
+    }
+
+    <span class="co">// close text</span>
+    fclose(fp);
+
+    <span class="co">// determine dictionary&#39;s size</span>
+    getrusage(RUSAGE_SELF, &amp;before);
+    <span class="dt">unsigned</span> <span class="dt">int</span> n = size();
+    getrusage(RUSAGE_SELF, &amp;after);
+
+    <span class="co">// calculate time to determine dictionary&#39;s size</span>
+    ti_size = calculate(&amp;before, &amp;after);
+
+    <span class="co">// unload dictionary</span>
+    getrusage(RUSAGE_SELF, &amp;before);
+    <span class="dt">bool</span> unloaded = unload();
+    getrusage(RUSAGE_SELF, &amp;after);
+
+    <span class="co">// abort if dictionary not unloaded</span>
+    <span class="kw">if</span> (!unloaded)
+    {
+        printf(<span class="st">&quot;Could not unload </span><span class="ch">%s</span><span class="st">.</span><span class="ch">\n</span><span class="st">&quot;</span>, dictionary);
+        <span class="kw">return</span> <span class="dv">1</span>;
+    }
+
+    <span class="co">// calculate time to unload dictionary</span>
+    ti_unload = calculate(&amp;before, &amp;after);
+
+    <span class="co">// report benchmarks</span>
+    printf(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">WORDS MISSPELLED:     </span><span class="ch">%d\n</span><span class="st">&quot;</span>, misspellings);
+    printf(<span class="st">&quot;WORDS IN DICTIONARY:  </span><span class="ch">%d\n</span><span class="st">&quot;</span>, n);
+    printf(<span class="st">&quot;WORDS IN TEXT:        </span><span class="ch">%d\n</span><span class="st">&quot;</span>, words);
+    printf(<span class="st">&quot;TIME IN load:         </span><span class="ch">%.2f\n</span><span class="st">&quot;</span>, ti_load);
+    printf(<span class="st">&quot;TIME IN check:        </span><span class="ch">%.2f\n</span><span class="st">&quot;</span>, ti_check);
+    printf(<span class="st">&quot;TIME IN size:         </span><span class="ch">%.2f\n</span><span class="st">&quot;</span>, ti_size);
+    printf(<span class="st">&quot;TIME IN unload:       </span><span class="ch">%.2f\n</span><span class="st">&quot;</span>, ti_unload);
+    printf(<span class="st">&quot;TIME IN TOTAL:        </span><span class="ch">%.2f\n\n</span><span class="st">&quot;</span>, 
+     ti_load + ti_check + ti_size + ti_unload);
+
+    <span class="co">// that&#39;s all folks</span>
+    <span class="kw">return</span> <span class="dv">0</span>;
+}
+
+<span class="co">/**</span>
+ * Returns number of seconds between b <span class="kw">and</span> a.
+ */
+<span class="dt">double</span> calculate(<span class="dt">const</span> <span class="kw">struct</span> rusage* b, <span class="dt">const</span> <span class="kw">struct</span> rusage* a)
+{
+    <span class="kw">if</span> (b == NULL || a == NULL)
+    {
+        <span class="kw">return</span> <span class="fl">0.</span><span class="dv">0</span>;
+    }
+    <span class="kw">else</span>
+    {
+        <span class="kw">return</span> ((((a-&gt;ru_utime.tv_sec * <span class="dv">1000000</span> + a-&gt;ru_utime.tv_usec) -
+                 (b-&gt;ru_utime.tv_sec * <span class="dv">1000000</span> + b-&gt;ru_utime.tv_usec)) +
+                ((a-&gt;ru_stime.tv_sec * <span class="dv">1000000</span> + a-&gt;ru_stime.tv_usec) -
+                 (b-&gt;ru_stime.tv_sec * <span class="dv">1000000</span> + b-&gt;ru_stime.tv_usec)))
+                / <span class="fl">1000000.</span><span class="dv">0</span>);
+    }
+}</code></pre>
+<h4 id="dictionary.c_hash">dictionary.c_hash</h4>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/****************************************************************************</span>
+<span class="co"> * dictionary.c</span>
+<span class="co"> *</span>
+<span class="co"> * Computer Science 50</span>
+<span class="co"> * Problem Set 6</span>
+<span class="co"> *</span>
+<span class="co"> * Implements a dictionary&#39;s functionality.</span>
+<span class="co"> ***************************************************************************/</span>
+<span class="ot">#include &lt;ctype.h&gt;</span>
+<span class="ot">#include &lt;stdbool.h&gt;</span>
+<span class="ot">#include &lt;stdlib.h&gt;</span>
+<span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;string.h&gt;</span>
+<span class="ot">#include &quot;dictionary.h&quot;</span>
+
+<span class="dt">static</span> node* barrel[ODDNUM] = {NULL};
+<span class="dt">static</span> <span class="dt">int</span> sizeDict = <span class="dv">0</span>;
+<span class="co">/**</span>
+ * Returns <span class="kw">true</span> <span class="kw">if</span> word is in dictionary <span class="kw">else</span> <span class="kw">false</span>.
+ */
+<span class="dt">bool</span> check(<span class="dt">const</span> <span class="dt">char</span>* word)
+{
+    <span class="dt">char</span>* tmpword = malloc(<span class="kw">sizeof</span>(<span class="dt">char</span>) * (strlen(word) + <span class="dv">1</span>));
+    wordToLower(word, tmpword);
+    <span class="dt">int</span> i = SDBMHash(tmpword) % ODDNUM;
+
+    node* cursor = barrel[i];
+    <span class="kw">while</span>(cursor)
+    {
+        <span class="kw">if</span> (!strcmp(cursor-&gt;word, tmpword))
+        {
+            free(tmpword);
+            <span class="kw">return</span> <span class="kw">true</span>;
+        }
+        cursor = cursor-&gt;next;
+    }
+    free(tmpword);
+    <span class="kw">return</span> <span class="kw">false</span>;
+}
+
+<span class="co">/**</span>
+ * Loads dictionary into memory.  Returns <span class="kw">true</span> <span class="kw">if</span> successful <span class="kw">else</span> <span class="kw">false</span>.
+ */
+<span class="dt">bool</span> load(<span class="dt">const</span> <span class="dt">char</span>* dictionary)
+{
+    FILE* fp = fopen(dictionary, <span class="st">&quot;r&quot;</span><span class="co">)</span>;
+    <span class="kw">if</span> (fp == NULL)
+    {
+        printf(<span class="st">&quot;Read dictionary error</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        <span class="kw">return</span> <span class="kw">false</span>;
+    }
+    
+    <span class="dt">char</span> word[LENGTH + <span class="dv">1</span>];
+    
+    <span class="kw">while</span>(fscanf(fp, <span class="st">&quot;</span><span class="ch">%s</span><span class="st">&quot;</span><span class="co">,</span> word) != EOF)
+    {
+        <span class="dt">int</span> i = SDBMHash(word) % ODDNUM;
+        node* cursor = malloc(<span class="kw">sizeof</span>(node));
+        <span class="kw">if</span>( cursor == NULL)
+            <span class="kw">return</span> <span class="kw">false</span>;
+
+        strcpy(cursor-&gt;word, word);
+        cursor-&gt;next = barrel[i];
+        barrel[i] = cursor;
+        sizeDict++;
+    }
+
+    fclose(fp);
+    <span class="kw">return</span> <span class="kw">true</span>;
+}
+
+<span class="co">/**</span>
+ * Returns number of words in dictionary <span class="kw">if</span> loaded <span class="kw">else</span> <span class="dv">0</span> <span class="kw">if</span> <span class="kw">not</span> yet loaded.
+ */
+<span class="dt">unsigned</span> <span class="dt">int</span> size(<span class="dt">void</span>)
+{
+    <span class="kw">return</span> sizeDict;
+}
+
+<span class="co">/**</span>
+ * Unloads dictionary from memory.  Returns <span class="kw">true</span> <span class="kw">if</span> successful <span class="kw">else</span> <span class="kw">false</span>.
+ */
+<span class="dt">bool</span> unload(<span class="dt">void</span>)
+{
+    <span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; ODDNUM; i++)
+    {
+        node* cursor = barrel[i];
+        <span class="kw">while</span>(cursor)
+        {
+            node* tmp = cursor;
+            cursor = cursor-&gt;next;
+            free(tmp);
+        }
+    }
+    <span class="kw">return</span> <span class="kw">true</span>;
+}
+
+<span class="co">/**</span>
+ * SDBMHash
+ **/
+ <span class="dt">unsigned</span> <span class="dt">int</span> SDBMHash(<span class="dt">char</span>* str)
+ {
+    <span class="dt">unsigned</span> <span class="dt">int</span> hash = <span class="dv">0</span>;
+    <span class="kw">while</span>(*str)
+        hash = (*str++) + (hash &lt;&lt; <span class="dv">6</span>) + (hash &lt;&lt; <span class="dv">16</span>) - hash;
+    <span class="kw">return</span> (hash &amp; <span class="bn">0x7FFFFFFF</span>);
+ }
+
+<span class="co">/**</span>
+ * wordToLower
+ **/
+<span class="dt">void</span> wordToLower(<span class="dt">const</span> <span class="dt">char</span>* src, <span class="dt">char</span>* dst)
+{
+    <span class="kw">while</span>(*src)
+        *dst++ = tolower(*src++);
+    *dst = <span class="st">&#39;</span><span class="ch">\0</span><span class="st">&#39;</span>;
+}</code></pre>
+<h4 id="dictionary.c_trie">dictionary.c_trie</h4>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/****************************************************************************</span>
+<span class="co"> * dictionary.c</span>
+<span class="co"> *</span>
+<span class="co"> * Computer Science 50</span>
+<span class="co"> * Problem Set 6</span>
+<span class="co"> *</span>
+<span class="co"> * Implements a dictionary&#39;s functionality.</span>
+<span class="co"> ***************************************************************************/</span>
+<span class="ot">#include &lt;ctype.h&gt;</span>
+<span class="ot">#include &lt;stdbool.h&gt;</span>
+<span class="ot">#include &lt;stdlib.h&gt;</span>
+<span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;string.h&gt;</span>
+<span class="ot">#include &quot;dictionary.h&quot;</span>
+
+<span class="dt">static</span> node* root = NULL;
+<span class="dt">static</span> <span class="dt">int</span> sizeDict = <span class="dv">0</span>;
+<span class="co">/**</span>
+ * Returns <span class="kw">true</span> <span class="kw">if</span> word is in dictionary <span class="kw">else</span> <span class="kw">false</span>.
+ */
+<span class="dt">bool</span> check(<span class="dt">const</span> <span class="dt">char</span>* word)
+{
+    node* cursor = root;
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>, wordLength = strlen(word); i &lt; wordLength; i++)
+    {
+        <span class="dt">int</span> order = getAlphaOrder(tolower(word[i]));
+        cursor = cursor-&gt;children[order];
+        <span class="kw">if</span> (cursor == NULL)
+            <span class="kw">return</span> <span class="kw">false</span>;
+    }
+    <span class="kw">if</span> (cursor-&gt;is_word == <span class="kw">false</span>)
+        <span class="kw">return</span> <span class="kw">false</span>;
+    <span class="kw">else</span>
+        <span class="kw">return</span> <span class="kw">true</span>;
+}
+
+<span class="co">/**</span>
+ * Loads dictionary into memory.  Returns <span class="kw">true</span> <span class="kw">if</span> successful <span class="kw">else</span> <span class="kw">false</span>.
+ */
+<span class="dt">bool</span> load(<span class="dt">const</span> <span class="dt">char</span>* dictionary)
+{
+    FILE* fp = fopen(dictionary, <span class="st">&quot;r&quot;</span><span class="co">)</span>;
+    <span class="kw">if</span> (fp == NULL)
+    {
+        printf(<span class="st">&quot;Read dictionary error</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        <span class="kw">return</span> <span class="kw">false</span>;
+    }
+    
+    <span class="dt">char</span> word[LENGTH + <span class="dv">1</span>];
+    initNode(&amp;root);
+    
+    <span class="kw">while</span>(fscanf(fp, <span class="st">&quot;</span><span class="ch">%s</span><span class="st">&quot;</span><span class="co">,</span> word) != EOF)
+    {
+        node* cursor = root;
+        <span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>, wordLength = strlen(word); i &lt; wordLength; i++)
+        {
+            <span class="dt">int</span> order = getAlphaOrder(word[i]);
+            <span class="kw">if</span> (cursor-&gt;children[order] == NULL)
+                initNode(&amp;(cursor-&gt;children[order]));
+            cursor = cursor-&gt;children[order];
+        }
+        cursor-&gt;is_word = <span class="kw">true</span>;
+        sizeDict++;
+    }
+
+    fclose(fp);
+    <span class="kw">return</span> <span class="kw">true</span>;
+}
+
+<span class="co">/**</span>
+ * Returns number of words in dictionary <span class="kw">if</span> loaded <span class="kw">else</span> <span class="dv">0</span> <span class="kw">if</span> <span class="kw">not</span> yet loaded.
+ */
+<span class="dt">unsigned</span> <span class="dt">int</span> size(<span class="dt">void</span>)
+{
+    <span class="kw">return</span> sizeDict;
+}
+
+<span class="co">/**</span>
+ * Unloads dictionary from memory.  Returns <span class="kw">true</span> <span class="kw">if</span> successful <span class="kw">else</span> <span class="kw">false</span>.
+ */
+<span class="dt">bool</span> unload(<span class="dt">void</span>)
+{
+    unloadNode(root);
+    <span class="kw">return</span> <span class="kw">true</span>;
+}
+
+<span class="dt">void</span> initNode(node** n)
+{
+    *n = malloc(<span class="kw">sizeof</span>(node));
+    <span class="kw">for</span>(<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; CHARSUM; j++)
+        (*n)-&gt;children[j] = NULL;
+    (*n)-&gt;is_word = <span class="kw">false</span>;
+}
+
+<span class="co">/**</span>
+ * Get the order of alpha <span class="kw">and</span> <span class="st">&#39;, a = 0, &#39;</span> = <span class="dv">26</span>
+ */
+<span class="dt">int</span> getAlphaOrder(<span class="dt">char</span> c)
+{
+    <span class="kw">if</span> (islower(c))
+        <span class="kw">return</span> c - <span class="st">&#39;a&#39;</span>;
+    <span class="kw">else</span> <span class="kw">if</span> (c == <span class="st">&#39;</span><span class="ch">\&#39;</span><span class="st">&#39;</span>)
+        <span class="kw">return</span> CHARSUM - <span class="dv">1</span>;
+    <span class="kw">else</span>
+    {
+        <span class="kw">return</span> <span class="dv">-1</span>;
+        printf(<span class="st">&quot;the word contain other char than lower alpha or &#39;</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+    }
+}
+
+<span class="dt">void</span> unloadNode(node* n)
+{
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; CHARSUM; i++)
+    {
+        <span class="kw">if</span>(n-&gt;children[i] != NULL)
+            unloadNode(n-&gt;children[i]);
+    }
+    free(n);
+}</code></pre>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

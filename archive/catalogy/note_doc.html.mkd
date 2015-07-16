@@ -1,0 +1,9 @@
+###note_doc
+
+------
+
+<div id=archive_catalogy>
+<ul>
+<li>[tibet study 2014](/wiki/note/doc/tibet study 2014.html)</li> 
+</ul>
+</div>

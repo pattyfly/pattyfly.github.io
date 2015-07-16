@@ -1,0 +1,12 @@
+###note_batch
+
+------
+
+<div id=archive_catalogy>
+<ul>
+<li>[batch for](/wiki/note/batch/batch for.html)</li> 
+<li>[batch wiki](/wiki/note/batch/batch wiki.html)</li> 
+<li>[batch](/wiki/note/batch/batch.html)</li> 
+<li>[find and replace](/wiki/note/batch/find and replace.html)</li> 
+</ul>
+</div>

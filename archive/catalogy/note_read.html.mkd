@@ -1,0 +1,9 @@
+###note_read
+
+------
+
+<div id=archive_catalogy>
+<ul>
+<li>[read index](/wiki/note/read/read index.html)</li> 
+</ul>
+</div>

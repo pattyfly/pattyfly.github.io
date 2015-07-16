@@ -1,0 +1,20 @@
+<!--ref-->
+###Ref. index
+
+-----------
+
+some ref on [quaternary glacier at Palong tsangpo](glacier/quaternary glacier at palong.html)
+
+ref on [quaternary glacier at tibet](glacier/quaternary glacier at tibet.html)
+
+近些年来国内冰川、悬冰川 [研究](glacier/hanging glacier at home.html)
+
+about [bomi lake](glacier/bodui lake.html)
+
+上次考察在墨脱发现的剖面能不能估计到雅江的下切速度或者说是何时下切到现在的高度
+
+[glacier erosion](glacier/glacier erosion.html)
+
+[tectonic aneurysm model](other/tectonic aneurysm.html)
+
+

@@ -1,0 +1,68 @@
+<!--batch-->
+### find and replace
+
+----------------
+
+``` bash
+@echo off
+::把需要搜索的路径赋值给变量sp，这里举例是c:\tmp
+set sp=c:\tmp
+::把需要查找的文件名赋值给变量cf，这里举例是root.txt
+set cf=root.txt
+::把将被替换的字符串赋值给st，这里举例是apple
+set st=apple
+::把替换字符串赋值给dt，这里举例是lemon
+set dt=lemon
+
+::以上的这些赋值执行后，将会把C盘tmp文件夹下面包括子文件夹里的root.txt中的apple全部替换成lemon
+::下面的代码将完成替换工作
+
+for /r %sp% %%a in (%cf%) do (call :doit "%%~dpa")
+goto end
+
+:doit
+setlocal enabledelayedexpansion
+pushd %1
+for /f "tokens=1,2* delims=:" %%i in ('findstr /n ".*" %cf%') do (
+set txt=%%j
+if "!txt!" == "" (
+echo.>>%1%cf%
+) else (
+echo !txt:%st%=%dt%!>>%1%cf%
+)
+)
+move /y %cf%.tmp %cf%
+
+:end
+```
+实际上就是读取每一行, 在重新写到一个临时文件中, 如果有关键字, 就替换掉, 用的就是 `!txt:%st%=%dt%!`,  `echo.>>` 是插入空行, 这个地方要注意, 为了能插入空行, `token` 那里一定要写上1, 2, 如果光提取2(后面参数用`%%i`), 不能输出空行, 所以所有的空行都会被删除. 这个例子我稍微修改一下就是这样了.
+
+*注*  `%%`变量很少用, 都是在批处理的for循环里面的特殊循环变量才用.
+
+```bash
+cd /d %~dp0
+
+::把将被替换的字符串赋值给st，这里举例是apple
+set st=apple
+::把替换字符串赋值给dt，这里举例是lemon
+set dt=lemon
+
+::下面的代码将完成替换工作
+
+for /r "test" %%a in (*.txt) do (call :doit %%a)
+goto end
+
+:doit
+setlocal enabledelayedexpansion
+for /f "tokens=1,2* delims=:" %%i in ('findstr /n ".*" %1') do (
+set txt=%%j
+if "!txt!" == "" (
+echo.>>"%~1.tmp"
+) else (
+echo !txt:%st%=%dt%!>>"%~1.tmp"
+)
+)
+move /y %1.tmp %1
+:end
+```
+

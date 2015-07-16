@@ -1,0 +1,20 @@
+<!---->
+### 涂鸦板
+
+----------
+
+[dropbox host](https://raw.githubusercontent.com/hyxxsfwy/hosts/master/Dropbox_Hosts.txt)
+
+[vim colors scheme](https://code.google.com/p/vimcolorschemetest/)
+
+验证模型值的方法:
+
+* 在模型图上点出实测值
+* 直接拿出模型值，和实测值进行比较，把这样的一对对点化成图，分析线性关系。
+
+
+* 青藏高原冰川出现的模式和抬升模式之间关系
+
+[mini 1](mini1.html)
+[mini 2](mini2.html)
+

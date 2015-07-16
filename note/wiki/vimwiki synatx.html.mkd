@@ -1,0 +1,135 @@
+﻿<!--wiki-->
+###vimwiki synatx
+
+--------
+
+### 语法 {#toc_0.1.1}
+
+#### 我是居中的标题？ {#toc_0.1.1.1 .justcenter}
+
+##### 文字格式 {#toc_0.1.1.1.1}
+
+\***粗体**\* \_*斜体*\_ ~~删除线~~ \``some code`\`
+
+##### 特殊格式 {#toc_0.1.1.1.2}
+
+x^2^ A~1~
+
+##### 文本块 {#toc_0.1.1.1.3}
+
+``` {.cpp}
+#include <stdio.h>
+int main()
+{
+    printf("hello, world!\n");
+}
+```
+
+``` {.code}
+这是一个pre
+class wei code
+```
+
+        这是另外一个pre
+        没有指定class
+
+> 四个空格开始就是一个块，也就是一个tab
+
+##### 链接 {#toc_0.1.1.1.4}
+
+[WikiCat](WikiCat.html) 大写开头的驼峰词\
+ [小乖](小乖.html)
+现在版本默认情况下任意词组句子，写完后普通模式按回车都会建立链接\
+ [搜索](http://www.baidu.com) [[ | ]\\] |分割目标和显示(后面\\不要)\
+ [1.txt](file://c:/Users/HappyFamily/vimwiki_html/1.txt)
+内部链接不知道是不是这样建立的\
+ ![小雨](images/1.jpg)
+
+##### 列表 {#toc_0.1.1.1.5}
+
+-   无序列表 猫
+-   无序列表 狗
+    -   子列表 丢丢
+    -   子列表 屁屁
+
+1.  有序聊表 周一
+2.  有序立标 周二
+    1.  有序列表 上午
+    2.  有序列表 下午
+
+##### 表格 {#toc_0.1.1.1.6}
+
+  ----------------------- ----------------------- -----------------------
+  年                      1900                    1910
+  最低温度                -10                     1-5
+  最高温度                25                      30
+  ----------------------- ----------------------- -----------------------
+
+表格如果不顶格写，表格就会居中 表格可以用\<\> \\/ /\\来合并
+
+##### todo list {#toc_0.1.1.1.7 .justcenter}
+
+###### 这是一个待办列表项 {#toc_0.1.1.1.7.1 .justcenter}
+
+-   切换列表项开/关。
+-   这样直接回车会在前面补充括号
+-   主项目的现实会受子项目的完成情况变化
+    -   -- 0%
+    -   -- 33%
+    -   -- 66%
+    -   -- 99%
+    -   -- 100%
+-   把原来自带的style删掉以后，就没有上述功能了，在后面加了才有
+
+### 快捷键 {#toc_0.1.2}
+
+-   \\ww 到主页
+-   \\wd 删除词条
+-   \\wr 重命名
+-   tab 在词条跳转
+-   F4 转词条到html
+-   S+F4 全部转换
+
+### 老模板 {#toc_0.1.4}
+
+```html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="%root_path%static/bootstrap/css/bootstrap.min.css">
+<link rel="Stylesheet" type="text/css" href="%root_path%static/css/style.css">
+<script type="text/javascript" src="%root_path%static/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="%root_path%static/bootstrap/js/bootstrap.min.js"></script>
+<title>MyWiki</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-inverse" role="navigation">
+ <div class="container">
+    <div class="navbar-header">
+<button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+        <span class="sr-only"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a class="navbar-brand" href="%root_path%index.html">Pattyfly</a>
+    </div>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="%root_path%index.html">首页</a></li>
+            <li><a href="%root_path%cs50/Cs50_note.html">CS50</a></li>
+            <li><a href="%root_path%diary/diary.html">日记</a></li>
+            <li><a href="%root_path%TODO.html">TODO</a></li>
+            <li><a href="%root_path%wiki入门.html">Wiki</a></li>
+        </ul>
+    </div>
+ </div>
+</nav>
+<div class="container content-body">
+    %content%
+</div>
+</script>
+</body>
+</html>
+```

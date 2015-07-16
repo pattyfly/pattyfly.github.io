@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>quickwin app intro</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#toc_0.0.1">QuickWin App 基础</a><ul>
+        <li><a href="#toc_0.0.1.1">设置窗口大小两个函数</a></li>
+        <li><a href="#toc_0.0.1.2">取消提示</a></li>
+        <li><a href="#toc_0.0.1.3">颜色</a></li>
+        <li><a href="#toc_0.0.1.4">定位</a></li>
+        <li><a href="#toc_0.0.1.5">其他</a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/fortran.html">fortran</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/06 15:26</div>
+<!--fortran-->
+<h3 id="toc_0.0.1">QuickWin App 基础</h3>
+<hr />
+<h4 id="toc_0.0.1.1">设置窗口大小两个函数</h4>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">Iret <span class="kw">=</span> setwsizeqq(eunit,winfo)</code></pre>
+<blockquote>
+<blockquote>
+<p>这里<code>eunit</code>如果是主窗口, 就用<code>qwin$framewindow</code> <br><code>Tpye(qwinfo) :: winfo = {tpye,X,Y,W,H}</code>, 其中<code>type(qwin$max,qwin$min,qwin$set)</code></p>
+</blockquote>
+</blockquote>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">Iret <span class="kw">=</span> setwindowconfig(wc)</code></pre>
+<blockquote>
+<blockquote>
+<p><code>Tpye(windowconfig) :: wc = {numxpixels, numypixels, numtextcols, numtextrows, title, fontsize}</code> <br>前者只能设置窗口大小位置, 后者能设置大小, 字体, 标题</p>
+</blockquote>
+</blockquote>
+<h4 id="toc_0.0.1.2">取消提示</h4>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">iret <span class="kw">=</span> setexitqq(exitmode)</code></pre>
+<blockquote>
+<blockquote>
+<p>其中<code>exitmode(qwin$exitprompt ,qwin$exitnopresist,qwin$exitpresist)</code>(默认, 马上消失, 正常显示)</p>
+</blockquote>
+</blockquote>
+<h4 id="toc_0.0.1.3">颜色</h4>
+<ul>
+<li>窗口颜色</li>
+</ul>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">iret <span class="kw">=</span> setbkcolorRGB(color)</code></pre>
+<blockquote>
+<blockquote>
+<p>这里 <code>color</code> 是 <code>integer</code>, 如 <code>#FF0000</code>, 或者用这种方式, <code>color = PGBtoInteger(255,0,0)</code> <br>这个函数只有当文字发生变化时才会使变化区域变色, 要全改背景需要调用清屏</p>
+</blockquote>
+</blockquote>
+<pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">call</span> clearscreen(area)                                       
+<span class="dt">integer</span> area($gclearscreen,gviewport,gwindow)</code></pre>
+<ul>
+<li>文字颜色</li>
+</ul>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">iret <span class="kw">=</span> settextcolorRGB(color)</code></pre>
+<h4 id="toc_0.0.1.4">定位</h4>
+<ul>
+<li>文本模式</li>
+</ul>
+<pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">call</span> settextposition(row,column,t)</code></pre>
+<blockquote>
+<blockquote>
+<p><code>type(rccoord)::t</code> 保存光标位置 <code>t(row,col)</code> <br>文本模式对应的可以用 <code>call outtext(text)</code></p>
+</blockquote>
+</blockquote>
+<ul>
+<li>图形模式</li>
+</ul>
+<pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">call</span> moveto(x,y,t)</code></pre>
+<blockquote>
+<blockquote>
+<p><code>type(xycoord)::t</code> 坐标位置 <code>t(xcoord,ycoord)</code> <br>图形模式对应的是 <code>call outgtext</code> <br>图形模式中字体设置有所不同</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>实例：</li>
+</ul>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">iret <span class="kw">=</span> setcolorRGB(#FF0000)              <span class="co">!只有这样才能改变图形模式的文字颜色</span>
+iret <span class="kw">=</span>  initializefoint()                <span class="co">!这个是必须的</span>
+iret <span class="kw">=</span> setfont(<span class="st">&#39;t&#39;</span> <span class="st">&#39;幼圆&#39;</span> <span class="st">&#39;h18w10&#39;</span>)      <span class="co">!屏幕坐标中, x对应的竖向的, y是水平向右为正, 左上角为原点. </span></code></pre>
+<h4 id="toc_0.0.1.5">其他</h4>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">iret <span class="kw">=</span> DisplayCursor($gCursorOn)  <span class="co">!显示光标</span>
+iret <span class="kw">=</span> ClickMenuQQ(Qwin$Title) <span class="co">!点击菜单上的title, 使子窗口平铺</span></code></pre>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

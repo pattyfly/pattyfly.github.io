@@ -1,0 +1,568 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>pset4</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#toc_0.0.0.1">pset 4</a><ul>
+        <li><a href="#breakout">breakout</a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/c.html">c</a></li>
+                <li><a href="/wiki/archive/tags/point.html">point</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/07/11 22:08</div>
+<!--c-point-->
+<h2 id="toc_0.0.0.1">pset 4</h2>
+<hr />
+<p><a href="https://cdn.cs50.net/2014/spring/psets/4/hacker4/hacker4.html">pset4</a></p>
+<h3 id="breakout">breakout</h3>
+<ul>
+<li>要求：生成一个打砖块的游戏，要求实现激光，生命，分数显示，难度提升（挡板宽度，球速）等功能</li>
+<li>掌握：图形库，自上而下的设计，对象函数</li>
+<li>难点：
+<ul>
+<li>自上而下的设计思路</li>
+<li>碰撞处理</li>
+</ul></li>
+<li>note</li>
+</ul>
+<blockquote>
+<p><code>play</code>函数有参数<code>paddle</code>, 我之前只是在函数里面用到了<code>paddle</code>, 但是后来hacker版本需要修改<code>paddle</code>的长度, 这里最合适的还是直接在play里面修改,虽然<code>paddle</code>是个<code>GRect</code>, 实际上是指向一个长方形的指针. 在函数里面要 <code>remove</code>, 然后再创建一个Grect, 并赋值给 <code>paddle</code>, 这样 <code>paddle</code> 实际上只是在当前函数里面修改, 这样并不能达到要求. 要修改的话, 很简单, 函数参数改为<code>GRect* paddle</code>, 调用的时候用<code>play(&amp;paddle)</code>(就跟swap一样). 所以这样就是一个双指针. 又比如 <code>int i, int* p = &amp;i, int** p1 = &amp;p</code>. p存的是i的地址, p1存的是p的地址.</p>
+</blockquote>
+<blockquote>
+<p>回过头来看，上面这段话就是本程序的难点，如果直接用<code>paddle</code>来传递参数，比如说在主程序中<code>paddle</code>为<code>0x123</code>,指向一个<code>GRect</code>。在子程序中<code>remove</code>掉这个<code>GRect</code>,并重新赋值一个新的，这时候<code>paddle</code>假设变为了<code>0x333</code>，这个值是在子程序框架中的，是没有办法返回到主程序的，除非用地址引用。</p>
+<p>所以，这时候其实有两种处理方式，而直接用这些值作为参数是不行的，这次参数在子程序中都会被替换到一个临时参数，不能返回。这里的两个方法之一是按照我这的用引用方式，另一种方法就是把这些需要传址的参数全改成全局变量，这样根本不在子程序中定义，直接就用。</p>
+</blockquote>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">//</span>
+<span class="co">// breakout.c</span>
+<span class="co">//</span>
+<span class="co">// Computer Science 50</span>
+<span class="co">// Problem Set 4</span>
+<span class="co">//</span>
+
+<span class="co">// standard libraries</span>
+<span class="ot">#define _XOPEN_SOURCE</span>
+<span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;stdlib.h&gt;</span>
+<span class="ot">#include &lt;string.h&gt;</span>
+<span class="ot">#include &lt;time.h&gt;</span>
+
+<span class="co">// Stanford Portable Library</span>
+<span class="ot">#include &quot;gevents.h&quot;</span>
+<span class="ot">#include &quot;gobjects.h&quot;</span>
+<span class="ot">#include &quot;gwindow.h&quot;</span>
+
+<span class="co">// copy from breakout.java</span>
+<span class="co">// height and width of game&#39;s window in pixels</span>
+<span class="ot">#define HEIGHT 600</span>
+<span class="ot">#define WIDTH 400</span>
+    
+<span class="co">/** </span>Dimensions of the paddle */
+<span class="ot">#define PADDLE_WIDTH 60.0</span>
+<span class="ot">#define PADDLE_HEIGHT 10.0</span>
+
+<span class="co">/** </span>Offset of the paddle up from the bottom */
+<span class="ot">#define PADDLE_Y_OFFSET 30.0</span>
+
+<span class="co">/** </span>Number of bricks per row */
+<span class="ot">#define NBRICKS_PER_ROW 10</span>
+
+<span class="co">/** </span>Number of rows of bricks */
+<span class="ot">#define NBRICK_ROWS 10</span>
+
+<span class="co">/** </span>Separation between bricks */
+<span class="ot">#define BRICK_SEP 4.0</span>
+
+<span class="co">/** </span>Width of a brick */
+<span class="ot">#define BRICK_WIDTH (WIDTH - (NBRICKS_PER_ROW - 1) * BRICK_SEP) / NBRICKS_PER_ROW</span>
+
+<span class="co">/** </span>Height of a brick */
+<span class="ot">#define BRICK_HEIGHT 8.0</span>
+
+<span class="co">/** </span>Radius of the ball in pixels */
+<span class="ot">#define BALL_RADIUS 5.0</span>
+
+<span class="co">/** </span>Offset of the top brick row from the top */
+<span class="ot">#define BRICK_Y_OFFSET 70.0</span>
+
+<span class="co">/** </span>Number of turns */
+<span class="ot">#define NTURNS 3</span>
+
+<span class="co">/** </span>sep deal collide */
+<span class="ot">#define COLLIDE_SEP 0.1</span>
+
+<span class="co">/** </span>vol of ball */
+<span class="ot">#define BALL_V 2.0</span>
+
+<span class="co">/** </span>pause time ms */
+<span class="ot">#define PAUSE 7</span>
+
+<span class="co">// prototypes</span>
+<span class="dt">void</span> initBricks(GWindow window);
+GOval initBall(GWindow window);
+GRect initPaddle(GWindow window);
+GLabel initScoreboard(GWindow window);
+<span class="dt">void</span> updateScoreboard(GWindow window, GLabel label, <span class="dt">int</span> points, <span class="dt">int</span> lives);
+GObject detectCollision(GWindow window, GOval ball);
+<span class="dt">int</span> play(GWindow window, GRect* paddle, GOval ball, GLabel label, <span class="dt">int</span>* points, <span class="dt">int</span>* lives, <span class="dt">int</span> god);
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span>* argv[])
+{
+    <span class="dt">int</span> god = <span class="dv">0</span>;
+    <span class="kw">if</span>(argc &gt; <span class="dv">2</span>)
+    {
+        printf(<span class="st">&quot;useage breakout GOD&quot;</span><span class="co">)</span>;
+        <span class="kw">return</span> <span class="dv">1</span>;
+    }
+    <span class="kw">else</span> <span class="kw">if</span>(argc == <span class="dv">2</span>)
+    {
+        <span class="kw">if</span>(!strcmp(argv[<span class="dv">1</span>],<span class="st">&quot;GOD&quot;</span><span class="co">)</span>)
+            god = <span class="dv">1</span>;
+    }
+
+    <span class="co">// seed pseudorandom number generator</span>
+    srand48(time(NULL));
+
+    <span class="co">// instantiate window</span>
+    GWindow window = newGWindow(WIDTH, HEIGHT);
+
+    <span class="co">// instantiate bricks</span>
+    initBricks(window);
+
+    <span class="co">// instantiate ball, centered in middle of window</span>
+    GOval ball = initBall(window);
+
+    <span class="co">// instantiate paddle, centered at bottom of window</span>
+    GRect paddle = initPaddle(window);
+
+    <span class="co">// instantiate scoreboard, centered in middle of window, just above ball</span>
+    GLabel label = initScoreboard(window);
+
+    <span class="co">// number of lives initially</span>
+    <span class="dt">int</span> lives = NTURNS;
+
+    <span class="co">// number of points initially</span>
+    <span class="dt">int</span> points = <span class="dv">0</span>;
+
+    <span class="dt">int</span> won = <span class="dv">0</span>;
+    <span class="co">// keep playing until game over</span>
+    <span class="kw">while</span> (lives &gt; <span class="dv">0</span>)
+    {
+        waitForClick();
+        won = play(window, &amp;paddle, ball, label, &amp;points, &amp;lives, god);
+        <span class="kw">if</span>(won)
+            <span class="kw">break</span>;
+    }
+    
+    removeGWindow(window, ball);
+    removeGWindow(window, paddle);
+    GLabel gameInfo = newGLabel(<span class="st">&quot;&quot;</span><span class="co">)</span>;
+    setFont(gameInfo, <span class="st">&quot;SansSerif-36&quot;</span><span class="co">)</span>;
+    add(window, gameInfo);
+    <span class="kw">if</span>(won)
+    {
+        setLabel(gameInfo, <span class="st">&quot;YOU WIN!!&quot;</span><span class="co">)</span>;
+        <span class="dt">double</span> x = (getWidth(window) - getWidth(gameInfo)) / <span class="dv">2</span>;
+        <span class="dt">double</span> y = (getHeight(window) - getHeight(gameInfo)) / <span class="dv">2</span>;
+        setLocation(gameInfo, x, y);
+    }
+    <span class="kw">else</span>
+    {
+        setLabel(gameInfo, <span class="st">&quot;YOU LOSE!&quot;</span><span class="co">)</span>;
+        <span class="dt">double</span> x = (getWidth(window) - getWidth(gameInfo)) / <span class="dv">2</span>;
+        <span class="dt">double</span> y = (getHeight(window) - getHeight(gameInfo)) / <span class="dv">2</span>;
+        setLocation(gameInfo, x, y);
+    }
+    <span class="co">// wait for click before exiting</span>
+    <span class="co">//waitForClick();</span>
+
+    <span class="co">// game over</span>
+    <span class="co">//closeGWindow(window);</span>
+    <span class="kw">return</span> <span class="dv">0</span>;
+}
+
+<span class="co">/**</span>
+ * Initializes window with a grid of bricks.
+ */
+<span class="dt">void</span> initBricks(GWindow window)
+{
+
+    <span class="dt">double</span> yBrick = BRICK_Y_OFFSET;
+    <span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; NBRICK_ROWS; i++)
+    {
+        <span class="dt">double</span> xBrick = <span class="fl">0.</span><span class="dv">0</span>;
+        <span class="kw">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; NBRICKS_PER_ROW; j++)
+        {
+            GRect brick = newGRect(xBrick, yBrick, BRICK_WIDTH, BRICK_HEIGHT);
+            setFilled(brick, <span class="kw">true</span>);
+            <span class="kw">switch</span> (i/<span class="dv">2</span>)
+            {
+                <span class="kw">case</span> <span class="dv">0</span>:
+                        setFillColor(brick, <span class="st">&quot;RED&quot;</span><span class="co">)</span>;
+                        <span class="kw">break</span>;
+                <span class="kw">case</span> <span class="dv">1</span>:
+                        setFillColor(brick, <span class="st">&quot;orange&quot;</span><span class="co">)</span>;
+                        <span class="kw">break</span>;
+                <span class="kw">case</span> <span class="dv">2</span>:
+                        setFillColor(brick, <span class="st">&quot;yellow&quot;</span><span class="co">)</span>;
+                        <span class="kw">break</span>;
+                <span class="kw">case</span> <span class="dv">3</span>:
+                        setFillColor(brick, <span class="st">&quot;green&quot;</span><span class="co">)</span>;
+                        <span class="kw">break</span>;
+                <span class="kw">case</span> <span class="dv">4</span>:
+                        setFillColor(brick, <span class="st">&quot;cyan&quot;</span><span class="co">)</span>;
+                        <span class="kw">break</span>;
+                <span class="kw">default</span>:                    
+                        <span class="kw">break</span>;
+            }
+            add(window, brick);
+            xBrick += BRICK_WIDTH + BRICK_SEP;
+        }
+        yBrick += BRICK_HEIGHT + BRICK_SEP;         
+    }
+}
+
+<span class="co">/**</span>
+ * Instantiates ball in center of window.  Returns ball.
+ */
+GOval initBall(GWindow window)
+{
+    GOval ball = newGOval(WIDTH /<span class="dv">2</span> - BALL_RADIUS, HEIGHT/<span class="dv">2</span> - BALL_RADIUS, <span class="dv">2</span> * BALL_RADIUS , <span class="dv">2</span> * BALL_RADIUS);
+    setFilled(ball, <span class="kw">true</span>);
+    add(window, ball);
+    <span class="kw">return</span> ball;
+}
+
+<span class="co">/**</span>
+ * Instantiates paddle in bottom-middle of window.
+ */
+GRect initPaddle(GWindow window)
+{
+    GRect paddle = newGRect((WIDTH - PADDLE_WIDTH) / <span class="dv">2</span>, (HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT), PADDLE_WIDTH, PADDLE_HEIGHT);
+    setFilled(paddle, <span class="kw">true</span>);
+    add(window, paddle);
+    <span class="kw">return</span> paddle;
+}
+
+<span class="co">/**</span>
+ * Instantiates, configures, <span class="kw">and</span> returns label <span class="kw">for</span> scoreboard.
+ */
+GLabel initScoreboard(GWindow window)
+{
+    GLabel label = newGLabel(<span class="st">&quot;Lives: 3                                            Points: 0&quot;</span><span class="co">)</span>;
+    setFont(label, <span class="st">&quot;SansSerif-16&quot;</span><span class="co">)</span>;
+    add(window, label);;
+;
+
+    <span class="co">// center label in window</span>
+    <span class="dt">double</span> x = (getWidth(window) - getWidth(label)) / <span class="dv">2</span>;
+    <span class="dt">double</span> y =  getHeight(window) - getHeight(label) / <span class="dv">2</span>;
+    setLocation(label, x, y);
+    <span class="kw">return</span> label;
+}
+
+<span class="co">/**</span>
+ * Updates scoreboard<span class="st">&#39;s label, keeping it centered in window.</span>
+ */
+<span class="dt">void</span> updateScoreboard(GWindow window, GLabel label, <span class="dt">int</span> points, <span class="dt">int</span> lives)
+{
+    <span class="co">// update label</span>
+    <span class="dt">char</span> s[<span class="dv">70</span>];
+    sprintf(s, <span class="st">&quot;Lives: </span><span class="ch">%d</span><span class="st">                                             Points: </span><span class="ch">%d</span><span class="st">&quot;</span><span class="co">,</span> lives, points);
+    setLabel(label, s);
+
+}
+
+<span class="co">/**</span>
+ * Detects whether ball has collided with some object in window
+ * by checking the four corners of its bounding box (which are
+ * outside the ball<span class="st">&#39;s GOval, and so the ball can&#39;</span>t collide with
+ * itself).  Returns object <span class="kw">if</span> so, <span class="kw">else</span> NULL.
+ */
+GObject detectCollision(GWindow window, GOval ball)
+{
+    <span class="co">// ball&#39;s location</span>
+    <span class="dt">double</span> x = getX(ball);
+    <span class="dt">double</span> y = getY(ball);
+
+    <span class="co">// for checking for collisions</span>
+    GObject object;
+
+    <span class="co">// check for collision at ball&#39;s top-left corner</span>
+    object = getGObjectAt(window, x, y);
+    <span class="kw">if</span> (object != NULL)
+    {
+        <span class="kw">return</span> object;
+    }
+
+    <span class="co">// check for collision at ball&#39;s top-right corner</span>
+    object = getGObjectAt(window, x + <span class="dv">2</span> * BALL_RADIUS, y);
+    <span class="kw">if</span> (object != NULL)
+    {
+        <span class="kw">return</span> object;
+    }
+
+    <span class="co">// check for collision at ball&#39;s bottom-left corner</span>
+    object = getGObjectAt(window, x, y + <span class="dv">2</span> * BALL_RADIUS);
+    <span class="kw">if</span> (object != NULL)
+    {
+        <span class="kw">return</span> object;
+    }
+
+    <span class="co">// check for collision at ball&#39;s bottom-right corner</span>
+    object = getGObjectAt(window, x + <span class="dv">2</span> * BALL_RADIUS, y + <span class="dv">2</span> * BALL_RADIUS);
+    <span class="kw">if</span> (object != NULL)
+    {
+        <span class="kw">return</span> object;
+    }
+
+    <span class="co">// no collision</span>
+    <span class="kw">return</span> NULL;
+}
+<span class="dt">int</span> play(GWindow window, GRect* paddle, GOval ball, GLabel label, <span class="dt">int</span>* points, <span class="dt">int</span>* lives, <span class="dt">int</span> god)
+{
+    <span class="dt">double</span> vy = BALL_V;
+    <span class="dt">double</span> vx = drand48() * (BALL_V - <span class="fl">1.</span><span class="dv">0</span>) + <span class="fl">1.</span><span class="dv">0</span>;
+    <span class="kw">if</span> (drand48() &lt; <span class="fl">0.</span><span class="dv">5</span>)
+        vx = -vx;
+    <span class="dt">double</span> paddleY = getY(*paddle);
+    <span class="dt">double</span> paddleWidth = PADDLE_WIDTH;
+    <span class="dt">double</span> brickFirstY = BRICK_Y_OFFSET + <span class="fl">9.</span><span class="dv">0</span> * (BRICK_HEIGHT + BRICK_SEP);
+    <span class="dt">bool</span> hasLaser = <span class="kw">false</span>;
+    <span class="kw">while</span>(<span class="kw">true</span>)
+    {
+        move(ball, vx, vy);    
+        <span class="dt">double</span> ballX = getX(ball);
+        <span class="dt">double</span> ballY = getY(ball);
+        
+        GOval laser;
+
+        <span class="kw">if</span>(god)
+        {
+            <span class="dt">double</span> xMouse = ballX;
+            <span class="kw">if</span> (xMouse &gt; WIDTH - paddleWidth / <span class="dv">2</span>)
+                xMouse = WIDTH - paddleWidth / <span class="dv">2</span>;
+            <span class="kw">else</span> <span class="kw">if</span> (xMouse &lt; paddleWidth / <span class="dv">2</span>) 
+                xMouse = paddleWidth / <span class="dv">2</span>;
+            setLocation(*paddle, xMouse - paddleWidth / <span class="dv">2</span>, paddleY);
+        }
+        <span class="kw">else</span>
+        {
+            GEvent event = getNextEvent(MOUSE_EVENT);
+            <span class="kw">if</span> (event != NULL)
+            {
+                <span class="kw">if</span> (getEventType(event) == MOUSE_MOVED)
+                {
+                    <span class="dt">double</span> xMouse = getX(event);
+                    <span class="kw">if</span> (xMouse &gt; WIDTH - paddleWidth / <span class="dv">2</span>)
+                        xMouse = WIDTH - paddleWidth / <span class="dv">2</span>;
+                    <span class="kw">else</span> <span class="kw">if</span> (xMouse &lt; paddleWidth / <span class="dv">2</span>) 
+                        xMouse = paddleWidth / <span class="dv">2</span>;
+                    setLocation(*paddle, xMouse - paddleWidth / <span class="dv">2</span>, paddleY);
+                }
+                <span class="kw">if</span> ((getEventType(event) == MOUSE_CLICKED) &amp;&amp; (hasLaser == <span class="kw">false</span>))
+                {
+                    <span class="dt">double</span> paddleX = getX(*paddle);
+                    laser = newGOval(paddleX + paddleWidth/<span class="dv">2</span> - PADDLE_HEIGHT/<span class="dv">4</span>, paddleY, PADDLE_HEIGHT/<span class="dv">2</span>, PADDLE_HEIGHT);
+                    setFilled(laser, <span class="kw">true</span>);
+                    setFillColor(laser, <span class="st">&quot;RED&quot;</span><span class="co">)</span>;
+                    add(window, laser);
+                    hasLaser = <span class="kw">true</span>;
+                }
+            }
+        }
+        <span class="kw">if</span> (hasLaser)
+        {
+            move(laser, <span class="fl">0.</span><span class="dv">0</span> , <span class="fl">-5.</span><span class="dv">0</span>);
+            <span class="dt">double</span> laserX = getX(laser);
+            <span class="dt">double</span> laserY = getY(laser);
+            <span class="kw">if</span> (laserY &lt; <span class="fl">0.</span><span class="dv">0</span>)
+            {
+                removeGWindow(window, laser);
+                hasLaser = <span class="kw">false</span>;
+            }
+            <span class="kw">else</span>
+            {
+                setLocation(laser, laserX, laserY);
+                GObject target = getGObjectAt(window, laserX, laserY);
+                <span class="kw">if</span> (target != NULL)
+                {
+                    <span class="kw">if</span> (target == ball)
+                    {
+                        *lives = <span class="dv">0</span>;
+                        <span class="kw">return</span> <span class="dv">0</span>;
+                    }
+                    <span class="kw">else</span>
+                    {
+                        <span class="dt">double</span> brickY = getY(target);
+                        <span class="dt">int</span> n = (<span class="dt">int</span>)(brickFirstY - brickY)/(<span class="dt">int</span>)(BRICK_HEIGHT + BRICK_SEP)/<span class="dv">2</span> + <span class="dv">1</span>;
+                        *points += n;
+                        removeGWindow(window, target);
+                        updateScoreboard(window, label, *points, *lives);
+                        paddleWidth = PADDLE_WIDTH * (<span class="fl">1.</span><span class="dv">0</span> - <span class="fl">2.</span><span class="dv">0</span> / <span class="fl">3.</span><span class="dv">0</span> * ((<span class="dt">double</span>)*points / <span class="fl">300.</span><span class="dv">0</span>));
+                        <span class="dt">double</span> paddleX = getX(*paddle);
+                        removeGWindow(window, *paddle);
+                        *paddle = newGRect(paddleX, (HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT), paddleWidth, PADDLE_HEIGHT);
+                        setFilled(*paddle, <span class="kw">true</span>);
+                        add(window, *paddle);
+                        
+                        removeGWindow(window, laser);
+                        hasLaser = <span class="kw">false</span>;
+                    }
+                }
+            }
+        }
+        <span class="kw">if</span> (ballY &gt; HEIGHT - PADDLE_Y_OFFSET)
+        {
+            setLocation(ball, WIDTH / <span class="dv">2</span> - BALL_RADIUS, HEIGHT / <span class="dv">2</span> - BALL_RADIUS);
+            setLocation(*paddle, (WIDTH - paddleWidth) / <span class="dv">2</span>, (HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT));
+            updateScoreboard(window, label, *points, --*lives);
+            <span class="kw">return</span> <span class="dv">0</span>;
+        }
+        <span class="dt">double</span> ballUC = getY(ball);
+        <span class="dt">double</span> ballLC = getX(ball);
+        <span class="dt">double</span> ballBC = ballUC + <span class="dv">2</span> * BALL_RADIUS;
+        <span class="dt">double</span> ballRC = ballLC + <span class="dv">2</span> * BALL_RADIUS;
+        <span class="kw">if</span>(ballUC &lt;= <span class="fl">0.</span><span class="dv">0</span> || ballBC &gt;= HEIGHT) vy = -vy;
+        <span class="kw">if</span>(ballLC &lt;= <span class="fl">0.</span><span class="dv">0</span> || ballRC &gt;= WIDTH) vx = -vx;
+        <span class="co">/* deal collide */</span> 
+        GObject collision = detectCollision(window, ball);
+        {
+            <span class="kw">if</span> (collision != NULL)
+            {   
+                <span class="kw">if</span> (strcmp(getType(collision), <span class="st">&quot;GLabel&quot;</span><span class="co">)</span> != <span class="dv">0</span>)
+                {
+                    vy = -vy;
+                    <span class="kw">if</span> (collision != *paddle)
+                    {   
+                        <span class="kw">if</span> (collision == laser)
+                        {
+                            *lives = <span class="dv">0</span>;
+                            <span class="kw">return</span> <span class="dv">0</span>;
+                        }
+                        <span class="kw">else</span>
+                        {
+                            vx *= <span class="fl">1.</span><span class="bn">007</span>;
+                            vy *= <span class="fl">1.</span><span class="bn">007</span>;
+                            <span class="dt">double</span> brickY = getY(collision);
+                            <span class="dt">int</span> n = (<span class="dt">int</span>)(brickFirstY - brickY)/(<span class="dt">int</span>)(BRICK_HEIGHT + BRICK_SEP)/<span class="dv">2</span> + <span class="dv">1</span>;
+                            *points += n;
+                            removeGWindow(window, collision);
+                            updateScoreboard(window, label, *points, *lives);
+                            paddleWidth = PADDLE_WIDTH * (<span class="fl">1.</span><span class="dv">0</span> - <span class="fl">2.</span><span class="dv">0</span> / <span class="fl">5.</span><span class="dv">0</span> * ((<span class="dt">double</span>)*points / <span class="fl">300.</span><span class="dv">0</span>));
+                            <span class="dt">double</span> paddleX = getX(*paddle);
+                            removeGWindow(window, *paddle);
+                            *paddle = newGRect(paddleX, (HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT), paddleWidth, PADDLE_HEIGHT);
+                            setFilled(*paddle, <span class="kw">true</span>);
+                            add(window, *paddle);
+                        }
+                    }
+                    <span class="kw">else</span>
+                    {
+                        vx += (drand48()<span class="fl">-0.</span><span class="dv">5</span>)/<span class="fl">5.</span><span class="dv">0</span>;
+                        vy += (drand48()<span class="fl">-0.</span><span class="dv">5</span>)/<span class="fl">5.</span><span class="dv">0</span>;
+                    }
+                }
+            }
+        }
+        pause(PAUSE);
+        <span class="kw">if</span> (*points == <span class="dv">300</span>)
+            <span class="kw">return</span> <span class="dv">1</span>;
+    }
+}</code></pre>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

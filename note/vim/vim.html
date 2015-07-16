@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+        
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>vim</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#vim">vim</a><ul>
+        <li><a href="#cheat-sheet">cheat sheet</a></li>
+        <li><a href="#宏">宏</a></li>
+        <li><a href="#移动光标">移动光标</a><ul>
+        <li><a href="#如何移动某些特定行到文尾">如何移动某些特定行到文尾</a></li>
+        </ul></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/vim.html">vim</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/06 15:26</div>
+<!--vim-->
+<h2 id="vim">vim</h2>
+<hr />
+<h3 id="cheat-sheet">cheat sheet</h3>
+<p>先贴两张cheat sheet</p>
+<div class="figure">
+<img src="vim-cheat-sheet.png" alt="中文" /><p class="caption">中文</p>
+</div>
+<div class="figure">
+<img src="vim-cheat-sheet.gif" alt="英文" /><p class="caption">英文</p>
+</div>
+<h3 id="宏">宏</h3>
+<p>宏的功能非常强大, 录制的命令并不局限于普通模式, :命令也是可以的, 比如用来 批量替换文本, 比如我想删掉 md 文件中的 {#toc0.x.x}, 依次输入下面的命令就行了</p>
+<pre class="vim"><code>vim *.md
+qq
+:%s/{.\+$//ge
+:wnext
+q
+
+999@q</code></pre>
+<blockquote>
+<blockquote>
+<p>当然, 针对此问题, 更好的方法是用 bufdo, 命令如下</p>
+</blockquote>
+</blockquote>
+<pre class="vim"><code>:bufdo %s/{.\+$//g | w</code></pre>
+<blockquote>
+<blockquote>
+<p>The pipe allows you to use additional commands per buffer</p>
+</blockquote>
+</blockquote>
+<h3 id="移动光标">移动光标</h3>
+<p><a href="http://www.niwozhi.net/demo_c243_i10590.html">这里</a>有基本的操作。</p>
+<p>编辑 <code>da(</code> <code>di(</code> 三个键分别是删除、包括、括号，第一个命令也可以用其他的，比如说y，v, x。最后一个可以用<code>(,{,[,t,b,B</code>，其中b和B分别表示小括号大括号。</p>
+<p>类似的还有<code>dfx</code>, 其中d是指一般的命令，f是向后查找，F是向前, 类似的t和T，但不包括要查找的词，x是任何一个字母，作用就是在当前行内删除到<code>x</code>字母。但这个命令只能在当前行使用，如果要跨行使用，用<code>d/pattern</code></p>
+<h4 id="如何移动某些特定行到文尾">如何移动某些特定行到文尾</h4>
+<p>我用GVIM做任务管理，就是todo list。效果不错。但是不能将已完成的任务全部归档或 移动文件尾部。t</p>
+<p>例如：</p>
+<ul>
+<li><p>[ ] 取电影票</p></li>
+<li><p>[X] 送费用发票</p></li>
+<li><p>[ ] 上移动公司</p></li>
+</ul>
+<p>我需要的是将带有[X]的行一次性全部移动到文件末尾或者归档另存为一个文件。这个组 合命令如何做？</p>
+<pre><code>:g/\[X\]/m$
+map &lt;F11&gt; :g/\[X\]/m$&lt;cr&gt;|       &quot;归档已完成项目</code></pre>
+<p>这里的<code>|</code>是表示map终结</p>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

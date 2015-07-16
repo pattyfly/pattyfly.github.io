@@ -1,0 +1,461 @@
+﻿<!--c-point-->
+## pset 4 {#toc_0.0.0.1}
+
+----
+
+[pset4](https://cdn.cs50.net/2014/spring/psets/4/hacker4/hacker4.html)
+
+###   breakout
+
+* 要求：生成一个打砖块的游戏，要求实现激光，生命，分数显示，难度提升（挡板宽度，球速）等功能
+* 掌握：图形库，自上而下的设计，对象函数
+* 难点：
+    - 自上而下的设计思路
+    - 碰撞处理
+* note
+
+> `play`函数有参数`paddle`, 我之前只是在函数里面用到了`paddle`, 但是后来hacker版本需要修改`paddle`的长度, 这里最合适的还是直接在play里面修改,虽然`paddle`是个`GRect`, 实际上是指向一个长方形的指针. 在函数里面要 `remove`, 然后再创建一个Grect, 并赋值给 `paddle`, 这样 `paddle` 实际上只是在当前函数里面修改, 这样并不能达到要求. 要修改的话, 很简单, 函数参数改为`GRect* paddle`, 调用的时候用`play(&paddle)`(就跟swap一样).  所以这样就是一个双指针. 又比如 `int i, int* p = &i, int** p1 = &p`.   p存的是i的地址, p1存的是p的地址. 
+
+> 回过头来看，上面这段话就是本程序的难点，如果直接用`paddle`来传递参数，比如说在主程序中`paddle`为`0x123`,指向一个`GRect`。在子程序中`remove`掉这个`GRect`,并重新赋值一个新的，这时候`paddle`假设变为了`0x333`，这个值是在子程序框架中的，是没有办法返回到主程序的，除非用地址引用。
+>
+> 所以，这时候其实有两种处理方式，而直接用这些值作为参数是不行的，这次参数在子程序中都会被替换到一个临时参数，不能返回。这里的两个方法之一是按照我这的用引用方式，另一种方法就是把这些需要传址的参数全改成全局变量，这样根本不在子程序中定义，直接就用。
+
+```cpp
+//
+// breakout.c
+//
+// Computer Science 50
+// Problem Set 4
+//
+
+// standard libraries
+#define _XOPEN_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+// Stanford Portable Library
+#include "gevents.h"
+#include "gobjects.h"
+#include "gwindow.h"
+
+// copy from breakout.java
+// height and width of game's window in pixels
+#define HEIGHT 600
+#define WIDTH 400
+	
+/** Dimensions of the paddle */
+#define PADDLE_WIDTH 60.0
+#define PADDLE_HEIGHT 10.0
+
+/** Offset of the paddle up from the bottom */
+#define PADDLE_Y_OFFSET 30.0
+
+/** Number of bricks per row */
+#define NBRICKS_PER_ROW 10
+
+/** Number of rows of bricks */
+#define NBRICK_ROWS 10
+
+/** Separation between bricks */
+#define BRICK_SEP 4.0
+
+/** Width of a brick */
+#define BRICK_WIDTH (WIDTH - (NBRICKS_PER_ROW - 1) * BRICK_SEP) / NBRICKS_PER_ROW
+
+/** Height of a brick */
+#define BRICK_HEIGHT 8.0
+
+/** Radius of the ball in pixels */
+#define BALL_RADIUS 5.0
+
+/** Offset of the top brick row from the top */
+#define BRICK_Y_OFFSET 70.0
+
+/** Number of turns */
+#define NTURNS 3
+
+/** sep deal collide */
+#define COLLIDE_SEP 0.1
+
+/** vol of ball */
+#define BALL_V 2.0
+
+/** pause time ms */
+#define PAUSE 7
+
+// prototypes
+void initBricks(GWindow window);
+GOval initBall(GWindow window);
+GRect initPaddle(GWindow window);
+GLabel initScoreboard(GWindow window);
+void updateScoreboard(GWindow window, GLabel label, int points, int lives);
+GObject detectCollision(GWindow window, GOval ball);
+int play(GWindow window, GRect* paddle, GOval ball, GLabel label, int* points, int* lives, int god);
+
+int main(int argc, char* argv[])
+{
+    int god = 0;
+    if(argc > 2)
+    {
+        printf("useage breakout GOD");
+        return 1;
+    }
+    else if(argc == 2)
+    {
+        if(!strcmp(argv[1],"GOD"))
+            god = 1;
+    }
+
+    // seed pseudorandom number generator
+    srand48(time(NULL));
+
+    // instantiate window
+    GWindow window = newGWindow(WIDTH, HEIGHT);
+
+    // instantiate bricks
+    initBricks(window);
+
+    // instantiate ball, centered in middle of window
+    GOval ball = initBall(window);
+
+    // instantiate paddle, centered at bottom of window
+    GRect paddle = initPaddle(window);
+
+    // instantiate scoreboard, centered in middle of window, just above ball
+    GLabel label = initScoreboard(window);
+
+    // number of lives initially
+    int lives = NTURNS;
+
+    // number of points initially
+    int points = 0;
+
+    int won = 0;
+    // keep playing until game over
+    while (lives > 0)
+    {
+        waitForClick();
+        won = play(window, &paddle, ball, label, &points, &lives, god);
+        if(won)
+            break;
+    }
+    
+    removeGWindow(window, ball);
+    removeGWindow(window, paddle);
+    GLabel gameInfo = newGLabel("");
+    setFont(gameInfo, "SansSerif-36");
+    add(window, gameInfo);
+    if(won)
+    {
+        setLabel(gameInfo, "YOU WIN!!");
+        double x = (getWidth(window) - getWidth(gameInfo)) / 2;
+        double y = (getHeight(window) - getHeight(gameInfo)) / 2;
+        setLocation(gameInfo, x, y);
+    }
+    else
+    {
+        setLabel(gameInfo, "YOU LOSE!");
+        double x = (getWidth(window) - getWidth(gameInfo)) / 2;
+        double y = (getHeight(window) - getHeight(gameInfo)) / 2;
+        setLocation(gameInfo, x, y);
+    }
+    // wait for click before exiting
+    //waitForClick();
+
+    // game over
+    //closeGWindow(window);
+    return 0;
+}
+
+/**
+ * Initializes window with a grid of bricks.
+ */
+void initBricks(GWindow window)
+{
+
+    double yBrick = BRICK_Y_OFFSET;
+    for(int i = 0; i < NBRICK_ROWS; i++)
+    {
+        double xBrick = 0.0;
+        for (int j = 0; j < NBRICKS_PER_ROW; j++)
+        {
+            GRect brick = newGRect(xBrick, yBrick, BRICK_WIDTH, BRICK_HEIGHT);
+            setFilled(brick, true);
+            switch (i/2)
+            {
+                case 0:
+                        setFillColor(brick, "RED");
+                        break;
+                case 1:
+                        setFillColor(brick, "orange");
+                        break;
+                case 2:
+                        setFillColor(brick, "yellow");
+                        break;
+                case 3:
+                        setFillColor(brick, "green");
+                        break;
+                case 4:
+                        setFillColor(brick, "cyan");
+                        break;
+                default:					
+                        break;
+            }
+            add(window, brick);
+            xBrick += BRICK_WIDTH + BRICK_SEP;
+        }
+        yBrick += BRICK_HEIGHT + BRICK_SEP;			
+    }
+}
+
+/**
+ * Instantiates ball in center of window.  Returns ball.
+ */
+GOval initBall(GWindow window)
+{
+    GOval ball = newGOval(WIDTH /2 - BALL_RADIUS, HEIGHT/2 - BALL_RADIUS, 2 * BALL_RADIUS , 2 * BALL_RADIUS);
+    setFilled(ball, true);
+    add(window, ball);
+    return ball;
+}
+
+/**
+ * Instantiates paddle in bottom-middle of window.
+ */
+GRect initPaddle(GWindow window)
+{
+    GRect paddle = newGRect((WIDTH - PADDLE_WIDTH) / 2, (HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT), PADDLE_WIDTH, PADDLE_HEIGHT);
+    setFilled(paddle, true);
+    add(window, paddle);
+    return paddle;
+}
+
+/**
+ * Instantiates, configures, and returns label for scoreboard.
+ */
+GLabel initScoreboard(GWindow window)
+{
+    GLabel label = newGLabel("Lives: 3                                            Points: 0");
+    setFont(label, "SansSerif-16");
+    add(window, label);;
+;
+
+    // center label in window
+    double x = (getWidth(window) - getWidth(label)) / 2;
+    double y =  getHeight(window) - getHeight(label) / 2;
+    setLocation(label, x, y);
+    return label;
+}
+
+/**
+ * Updates scoreboard's label, keeping it centered in window.
+ */
+void updateScoreboard(GWindow window, GLabel label, int points, int lives)
+{
+    // update label
+    char s[70];
+    sprintf(s, "Lives: %d                                             Points: %d", lives, points);
+    setLabel(label, s);
+
+}
+
+/**
+ * Detects whether ball has collided with some object in window
+ * by checking the four corners of its bounding box (which are
+ * outside the ball's GOval, and so the ball can't collide with
+ * itself).  Returns object if so, else NULL.
+ */
+GObject detectCollision(GWindow window, GOval ball)
+{
+    // ball's location
+    double x = getX(ball);
+    double y = getY(ball);
+
+    // for checking for collisions
+    GObject object;
+
+    // check for collision at ball's top-left corner
+    object = getGObjectAt(window, x, y);
+    if (object != NULL)
+    {
+        return object;
+    }
+
+    // check for collision at ball's top-right corner
+    object = getGObjectAt(window, x + 2 * BALL_RADIUS, y);
+    if (object != NULL)
+    {
+        return object;
+    }
+
+    // check for collision at ball's bottom-left corner
+    object = getGObjectAt(window, x, y + 2 * BALL_RADIUS);
+    if (object != NULL)
+    {
+        return object;
+    }
+
+    // check for collision at ball's bottom-right corner
+    object = getGObjectAt(window, x + 2 * BALL_RADIUS, y + 2 * BALL_RADIUS);
+    if (object != NULL)
+    {
+        return object;
+    }
+
+    // no collision
+    return NULL;
+}
+int play(GWindow window, GRect* paddle, GOval ball, GLabel label, int* points, int* lives, int god)
+{
+    double vy = BALL_V;
+    double vx = drand48() * (BALL_V - 1.0) + 1.0;
+    if (drand48() < 0.5)
+        vx = -vx;
+    double paddleY = getY(*paddle);
+    double paddleWidth = PADDLE_WIDTH;
+    double brickFirstY = BRICK_Y_OFFSET + 9.0 * (BRICK_HEIGHT + BRICK_SEP);
+    bool hasLaser = false;
+    while(true)
+    {
+        move(ball, vx, vy);    
+        double ballX = getX(ball);
+        double ballY = getY(ball);
+        
+        GOval laser;
+
+        if(god)
+        {
+            double xMouse = ballX;
+            if (xMouse > WIDTH - paddleWidth / 2)
+                xMouse = WIDTH - paddleWidth / 2;
+            else if (xMouse < paddleWidth / 2) 
+                xMouse = paddleWidth / 2;
+            setLocation(*paddle, xMouse - paddleWidth / 2, paddleY);
+        }
+        else
+        {
+            GEvent event = getNextEvent(MOUSE_EVENT);
+            if (event != NULL)
+            {
+                if (getEventType(event) == MOUSE_MOVED)
+                {
+                    double xMouse = getX(event);
+                    if (xMouse > WIDTH - paddleWidth / 2)
+                        xMouse = WIDTH - paddleWidth / 2;
+                    else if (xMouse < paddleWidth / 2) 
+                        xMouse = paddleWidth / 2;
+                    setLocation(*paddle, xMouse - paddleWidth / 2, paddleY);
+                }
+                if ((getEventType(event) == MOUSE_CLICKED) && (hasLaser == false))
+                {
+                    double paddleX = getX(*paddle);
+                    laser = newGOval(paddleX + paddleWidth/2 - PADDLE_HEIGHT/4, paddleY, PADDLE_HEIGHT/2, PADDLE_HEIGHT);
+                    setFilled(laser, true);
+                    setFillColor(laser, "RED");
+                    add(window, laser);
+                    hasLaser = true;
+                }
+            }
+        }
+        if (hasLaser)
+        {
+            move(laser, 0.0 , -5.0);
+            double laserX = getX(laser);
+            double laserY = getY(laser);
+            if (laserY < 0.0)
+            {
+                removeGWindow(window, laser);
+                hasLaser = false;
+            }
+            else
+            {
+                setLocation(laser, laserX, laserY);
+                GObject target = getGObjectAt(window, laserX, laserY);
+                if (target != NULL)
+                {
+                    if (target == ball)
+                    {
+                        *lives = 0;
+                        return 0;
+                    }
+                    else
+                    {
+                        double brickY = getY(target);
+                        int n = (int)(brickFirstY - brickY)/(int)(BRICK_HEIGHT + BRICK_SEP)/2 + 1;
+                        *points += n;
+                        removeGWindow(window, target);
+                        updateScoreboard(window, label, *points, *lives);
+                        paddleWidth = PADDLE_WIDTH * (1.0 - 2.0 / 3.0 * ((double)*points / 300.0));
+                        double paddleX = getX(*paddle);
+                        removeGWindow(window, *paddle);
+                        *paddle = newGRect(paddleX, (HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT), paddleWidth, PADDLE_HEIGHT);
+                        setFilled(*paddle, true);
+                        add(window, *paddle);
+                        
+                        removeGWindow(window, laser);
+                        hasLaser = false;
+                    }
+                }
+            }
+        }
+        if (ballY > HEIGHT - PADDLE_Y_OFFSET)
+        {
+            setLocation(ball, WIDTH / 2 - BALL_RADIUS, HEIGHT / 2 - BALL_RADIUS);
+            setLocation(*paddle, (WIDTH - paddleWidth) / 2, (HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT));
+            updateScoreboard(window, label, *points, --*lives);
+            return 0;
+        }
+        double ballUC = getY(ball);
+        double ballLC = getX(ball);
+        double ballBC = ballUC + 2 * BALL_RADIUS;
+        double ballRC = ballLC + 2 * BALL_RADIUS;
+        if(ballUC <= 0.0 || ballBC >= HEIGHT) vy = -vy;
+        if(ballLC <= 0.0 || ballRC >= WIDTH) vx = -vx;
+        /* deal collide */ 
+        GObject collision = detectCollision(window, ball);
+        {
+            if (collision != NULL)
+            {   
+                if (strcmp(getType(collision), "GLabel") != 0)
+                {
+                    vy = -vy;
+                    if (collision != *paddle)
+                    {   
+                        if (collision == laser)
+                        {
+                            *lives = 0;
+                            return 0;
+                        }
+                        else
+                        {
+                            vx *= 1.007;
+                            vy *= 1.007;
+                            double brickY = getY(collision);
+                            int n = (int)(brickFirstY - brickY)/(int)(BRICK_HEIGHT + BRICK_SEP)/2 + 1;
+                            *points += n;
+                            removeGWindow(window, collision);
+                            updateScoreboard(window, label, *points, *lives);
+                            paddleWidth = PADDLE_WIDTH * (1.0 - 2.0 / 5.0 * ((double)*points / 300.0));
+                            double paddleX = getX(*paddle);
+                            removeGWindow(window, *paddle);
+                            *paddle = newGRect(paddleX, (HEIGHT - PADDLE_Y_OFFSET - PADDLE_HEIGHT), paddleWidth, PADDLE_HEIGHT);
+                            setFilled(*paddle, true);
+                            add(window, *paddle);
+                        }
+                    }
+                    else
+                    {
+                        vx += (drand48()-0.5)/5.0;
+                        vy += (drand48()-0.5)/5.0;
+                    }
+                }
+            }
+        }
+        pause(PAUSE);
+        if (*points == 300)
+            return 1;
+    }
+}
+```

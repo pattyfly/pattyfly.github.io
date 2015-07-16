@@ -1,0 +1,12 @@
+###wiki
+
+------
+
+<div id=archive_tags>
+<ul>
+<li>[batch wiki](/wiki/note/batch/batch wiki.html)</li> 
+<li>[about wiki](/wiki/note/wiki/about wiki.html)</li> 
+<li>[vimwiki synatx](/wiki/note/wiki/vimwiki synatx.html)</li> 
+<li>[vimwiki template](/wiki/note/wiki/vimwiki template.html)</li> 
+</ul>
+</div>

@@ -1,0 +1,67 @@
+<!--php-->
+### php intro
+
+----
+
+不需要申明变量类型, 变量名称都是\$加上字母或者下划线开始. -   `condition`, `switch`, `for`,  `while`,  `do while` 都一样
+
+```php
+.....
+.....
+```
+
+#### 基本语法
+
+-   array
+
+```php
+$numbers=[1,5,6,7] //跟python一样;
+$numbers[]=8; $numbers=[1,5,6,7,8]
+```
+
+-   string
+
+> > \$s="hello, world"; 也可以用单引号 .用于连接字符 
+       
+```php
+$$n=5; $$s='n is ' . $$n
+$s="n is $n";
+```
+> > -   双引号里面的变量会被转换, 单引号不会
+-   自带string.h
+-   printf/print
+-   print输出变量, printf用于格式化输出. 
+
+
+-   foreach
+
+```php
+foreach ($numbers as $number)
+  $sum += number;
+```
+
+>>类似于 python 的 for number in numbers, 不过两者的顺序要倒过来. 
+
+-   字典( associative arrays)
+
+```php
+$quote = ["symbol" => "FB", "price" => "49.26"]
+$quote["symbol"] //就是"FB"
+$quote["increase"]=0.4 //增加字段
+count($quote), //所有项目数量, 4
+```
+
+-   super globals
+
+```php
+$_COOKIE $_GET $_POST $_SERVER $_SESSION
+```
+
+-   函数 function f()
+-   多文件
+
+```php
+require_once(__DIR__."functionPhpname.php")
+```
+
+-   邮件库 [PHPMailer](https://github.com/PHPMailer/PHPMailer)

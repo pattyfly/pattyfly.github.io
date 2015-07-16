@@ -1,0 +1,10 @@
+###vim
+
+------
+
+<div id=archive_tags>
+<ul>
+<li>[vim](/wiki/note/vim/vim.html)</li> 
+<li>[about wiki](/wiki/note/wiki/about wiki.html)</li> 
+</ul>
+</div>

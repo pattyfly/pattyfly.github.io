@@ -1,0 +1,330 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>pset2</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#pset-2">pset 2</a><ul>
+        <li><a href="#initials">initials</a></li>
+        <li><a href="#crack">crack</a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/c.html">c</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/24 17:51</div>
+<!--c-->
+<h2 id="pset-2">pset 2</h2>
+<hr />
+<p><a href="https://cdn.cs50.net/2014/spring/psets/2/hacker2/hacker2.html">pset2</a></p>
+<h3 id="initials">initials</h3>
+<ul>
+<li>要求：输出名字的缩写</li>
+<li>掌握：标准输入，基本库函数</li>
+<li>难点：判断首字母的算法</li>
+</ul>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;cs50.h&gt;</span>
+<span class="ot">#include &lt;ctype.h&gt;</span>
+
+<span class="dt">int</span> main(<span class="dt">void</span>)
+{
+    printf(<span class="st">&quot;please put in your name:</span><span class="ch">\n</span><span class="st">&quot;</span>);
+    <span class="dt">char</span>* name = GetString();
+    <span class="dt">char</span>* s = name;
+    <span class="dt">int</span> flag =  <span class="dv">1</span>;
+    <span class="kw">while</span> (*s != <span class="st">&#39;</span><span class="ch">\0</span><span class="st">&#39;</span>)
+    {
+        <span class="kw">if</span> (isalpha(*s) &amp;&amp; flag)
+        {
+            printf(<span class="st">&quot;</span><span class="ch">%c</span><span class="st">&quot;</span>,toupper(*s));
+            flag = <span class="dv">0</span>;
+        }
+        <span class="kw">if</span> (*s == <span class="st">&#39; &#39;</span> &amp;&amp; !flag) 
+        {
+            flag = <span class="dv">1</span>;
+        }
+        s++;
+    }
+    free(name);
+    printf(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>);
+}</code></pre>
+<h3 id="crack">crack</h3>
+<ul>
+<li>要求：破解加密的密码</li>
+<li>掌握：<a href="C%20intro.html">文件读写</a>, 其他函数的理解(man)，main 函数命令行参数，常量定义</li>
+<li>难点：字符串函数， 函数返回字符串，内存管理</li>
+<li>爆点：短于8位字符的密码遍历，从简单到复杂</li>
+<li>注意：因为涉及到很多指针函数，所以内存管理这一块是个很大的问题，需要用<code>valgrind</code>多检查。另外现在还是没有明白为什么下面的<code>tmp</code>不需要也不能释放内存，是不是跟<code>crypt</code>的实现有关</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>假如定义一个字符指针，由一个字符指针函数赋值，这样这个指针不需要用malloc来分配内存。因为子函数已经分好内存了，只是注意用完以后要释放。比如说 <code>char* c = GetString();</code> 这种类型的就不要先用<code>malloc</code>给<code>c</code>来分配内存。但是还有一类指针函数，比如<code>strcp(sour, dest)</code>，这样的函数在实现的时候并没有给分配内存，所以使用前要<code>malloc</code>, 从函数的参数形式也能看出差别，类似的有<code>fgets(word, n, f)</code>, <code>sort(int* arr, int n)</code>。所以如果要实现一个用户自己分配内存，然后从屏幕读取字符的函数，参数应该这样写<code>NewGetString(char* c)</code></p>
+</blockquote>
+</blockquote>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/**</span>
+ * crack
+ * crack the password encrypted by DES method
+ * first with a dictionary
+ * <span class="kw">if</span> failed, go to brute
+ * assume the password consist by all printable chars
+ * <span class="kw">and</span> have a maxLength of <span class="dv">8</span>
+ * useage: crack ciphertext
+ */
+<span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;unistd.h&gt;</span>
+<span class="ot">#include &lt;string.h&gt;</span>
+<span class="ot">#include &lt;stdlib.h&gt;</span>
+
+<span class="ot">#define _XOPEN_SOURCE</span>
+<span class="co">// all printable chars</span>
+<span class="ot">#define CHARSTART 0x20 </span>
+<span class="ot">#define CHAREND 0x7E</span>
+<span class="ot">#define MAXWORD 64</span>
+
+<span class="dt">char</span>* crypt(<span class="dt">char</span>* key, <span class="dt">char</span>* salt);
+<span class="dt">char</span>* crackDictionary(<span class="dt">char</span>* encrypted);
+<span class="dt">char</span>* crackBrute(<span class="dt">char</span>* encrypted);
+<span class="dt">char</span>* GetCharList(<span class="dt">int</span> charStart, <span class="dt">int</span> charEnd);
+
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span>* argv[])
+{
+    <span class="kw">if</span> (argc != <span class="dv">2</span>)
+    {
+        printf(<span class="st">&quot;usage: input a encrypted password</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        <span class="kw">return</span> <span class="dv">1</span>;
+    }
+
+    <span class="dt">char</span>* encrypted = malloc(<span class="kw">sizeof</span>(<span class="dt">char</span>) * <span class="dv">15</span>);
+    <span class="dt">char</span>* password;
+
+    strcpy(encrypted, argv[<span class="dv">1</span>]);
+
+    <span class="kw">if</span> ((password = crackDictionary(encrypted)) != NULL)
+    {
+        printf(<span class="st">&quot;crack successfly with dictionary!</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+    }
+    <span class="kw">else</span> 
+    {
+        printf(<span class="st">&quot;crack fail with dictionary, using brute crack.</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        password = crackBrute(encrypted);
+    }
+    printf(<span class="st">&quot;</span><span class="ch">%s\n</span><span class="st">&quot;</span><span class="co">,</span> password);
+    free(encrypted);
+    free(password);
+}
+
+ 
+<span class="co">/**</span>
+ * crack encrypted password with a dictionary
+ */
+
+<span class="dt">char</span>* crackDictionary(<span class="dt">char</span>* encrypted)
+{
+    <span class="dt">char</span>* salt = malloc(<span class="kw">sizeof</span>(<span class="dt">char</span>) * <span class="dv">3</span>);
+    strncpy(salt, encrypted, <span class="dv">2</span>);
+    salt[<span class="dv">2</span>] = <span class="st">&#39;</span><span class="ch">\0</span><span class="st">&#39;</span>;
+    <span class="dt">char</span>* tmp;
+
+    FILE* f;
+    <span class="kw">if</span> ((f = fopen(<span class="st">&quot;words&quot;</span><span class="co">,</span><span class="st">&quot;r&quot;</span><span class="co">)</span>) == NULL)
+    {
+        printf(<span class="st">&quot;dictionary open error</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        <span class="kw">return</span> NULL;
+    }
+    <span class="dt">char</span>* word = malloc(<span class="kw">sizeof</span>(<span class="dt">char</span>) * (MAXWORD + <span class="dv">1</span>));
+    <span class="kw">while</span> (fgets(word, <span class="kw">sizeof</span>(<span class="dt">char</span>) * MAXWORD, f) != NULL)
+    {
+        <span class="co">// get rid of the huanghangfu</span>
+        word[strlen(word) - <span class="dv">1</span>] = <span class="st">&#39;</span><span class="ch">\0</span><span class="st">&#39;</span>;
+        tmp = crypt(word, salt);
+        <span class="kw">if</span> (!strcmp(tmp, encrypted))
+        {
+            <span class="dt">char</span>* password = malloc(<span class="kw">sizeof</span>(<span class="dt">char</span>) * (strlen(word) + <span class="dv">1</span>));
+            strcpy(password, word);
+            free(salt);
+            free(word);
+            <span class="kw">return</span> password;
+        }
+    }
+    free(salt);
+    free(word);
+    fclose(f);
+    <span class="kw">return</span> NULL;
+}
+
+<span class="co">/**</span>
+ * crack encrypted password brutely
+ * assume the maxlength of password is <span class="dv">8</span>
+ * traverse all possible combinations from <span class="dv">1</span> <span class="dt">char</span> to <span class="dv">8</span> chars.
+ */
+
+<span class="dt">char</span>* crackBrute(<span class="dt">char</span>* encrypted)
+{
+    <span class="dt">char</span>* salt = malloc(<span class="kw">sizeof</span>(<span class="dt">char</span>) * <span class="dv">3</span>);
+    strncpy(salt, encrypted, <span class="dv">2</span>);
+    salt[<span class="dv">2</span>] = <span class="st">&#39;</span><span class="ch">\0</span><span class="st">&#39;</span>;
+    <span class="dt">char</span>* key = malloc(<span class="kw">sizeof</span>(<span class="dt">char</span>) * <span class="dv">9</span>);
+    key[<span class="dv">8</span>] = <span class="st">&#39;</span><span class="ch">\0</span><span class="st">&#39;</span>;
+
+    <span class="co">// charList include &#39;\0&#39;</span>
+    <span class="dt">char</span>* charList = GetCharList(CHARSTART, CHAREND);
+    <span class="dt">char</span>* tmp;
+
+    <span class="co">// change chars from left to right</span>
+    <span class="co">// one position can&#39;t be \0 if position right of it be anyting else.</span>
+
+    <span class="kw">for</span> (<span class="dt">int</span> a = <span class="dv">0</span>; a &lt;= CHAREND - CHARSTART + <span class="dv">1</span>; a++)
+    {
+        key[<span class="dv">7</span>] = charList[a];
+        <span class="kw">for</span> (<span class="dt">int</span> b = (a || <span class="dv">0</span>); b &lt;= CHAREND - CHARSTART + <span class="dv">1</span>; b++)
+        {
+            key[<span class="dv">6</span>] = charList[b];
+            <span class="kw">for</span> (<span class="dt">int</span> c = (a || b); c &lt;= CHAREND - CHARSTART + <span class="dv">1</span>; c++)
+            {
+                key[<span class="dv">5</span>] = charList[c];
+                <span class="kw">for</span> (<span class="dt">int</span> d = (a || b || c); d &lt;= CHAREND - CHARSTART + <span class="dv">1</span>; d++)
+                {
+                    key[<span class="dv">4</span>] = charList[d];
+                    <span class="kw">for</span> (<span class="dt">int</span> e = (a || b || c || d); e &lt;= CHAREND - CHARSTART + <span class="dv">1</span>; e++)
+                    {
+                        key[<span class="dv">3</span>] = charList[e];
+                        <span class="kw">for</span> (<span class="dt">int</span> f = (a || b || c || d || e); f &lt;= CHAREND - CHARSTART + <span class="dv">1</span>; f++)
+                        {
+                            key[<span class="dv">2</span>] = charList[f];
+                            <span class="kw">for</span> (<span class="dt">int</span> g = (a || b || c || d || e || f); g &lt;= CHAREND - CHARSTART + <span class="dv">1</span>; g++)
+                            {
+                                key[<span class="dv">1</span>] = charList[g];
+                                <span class="kw">for</span> (<span class="dt">int</span> h = (a || b || c || d || e || f || g); h &lt;= CHAREND - CHARSTART + <span class="dv">1</span>; h++)
+                                {
+                                    key[<span class="dv">0</span>] = charList[h];
+                                    tmp = crypt(key, salt);
+                                    <span class="kw">if</span> (!strcmp(tmp, encrypted))
+                                    {
+                                        free(charList);
+                                        free(salt);
+                                        <span class="kw">return</span> key;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    free(charList);
+    free(salt);
+    <span class="kw">return</span> NULL;
+}
+
+<span class="co">/**</span>
+ * get all possible <span class="dt">char</span> in a list
+ */
+
+<span class="dt">char</span>* GetCharList(<span class="dt">int</span> charStart, <span class="dt">int</span> charEnd)
+{
+    <span class="dt">char</span>* charList = malloc(<span class="kw">sizeof</span>(<span class="dt">char</span>)*(charEnd - charStart + <span class="dv">2</span>));
+    charList[<span class="dv">0</span>] = <span class="st">&#39;</span><span class="ch">\0</span><span class="st">&#39;</span>;
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt;= charEnd - charStart; i++)
+    {
+        charList[i<span class="dv">+1</span>] = charStart + i;
+    }
+    <span class="kw">return</span> charList;
+}</code></pre>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

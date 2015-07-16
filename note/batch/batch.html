@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>batch</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#batch">Batch</a></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/batch.html">batch</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/06 15:27</div>
+<!--batch-->
+<h3 id="batch">Batch</h3>
+<hr />
+<p>在搞 wiki 的时候终于下决心学点批处理了, <a href="batch%20wiki.html">这里</a>是关于 wiki 的批处理.</p>
+<ul>
+<li><p>For</p>
+<p><a href="https://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/for.mspx?mfr=true">官网</a>有详细解释, 可以看看下面这个例子</p>
+<blockquote>
+<blockquote>
+<p><a href="find%20and%20replace.html">文本查找于替换</a></p>
+</blockquote>
+</blockquote></li>
+<li><p>token &amp; delims</p>
+<p><a href="http://www.jb51.net/article/17928.htm">这里</a>有些 token 的知识, 基本点如下</p></li>
+</ul>
+<blockquote>
+<blockquote>
+<p>tokens=m表示提取第m列。 <br>tokens=m,n表示提取第m列和第n列。 <br>tokens=m-n表示提取第m列至第n列。 <br>Tokens=<em>表示删除每行前面的空格。忽略行首的所有空格。 <br>tokens=m</em>提取第m列以后的所有字符，星号表示剩余的字符。 <br>tokens=m,*提取第m列以后的所有字符，星号表示剩余的字符。</p>
+</blockquote>
+</blockquote>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="kw">/F</span> <span class="st">&quot;eol=; tokens=2,3* delims=,&quot;</span> %i in (myfile.txt) <span class="kw">do</span> <span class="kw">@echo</span> %i %j %k</code></pre>
+<p>This command parses each line in Myfile.txt, ignoring lines that begin with a semicolon and passing the second and third token from each line to the FOR body (tokens are delimited by commas or spaces). The body of the FOR statement references %i to get the second token, %j to get the third token, and %k to get all of the remaining tokens. If the file names that you supply contain spaces, use quotation marks around the text (for example, &quot;File Name&quot;). To use quotation marks, you must use usebackq. Otherwise, the quotation marks are interpreted as defining a literal string to parse. 比如说</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="kw">/f</span> <span class="st">&quot;tokens=1,2* delims=,&quot;</span> %%i in (test.txt) <span class="kw">do</span> <span class="kw">(</span>
+<span class="kw">set</span> <span class="ot">txt=</span><span class="kw">%%i)</span></code></pre>
+<p>加入 <code>test.txt</code> 中只有一句 hello, world. 待分割的实际上是 1:hello, world.(1是行号) 所以第二个 <code>%%i</code> (表示第一段文字)就是 1:hello, 如果第二个 <code>%%i</code> 换成 <code>%%j</code> 就是设置成 world. 如果只要提取 hello 跟 world, 可以这样写:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="kw">/f</span> <span class="st">&quot;tokens=2,3 delims=:,&quot;</span> %%i in (test.txt) <span class="kw">do</span> <span class="kw">(</span>
+<span class="kw">set</span> <span class="ot">txt1=</span><span class="kw">%%i</span>
+<span class="kw">set</span> <span class="ot">txt2=</span><span class="kw">%%j)</span></code></pre>
+<blockquote>
+<blockquote>
+<p><code>%%i</code> 并不是指 <code>tokens 1</code> 而是指显示的 tokens 的第一个.</p>
+</blockquote>
+</blockquote>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

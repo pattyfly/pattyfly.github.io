@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>find and replace</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#find-and-replace">find and replace</a></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/batch.html">batch</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/06 15:27</div>
+<!--batch-->
+<h3 id="find-and-replace">find and replace</h3>
+<hr />
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">@echo</span> off
+::把需要搜索的路径赋值给变量<span class="kw">sp</span>，这里举例是c:\tmp
+<span class="kw">set</span> <span class="ot">sp=</span>c:\<span class="kw">tmp</span>
+::把需要查找的文件名赋值给变量<span class="kw">cf</span>，这里举例是root.txt
+<span class="kw">set</span> <span class="ot">cf=</span>root.txt
+::把将被替换的字符串赋值给<span class="kw">st</span>，这里举例是apple
+<span class="kw">set</span> <span class="ot">st=</span>apple
+::把替换字符串赋值给<span class="kw">dt</span>，这里举例是lemon
+<span class="kw">set</span> <span class="ot">dt=</span>lemon
+
+::以上的这些赋值执行后，将会把<span class="kw">C</span>盘tmp文件夹下面包括子文件夹里的root.txt中的apple全部替换成lemon
+::下面的代码将完成替换工作
+
+<span class="kw">for</span> <span class="kw">/r</span> %sp% %%a in (%cf%) <span class="kw">do</span> <span class="kw">(call</span> :doit <span class="st">&quot;%%~dpa&quot;</span><span class="kw">)</span>
+<span class="kw">goto</span> end
+
+:<span class="kw">doit</span>
+<span class="kw">setlocal</span> enabledelayedexpansion
+<span class="kw">pushd</span> %1
+<span class="kw">for</span> <span class="kw">/f</span> <span class="st">&quot;tokens=1,2* delims=:&quot;</span> %%i in (<span class="st">&#39;findstr /n &quot;.*&quot; %cf%&#39;</span>) <span class="kw">do</span> <span class="kw">(</span>
+<span class="kw">set</span> <span class="ot">txt=</span><span class="kw">%%j</span>
+<span class="kw">if</span> <span class="st">&quot;!txt!&quot;</span> == <span class="st">&quot;&quot;</span> <span class="kw">(</span>
+<span class="kw">echo.&gt;&gt;</span>%1%cf%
+<span class="kw">)</span> <span class="kw">else</span> <span class="kw">(</span>
+<span class="kw">echo</span> !txt:%st%=%dt%!<span class="kw">&gt;&gt;</span>%1%cf%
+<span class="kw">)</span>
+<span class="kw">)</span>
+<span class="kw">move</span> /y %cf%.tmp %cf%
+
+:<span class="kw">end</span></code></pre>
+<p>实际上就是读取每一行, 在重新写到一个临时文件中, 如果有关键字, 就替换掉, 用的就是 <code>!txt:%st%=%dt%!</code>, <code>echo.&gt;&gt;</code> 是插入空行, 这个地方要注意, 为了能插入空行, <code>token</code> 那里一定要写上1, 2, 如果光提取2(后面参数用<code>%%i</code>), 不能输出空行, 所以所有的空行都会被删除. 这个例子我稍微修改一下就是这样了.</p>
+<p><em>注</em> <code>%%</code>变量很少用, 都是在批处理的for循环里面的特殊循环变量才用.</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cd</span> /d %~dp0
+
+::把将被替换的字符串赋值给<span class="kw">st</span>，这里举例是apple
+<span class="kw">set</span> <span class="ot">st=</span>apple
+::把替换字符串赋值给<span class="kw">dt</span>，这里举例是lemon
+<span class="kw">set</span> <span class="ot">dt=</span>lemon
+
+::下面的代码将完成替换工作
+
+<span class="kw">for</span> <span class="kw">/r</span> <span class="st">&quot;test&quot;</span> %%a in (*.txt) <span class="kw">do</span> <span class="kw">(call</span> :doit %%a<span class="kw">)</span>
+<span class="kw">goto</span> end
+
+:<span class="kw">doit</span>
+<span class="kw">setlocal</span> enabledelayedexpansion
+<span class="kw">for</span> <span class="kw">/f</span> <span class="st">&quot;tokens=1,2* delims=:&quot;</span> %%i in (<span class="st">&#39;findstr /n &quot;.*&quot; %1&#39;</span>) <span class="kw">do</span> <span class="kw">(</span>
+<span class="kw">set</span> <span class="ot">txt=</span><span class="kw">%%j</span>
+<span class="kw">if</span> <span class="st">&quot;!txt!&quot;</span> == <span class="st">&quot;&quot;</span> <span class="kw">(</span>
+<span class="kw">echo.&gt;&gt;</span><span class="st">&quot;%~1.tmp&quot;</span>
+<span class="kw">)</span> <span class="kw">else</span> <span class="kw">(</span>
+<span class="kw">echo</span> !txt:%st%=%dt%!<span class="kw">&gt;&gt;</span><span class="st">&quot;%~1.tmp&quot;</span>
+<span class="kw">)</span>
+<span class="kw">)</span>
+<span class="kw">move</span> /y %1.tmp %1
+:<span class="kw">end</span></code></pre>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

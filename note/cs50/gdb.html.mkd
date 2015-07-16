@@ -1,0 +1,26 @@
+﻿<!--c-linux-->
+### gdb {#toc_0.0.0.1}
+
+----
+
+#### usage
+
+```bash
+gdb ./hello
+break main
+run [argv]
+```
+
+-   [常用命令](http://wiki.ubuntu.org.cn/index.php?title=%E7%94%A8GDB%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F&variant=zh-hans)：`run break next list step continu print`
+-   所有命令都可以缩写
+-   info locals 显示所有的变量
+-   u 退出循环
+
+* next
+  
+  run the code line by line, 比如在main break, 里面调用函数的行也是直接一个n就过去了
+
+* step
+
+  和next的区别就是，在遇到函数时，不是直接得到函数的返回值，而是进入函数里面
+

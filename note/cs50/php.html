@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>php</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#php-intro">php intro</a><ul>
+        <li><a href="#基本语法">基本语法</a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/php.html">php</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/06 15:27</div>
+<!--php-->
+<h3 id="php-intro">php intro</h3>
+<hr />
+<p>不需要申明变量类型, 变量名称都是$加上字母或者下划线开始. - <code>condition</code>, <code>switch</code>, <code>for</code>, <code>while</code>, <code>do while</code> 都一样</p>
+<pre class="sourceCode php"><code class="sourceCode php">.....
+.....</code></pre>
+<h4 id="基本语法">基本语法</h4>
+<ul>
+<li>array</li>
+</ul>
+<pre class="sourceCode php"><code class="sourceCode php">$numbers=[1,5,6,7] //跟python一样;
+$numbers[]=8; $numbers=[1,5,6,7,8]</code></pre>
+<ul>
+<li>string</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>$s=&quot;hello, world&quot;; 也可以用单引号 .用于连接字符</p>
+</blockquote>
+</blockquote>
+<pre class="sourceCode php"><code class="sourceCode php">$$n=5; $$s=&#39;n is &#39; . $$n
+$s=&quot;n is $n&quot;;</code></pre>
+<blockquote>
+<blockquote>
+<ul>
+<li>双引号里面的变量会被转换, 单引号不会</li>
+<li>自带string.h</li>
+<li>printf/print</li>
+<li>print输出变量, printf用于格式化输出.</li>
+</ul>
+</blockquote>
+</blockquote>
+<ul>
+<li>foreach</li>
+</ul>
+<pre class="sourceCode php"><code class="sourceCode php">foreach ($numbers as $number)
+  $sum += number;</code></pre>
+<blockquote>
+<blockquote>
+<p>类似于 python 的 for number in numbers, 不过两者的顺序要倒过来.</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>字典( associative arrays)</li>
+</ul>
+<pre class="sourceCode php"><code class="sourceCode php">$quote = [&quot;symbol&quot; =&gt; &quot;FB&quot;, &quot;price&quot; =&gt; &quot;49.26&quot;]
+$quote[&quot;symbol&quot;] //就是&quot;FB&quot;
+$quote[&quot;increase&quot;]=0.4 //增加字段
+count($quote), //所有项目数量, 4</code></pre>
+<ul>
+<li>super globals</li>
+</ul>
+<pre class="sourceCode php"><code class="sourceCode php">$_COOKIE $_GET $_POST $_SERVER $_SESSION</code></pre>
+<ul>
+<li>函数 function f()</li>
+<li>多文件</li>
+</ul>
+<pre class="sourceCode php"><code class="sourceCode php">require_once(__DIR__.&quot;functionPhpname.php&quot;)</code></pre>
+<ul>
+<li>邮件库 <a href="https://github.com/PHPMailer/PHPMailer">PHPMailer</a></li>
+</ul>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

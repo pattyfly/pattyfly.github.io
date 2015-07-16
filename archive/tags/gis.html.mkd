@@ -1,0 +1,9 @@
+###gis
+
+------
+
+<div id=archive_tags>
+<ul>
+<li>[gis index](/wiki/note/gis/gis index.html)</li> 
+</ul>
+</div>

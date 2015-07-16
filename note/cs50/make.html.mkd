@@ -1,0 +1,6 @@
+<!--c-linux-->
+###make
+
+-----
+
+默认的调用[clang](clang.html)进行编译，编译成功后会生成可执行程序。比如有一个`hello.c`，可以用以下命令编译: `make hello`，用以下命令运行: `./hello`，注意make的cpp不需要后面的扩展名。

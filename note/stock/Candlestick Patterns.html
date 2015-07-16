@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+        
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>Candlestick Patterns</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#candlestick-patterns">Candlestick Patterns</a><ul>
+        <li><a href="#第四章-反转形态">第四章 反转形态</a><ul>
+        <li><a href="#锤子线和上吊线">锤子线和上吊线</a></li>
+        <li><a href="#吞没抱线">吞没（抱线）</a></li>
+        <li><a href="#乌云盖顶及刺透">乌云盖顶及刺透</a></li>
+        </ul></li>
+        <li><a href="#第五章-星线">第五章 星线</a></li>
+        <li><a href="#第六章-其它形态">第六章 其它形态</a><ul>
+        <li><a href="#孕线">孕线</a></li>
+        <li><a href="#平头">平头</a></li>
+        <li><a href="#捉腰带线">捉腰带线</a></li>
+        <li><a href="#向上跳空二只乌鸦">向上跳空二只乌鸦</a></li>
+        <li><a href="#三只乌鸦">三只乌鸦</a></li>
+        <li><a href="#反击线">反击线</a></li>
+        <li><a href="#三山和三川">三山和三川</a></li>
+        <li><a href="#圆形及塔形">圆形及塔形</a></li>
+        </ul></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/stock.html">stock</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/06 15:26</div>
+<!--stock-->
+<h2 id="candlestick-patterns">Candlestick Patterns</h2>
+<hr />
+<h3 id="第四章-反转形态">第四章 反转形态</h3>
+<p>P21: <code>把反转形态理解成趋势变化形态，才是慎重可取的考虑：</code>说“反转形态”的时候．这个术语仅仅意味着之前的趋势将发生变化，但是未必一定会反转。这里有一条重要原则：<code>仅当反转信号所指的方向与市场的主要趋势方向一致时</code>，我们才可以依据这个反转信号来开立新 头寸。</p>
+<blockquote>
+<p>p32: <em>在技术分析中，有一条基本的定理：<code>原先的支撑水平一旦被突破，则转化为新的阻挡水平</code></em></p>
+</blockquote>
+<h4 id="锤子线和上吊线">锤子线和上吊线</h4>
+<p><strong>形态：</strong>下影线较长，实体较小（不管阴阳），几乎没有上影线。低价位称锤子，高价位称上吊。是一种<code>反转形式</code>。</p>
+<p><strong>标准：</strong></p>
+<ul>
+<li>必须出现在一段<code>(大体)连续</code>上升或下降后</li>
+<li>下影线的长度至少达到实体高度的 2 倍</li>
+<li>应当没有上影线，即使有上影线，其长度也是极短的</li>
+</ul>
+<p><strong>参考：</strong></p>
+<ul>
+<li>下影线越长、上影线越短、实体越小，越有意义。</li>
+<li>吞没形态出现在超长期的或非常急剧的市场运动之后。</li>
+</ul>
+<p><strong><code>NOTE：</code></strong></p>
+<blockquote>
+<p><em>当上吊线出现时。一定要等待其它看跌信号的证实，这一点特别重要. 上吊线的实体与上吊线次日的开市价之间向下的缺口越大，那么上吊线就越有可能构成市场的顶部。在上吊线之后，如果市场形成了一条黑色的实体，并且它的收市价低于上吊线的收市价，那么，这也可以看作上吊线成立的一种佐证。</em> <code>再次注意要和价格联系起来才稳</code></p>
+</blockquote>
+<h4 id="吞没抱线">吞没（抱线）</h4>
+<p><strong>形态：</strong>市场本来处于下降趋势之中，但是后来出现了一根坚挺的白色实体，这根白色实体将它前面的那根黑色实体<code>抱进怀里了</code>，或者说把它<code>吞没</code>了。这种情形说明市场上买进的压力已经压倒了卖出压力，可称为<code>涨抱线形态</code>，反之，为<code>跌抱线形态</code>。</p>
+<div class="figure">
+<img src="baoxianxingtai0.png" alt="抱线形态" /><p class="caption">抱线形态</p>
+</div>
+<p><strong>标准：</strong></p>
+<ul>
+<li>必须出现在一段<code>(大体)连续</code>上升或下降后</li>
+<li>吞没形态必须由 2 条蜡烛线组成。其中第二根蜡烛线的实体必须覆盖第一根蜡烛线的实体（但是不一定需要吞没前者的上下影线）</li>
+<li>吞没形态的第二个实体必须与第一个实体的颜色相反。这一条标准有例外的情况，条件是，第一条蜡烛线的实体的 必须非常小，小得几乎构成了一根十字线（或者它就是一根十字线）。如此一来，如果在长期的下降趋势之后，一个小小的白色实体为一个巨大的白色实体所吞没，那么也可能构成了底部反转形态。反之，在上升趋势中，如果一个小小的黑色实体为一个巨大的黑色实体所吞没，那么也可能构成了顶部反转形态。</li>
+</ul>
+<p><strong>参考：</strong></p>
+<ul>
+<li>在吞没形态中，第一天的实体非常小，而第二天的实体非常大。</li>
+<li>在吞没形态中，第二个实体伴有超额的交易量。这种情形可能属于胀爆现象。</li>
+<li>吞没形态出现在超长期的或非常急剧的市场运动之后。</li>
+<li>在吞没形态中，第二天的实体向前吞没的实体不止一个。</li>
+</ul>
+<h4 id="乌云盖顶及刺透">乌云盖顶及刺透</h4>
+<p><strong>形态：</strong>它们一般出现在上升趋势之后，在有些情况下也可能出现在水平调整区间的顶部。在这一形态中，第一天是一根坚挺的白色实体；第二天的开市价超过了第一天的<code>最高价</code>。但是，市场却收市在<code>接近当日的最低价的水平</code>，并且收市价<code>明显</code>地向下扎入到第一天白色实体的内部。是顶部反转形态。相反的是刺透形态（斩回线形态）</p>
+<div class="figure">
+<img src="wuyungaidingcitou.png" alt="乌云盖顶&amp;刺透" /><p class="caption">乌云盖顶&amp;刺透</p>
+</div>
+<p><strong>标准：</strong></p>
+<ul>
+<li>必须出现在一段<code>(大体)连续</code>上升或下降后</li>
+<li>第二天的开市价超过了第一天的<code>最高价</code>(为稳)。</li>
+<li>阴线必须深插前天的阳线（超过50%较为稳）。</li>
+</ul>
+<p><strong>参考：</strong></p>
+<ul>
+<li>黑色实体的收市价向下穿入前一个白色实体的程度越深则该形态构成市场顶部的机会越大。</li>
+<li>第二个实体伴有超额的交易量。这种情形可能属于胀爆现象。</li>
+<li>乌云盖顶形态发生在一个超长期的上升趋势中，两条蜡烛都是秃头秃脚。</li>
+<li>在乌云盖顶形态中，如果第二个实体（即黑色的实体）的开市价高于某个重要的阻挡水平，但是市场未能成功地坚守住，那么可能证明牛方已经无力控制市场了。</li>
+</ul>
+<p><strong>NOTE:</strong></p>
+<ul>
+<li>如果在乌云盖顶形态之后，或者在看跌吞没形态之后，出现了一根长长的白色实体，而且其收市价超过了这两种形态的最高价，那么这可能预示着新一轮<code>上冲</code>行情的到来。</li>
+<li>乌云盖顶的标准比较灵活，黑线不一定要下到50%，但刺透是一定要的，否则视为下跌信号（待定），如下图：</li>
+</ul>
+<div class="figure">
+<img src="jiacitou.png" alt="假刺透" /><p class="caption">假刺透</p>
+</div>
+<blockquote>
+<p><em>在待入线形态中，白色蜡烛线（其外形通常是比较小的）的收市价位于前一个蜡烛线的最低价下方附近。在切入线形态中，白色蜡烛线在待入线形态中，白色蜡烛线（其外形通常是比较小的）的收市价位于前一个蜡烛线的最低价下方附近。在切入线形态中，白色蜡烛线比上述两个形态的更长一些，其收市价也更多地刺入前一个黑色实体之内，但是没有达到黑色实体中点的水平。本形态同前两个形态相比，稍稍坚挺一些。</em></p>
+</blockquote>
+<h3 id="第五章-星线">第五章 星线</h3>
+<hr />
+<p>星蜡烛线（简称星线）的实体较小，并且在它的实体与它前面的较大的蜡烛线的实体之间形成了价格跳空。只要星线的实体与前一个实体没有任何重叠，那么这个星蜡烛线就是成立的。星线本身的颜色并不重要。星线既可能出现在市场的顶部，也可能出现在市场的底部如果显线的实体已经缩小为十字线测称之为十字星线。</p>
+<div class="figure">
+<img src="xingxian.png" alt="星线" /><p class="caption">星线</p>
+</div>
+<p>当星线，尤其是十字星线出现时，就是一个警告信号，表明当前的趋势或许好景不长了。在下列 4 种反转形态中，星线都是其中的一项重要组成成分。这四种反转形态分别是：1、启明星；2、黄昏星；3、倒锤子；4、流星。(星线实体的颜色都是无关紧要)</p>
+<div class="figure">
+<img src="xingxing.jpg" alt="星形" /><p class="caption">星形</p>
+</div>
+<p><strong>形态：</strong>4个图中都是由三个烛线组成，在长期的单调趋中，这四种图形出都有表示反转。4个图的一三星线的颜色必须相反且各自和两侧相同。其中倒锤子和流星指示作用较弱，启明星和黄昏星较强，如果中间是十字星线，称为十字启明星和十字黄昏星，指示作用非常强。</p>
+<p><strong>参考：</strong></p>
+<ul>
+<li>星线最好和第一条有<code>跳空</code>，和第三条有跳空更好。</li>
+<li><code>第三条相对第一条的位置，插的较深</code>，最好是对称。</li>
+<li>第一条成交量小，第三条成交量大。</li>
+<li>星线的影线很长（特别是对于倒锤子和流星，实体较小）</li>
+</ul>
+<p><strong>NOTE</strong></p>
+<ul>
+<li>如果这四种形状的第三根，没有插入第一条，或者甚至三条呈一条线，则反转可能比较坎坷，或者继续原来的趋势。</li>
+<li>四个图形后的下一个交易日，如果反过来超过了星线，则指示意义也消失了，需要马上调整策略。</li>
+<li>如果既不是稳定的趋势，也不在横向调整的巩固期，没有指示作用。</li>
+<li>有一种特殊情况，见下图，指示作用极为明显，毋须多想。</li>
+</ul>
+<div class="figure">
+<img src="qiying.png" alt="弃婴" /><p class="caption">弃婴</p>
+</div>
+<h3 id="第六章-其它形态">第六章 其它形态</h3>
+<hr />
+<p>本章要讨论更多的反转形态。其中一部分形态通常——但并不总是——构成反转信号，因此，它们是较弱的反转信号。这些形态包括孕线形态、平头顶部形态和平头底部形态、捉腰带蜡烛线、向上跳空二只乌鸦、反击蜡烛线等。然后本章还要探讨一些强烈的反转信号，其中包括三只乌鸦、三山形态、三川形态，圆形顶、圆顶底、塔形顶和塔形底等。</p>
+<h4 id="孕线">孕线</h4>
+<p>下图所示即孕线形态，其中后一根蜡烛线的实体较小，并且被前一根相对较长的实体包容进去。长的蜡烛线是“母”蜡烛线，而小的蜡烛线则是“子”或“胎”蜡烛线。孕线形态与吞没形态相比，两根蜡烛线的顺序恰好颠倒过来。在吞没形态中，两根蜡烛线的实体的颜色应当互不<code>相同</code>。而在孕线形态中，这一点倒<code>不是一项必要条件</code>。</p>
+<div class="figure">
+<img src="yunxian.png" alt="孕线" /><p class="caption">孕线</p>
+</div>
+<blockquote>
+<p><em>与其它一些反转形态相比，比如说锤子线、上吊线或吞没形态等，孕线形态所构成的反转信号通常不如它们重耍。其指示作用大小跟纺锤的大小（或者说是子母比率）有关，而和颜色，影线长度无关。中间特殊的一种是十字孕线，指示作用明显，被视为</em><code>主要反转信号</code><em>。十字孕线形态有时也称为呆滞形态。</em></p>
+</blockquote>
+<blockquote>
+<p><em>十字孕线形态也可能引发底部过程，不过，当这类形态出现在市场顶部时更有效力</em></p>
+</blockquote>
+<h4 id="平头">平头</h4>
+<p>平头形态是由具有几乎相同水平的最高点的两根蜡烛线组成的，或者是由具有几乎相同的<code>最低点</code>的二根蜡烛线组成的。之所以将这种形态称为平头形态，是因为这些蜡烛线的端点就像镊子腿一样平齐。在上升的市场中，当几根蜡烛线的<code>最高点</code>不相上下时，就形成了一个平头顶部形态。在下降的市场上，当几根蜡烛线的最低点基本一致时，就形成了一个平头底部形态。</p>
+<p>平头形态既可以由实体构成，<code>也可以由影线或者十字线构成</code>。平头形态既可以由相邻的蜡烛线组成，<code>也可以由相隔较近的蜡烛线组成</code>。</p>
+<p>它通常不能成为一个决定性的反转形态。构成平头形态的蜡烛线也可能相距甚远，并且其中间夹着较长期的市场变化；或者在平头形态之内，同时包含着其它看跌的蜡烛图因素(在构成顶部反转信号时)，或者同时包含着其它看涨的蜡烛图因素(在构成底部反转信号时)。在这样的情况下，平头形态就多了一些额外的技术分量。</p>
+<p>对于希望获得长期的市场看法的朋友来说，不妨选用<code>周蜡烛线图</code>和<code>月蜡烛线图</code>进行研究，在这种情况下，由<code>相邻的蜡烛线</code>形成的平头顶部形态和平头底部形态可能构成<code>重耍的反转信号</code>。这类形态甚至在没有其它蜡烛图信号相验证的条件下，也是成立的。我们不妨用下面的例子来说明其原因。在周蜡烛线图或月蜡烛图上，如果前一个时间单位的低点在后一个时间单位内成功地经受了市场向下的试探，这个低点就可能构成重要的市场底部，引发上冲行情。在日蜡烛线图上，类似的情况可能就不那么重要了，因为今天成功地经受试探的不过是昨天的低点，演变成市场底部、引发上冲行情的可能性就不如上面的例子大</p>
+<h4 id="捉腰带线">捉腰带线</h4>
+<p>捉腰带形态是由单独一根蜡烛线构成的，既可能具有看涨的意义，也可能具有看跌的意义。看涨捉腰带形态是一根坚挺的白色蜡烛线，其开市价位于当日的最低点(或者，这根蜡烛线只有极短的下影线)，然后市场一路上扬。看涨捉腰带线又称为开盘秃(脚)阳线。如果市场处于低价区域，如图 6.25 所示，出现了一根长长的看涨捉腰带线，则预示着上冲行情的到来。反之就是看跌捉腰带线。</p>
+<div class="figure">
+<img src="zhuoyaodaixian.png" alt="捉腰带线" /><p class="caption">捉腰带线</p>
+</div>
+<blockquote>
+<p>捉腰带蜡烛线的长度愈长，则该形态的技术意义越重大。另外，如果捉腰带线是在市场趋势已经发展了较长时间之后才出现的，那么，它的意义也更加重要。</p>
+</blockquote>
+<h4 id="向上跳空二只乌鸦">向上跳空二只乌鸦</h4>
+<p>“向上跳空”指的是图示的小黑色实体与它们之前的实体(即第一个小黑色实体之前的实体，通常是一根长长的白色实体)之间的价格跳空。<code>在理想的向上跳空两只乌鸦形态中，第二个黑色实体的开市价高于第一个黑色实体的开市价，并且它的收市价低于第一个黑色实体的收市价</code>（<em>这种理想的两只乌鸦指示意义应非常明显</em>）</p>
+<div class="figure">
+<img src="xiangshangtiaokongliangzhiwuya.png" alt="向上跳空两只乌鸦" /><p class="caption">向上跳空两只乌鸦</p>
+</div>
+<p>还有一种与向上跳空二只乌鸦有点瓜葛的蜡烛图形态，其外形与向上跳空二只乌鸦形态有一定程度的相似之处。但是，与向上跳空二只乌鸦形态不同的是，在上升行情中，这类形态是看涨的。这两种情况都是非常罕见的。</p>
+<h4 id="三只乌鸦">三只乌鸦</h4>
+<p>连续出现了三根依次下降的黑色蜡烛线，则构成了所谓的三只乌鸦形态，其指示作用极强烈。如下图：</p>
+<div class="figure">
+<img src="sanzhiwuya.png" alt="三只乌鸦" /><p class="caption">三只乌鸦</p>
+</div>
+<p><strong>参考：</strong></p>
+<ul>
+<li>这三根黑色蜡烛线的收市价都应当处于其最低点，或者接近其最低点</li>
+<li>每根黑色蜡烛线的开市价也都应该处于前一个实体的范围之内</li>
+<li>分析者可能还希望“三只乌鸦”中的第一根黑色蜡烛线的实体，居于它之前的那根白色蜡烛线的最高点以下</li>
+</ul>
+<h4 id="反击线">反击线</h4>
+<p>当两根颜色相反的蜡烛线具有相同的收市价时，就形成了一个反击线形态(也称为约会线形态)。</p>
+<div class="figure">
+<img src="fanjixian.png" alt="反击线" /><p class="caption">反击线</p>
+</div>
+<p>反击形态同刺透在形态上的区别是第二条烛线的位置，反击是刚插到门口，刺透则最好是深深插进。说明反击形态是没有刺透强烈。但仍有改变局势的能力，特别是当第二条特别长时。</p>
+<p><code>在反击线形态中，第二根蜡烛线的收市价未必要与前一天的收市价完全一致</code>，其核心思想是，在该形态第二天开市时，市场本来已经顺着既有趋势向前迈了一大步，但是后来，却发生了意想不到的变故！到当日收市时，市场竟然完全返回到前一天收市价的水平</p>
+<h4 id="三山和三川">三山和三川</h4>
+<p>如果市场先后三次均从同一个高价位上回落，或者市场对某一个高价位向上进行了三次尝试，但统统归于失败，那么，就形成了一个三山顶部形态。<code>在山顶部形态的最后一座山的最离点，还应当出现某种看跌的蜡烛图指标(比如说，一根十字线，或者一个乌云盖顶形态等)，以对三山顶部形态作出确认</code>。与之相反的是三川形态。</p>
+<p>在三山顶部形态中，如果中间的山峰高于两侧的山峰，则构成了一种特殊的三山形态，称为三尊顶部形态。在底部的相应的是倒三尊形态。对于这种形态，指示作用自然是非常明确。<code>但最常见的是呈一条涨线的三山，或呈一条跌线的三川。</code><strong>这也是反转的信号！</strong></p>
+<div class="figure">
+<img src="sanshan.png" alt="三山" /><p class="caption">三山</p>
+</div>
+<p><strong>note：</strong> * 这类三山内部本来就有涨跌，会变到第一支撑，<code>但形态之后就变到第二支撑</code> * 这类形态也不一定都是三个，<code>有时也会是丙个或者四个</code>。</p>
+<h4 id="圆形及塔形">圆形及塔形</h4>
+<p>在圆形顶部形态，市场逐步形成向上凸起的圆弧状图案，在这个过程中，通常出现的是一些较小的实体。最后，当市场向下跳空时，就证明圆形顶部形态巳经完成。市场本来处在上升趋势中，在某一时刻，出现了一根坚挺的白色蜡烛线(或者出现了一系列高高的白色蜡烛线)。后来，市场先是放缓了上涨的步调，然后，蜡烛线的高点开始下降。最后，市场上出现了一根或者数根长长的黑色蜡烛线，于是，塔形顶部形态就完成了。</p>
+<div class="figure">
+<img src="yuanxingtaxing.png" alt="圆形塔形" /><p class="caption">圆形塔形</p>
+</div>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

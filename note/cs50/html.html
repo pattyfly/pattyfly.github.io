@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>html</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#html-intro">html intro</a><ul>
+        <li><a href="#超链接">超链接</a></li>
+        <li><a href="#图像">图像</a></li>
+        <li><a href="#form">form</a></li>
+        <li><a href="#table">table</a></li>
+        <li><a href="#列表">列表</a></li>
+        <li><a href="#全局变量">全局变量</a></li>
+        <li><a href="#其他">其他</a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/html.html">html</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/07/13 17:41</div>
+<!--html-->
+<h3 id="html-intro">html intro</h3>
+<hr />
+<h4 id="超链接">超链接</h4>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;google.com?q=foo&quot;</span><span class="kw">&gt;</span>foo<span class="kw">&lt;/a&gt;</span></code></pre>
+<h4 id="图像">图像</h4>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;img</span><span class="ot"> alt=</span><span class="st">&quot;me&quot;</span><span class="ot"> src=</span><span class="st">&quot;me.jpg&quot;</span><span class="kw">/&gt;</span>
+<span class="kw">&lt;img</span><span class="ot"> alt=</span><span class="st">&quot;me&quot;</span><span class="ot"> src=</span><span class="st">&quot;http://example.com/me.jpg&quot;</span><span class="kw">/&gt;</span></code></pre>
+<h4 id="form">form</h4>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div&gt;</span>
+  <span class="kw">&lt;h1&gt;</span>cs50 search<span class="kw">&lt;/h1&gt;</span>
+  <span class="kw">&lt;form</span><span class="ot"> action=</span><span class="st">&quot;https://www.google.com/search&quot;</span><span class="ot"> method=</span><span class="st">&quot;get&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> name=</span><span class="st">&quot;q&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;br/&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;submit&quot;</span><span class="ot"> value=</span><span class="st">&quot;cs50 search&quot;</span><span class="kw">/&gt;</span>
+  <span class="kw">&lt;/form&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<blockquote>
+<blockquote>
+<p>input属性, type=&quot;text&quot; name, value, placeholder.....具体见 <a href="http://www.w3school.com.cn/tags/tag_form.asp">http://www.w3school.com.cn/tags/tag_form.asp</a></p>
+</blockquote>
+</blockquote>
+<h4 id="table">table</h4>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;table</span><span class="ot"> border=</span><span class="st">&quot;1&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;tr&gt;</span>
+    <span class="kw">&lt;td&gt;</span>1<span class="kw">&lt;/td&gt;</span>
+    <span class="kw">&lt;td&gt;</span>2<span class="kw">&lt;/td&gt;</span>
+  <span class="kw">&lt;/tr&gt;</span>
+  <span class="kw">&lt;tr&gt;</span>
+    <span class="kw">&lt;td&gt;</span>3<span class="kw">&lt;/td&gt;</span>
+    <span class="kw">&lt;td&gt;</span>4<span class="kw">&lt;/td&gt;</span>
+  <span class="kw">&lt;/tr&gt;</span>
+<span class="kw">&lt;/table&gt;</span></code></pre>
+<h4 id="列表">列表</h4>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;ol</span><span class="ot"> start=</span><span class="st">&quot;1&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;li&gt;</span>cat<span class="kw">&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;</span>dog<span class="kw">&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;</span>duck<span class="kw">&lt;/li&gt;</span>
+<span class="kw">&lt;ol&gt;</span></code></pre>
+<p>order list(ol) unorder list(ul)</p>
+<h4 id="全局变量">全局变量</h4>
+<p><code>_POST _GET _*DIR*_  _SESSION _SERVER</code> 详细见<a href="http://www.w3school.com.cn/php/php_superglobals.asp">这里</a></p>
+<h4 id="其他">其他</h4>
+<ul>
+<li>服务器端口协议</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>80 http 25 smtp 23 Telnet 21 FTP 443 https</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>http status codes
+<ul>
+<li>200 ok</li>
+<li>301 moved permanently</li>
+<li>302 found</li>
+<li>401 un-authorized</li>
+<li>403 forbidden</li>
+<li>404 not found</li>
+<li>500 internal server error</li>
+</ul></li>
+<li>其他 <code>&amp;#169;</code> copyRight字符</li>
+</ul>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

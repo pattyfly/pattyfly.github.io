@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>markdown test</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#test">test</a><ul>
+        <li><a href="#语法">语法</a><ul>
+        <li><a href="#链接">链接</a></li>
+        <li><a href="#区块">区块</a></li>
+        <li><a href="#列表">列表</a></li>
+        <li><a href="#其他">其他</a></li>
+        </ul></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/markdown.html">markdown</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/06 15:26</div>
+<!--markdown-->
+<h2 id="test">test</h2>
+<hr />
+<p>this is a test page for markdown.</p>
+<h3 id="语法">语法</h3>
+<h4 id="链接">链接</h4>
+<hr />
+<p>这里是个 <a href="inner.html">inner ref</a></p>
+<p>内链还是比较麻烦的, 语法像下面一样, 注意空行:</p>
+<pre><code>[inner link discription][inner link id]
+
+[inner link id]: inner link sourse
+
+other things</code></pre>
+<p>当然, 这样的好处是如果都这样写, 所有的 md 名字就会正常了, 不会加上html, 另外, 可能在 markdown 方面, 内外链可能也有点区别. 更重要的是link id 可以统一放在文章的最后面, 方便统一修改管理.</p>
+<p>还有一个优点是可以写成这样 <a href="http://www.baidu.com/">baidu</a> 这样, vim 不会处理成链接, 省的行内的文字到处变, 对于长链接很好用.</p>
+<p>插入图片跟链接相似, 只是要在最开头插入一个<code>!</code>.</p>
+<h4 id="区块">区块</h4>
+<hr />
+<pre><code>```
+区块1
+```
+
+区块1</code></pre>
+<p>空格和```作用是一样的, 都是pre, 全部照抄, 但是 &gt; 是block, 支持语法的, 可以通过css来实现整个块的缩进. 下面就是一个 block</p>
+<blockquote>
+<p>Markdown 不是想要取代 HTML，甚至也没有要和它相近，它的语法种类很少，只对应 HTML 标记的一小部分。Markdown 的构想<em>不是</em>要使得 HTML 文档更容易书写。在我看来， HTML 已经很容易写了。Markdown 的理念是，能让文档更容易读、写和随意改。HTML 是一种<em>发布</em>的格式，Markdown 是一种<em>书写</em>的格式。就这样，Markdown 的格式语法只涵盖纯文本可以涵盖的范围。<br> 这里有一段<code>code</code> 文字是不换行的, 除非用 <code>&lt;br&gt;</code> <br> 这样才行, block 的空格是没有用的, pre才有用.</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="dt">int</span> main(<span class="dt">void</span>)
+{
+  printf(<span class="st">&quot;hello, world&quot;</span>);
+}</code></pre>
+<p>也可以嵌套</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>现在就是子块</p>
+</blockquote>
+</blockquote>
+<h4 id="列表">列表</h4>
+<hr />
+<p>这是一个嵌套列表</p>
+<ul>
+<li>鸟
+<ul>
+<li>鸡</li>
+<li>鸭</li>
+</ul></li>
+<li>白菜</li>
+</ul>
+<p>有序列表, 如果想从1开始, 就输入 <code>1.</code>, 后面都是1, 会自动编号</p>
+<ol style="list-style-type: decimal">
+<li>沙和尚</li>
+<li>猪八戒</li>
+</ol>
+<h4 id="其他">其他</h4>
+<hr />
+<p>西藏路上拍的</p>
+<div class="figure">
+<img src="1.jpg" alt="窗外" /><p class="caption">窗外</p>
+</div>
+<p><a href="../cs50/css.html">跨文件夹的引用</a></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Fruit</th>
+<th align="left">Price</th>
+<th align="left">Advntages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">banans</td>
+<td align="left">$1.34</td>
+<td align="left">bright</td>
+</tr>
+<tr class="even">
+<td align="left">oranges</td>
+<td align="left">$2.1</td>
+<td align="left">tasty</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="22%" />
+<col width="29%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Fruit</th>
+<th align="left">Price</th>
+<th align="left">Advantages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><p>Bananas</p></td>
+<td align="left"><p>$1.34</p></td>
+<td align="left"><ul>
+<li>built-in wrapper</li>
+<li>bright color</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td align="left"><p>Oranges</p></td>
+<td align="left"><p>$2.10</p></td>
+<td align="left"><ul>
+<li>cures scurvy</li>
+<li>tasty</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

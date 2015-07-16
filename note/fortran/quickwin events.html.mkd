@@ -1,0 +1,108 @@
+<!--fortran-->
+### QuickWin events 
+
+----
+
+#### 捕获键盘 
+
+```fortran
+c=getcharqq()
+```
+
+#### 捕获鼠标 
+
+-   监控鼠标
+
+```fortran
+do while(.ture.)
+  iret = WaitOnMouseEvent(MouseEvents,keystate,x,y)
+end do
+```
+
+-   事件注册
+
+```fortran
+iret = RegisterMouseEvent(unit,MouseEvents,callbackroutine)
+```
+
+-   回调函数
+
+```fortran
+MouseCallbackRoutine(unit,MouseEvents,keystate,MouseXpos,MouseYpos)
+```
+
+-   MouseEvents 鼠标事件
+
+```fortran
+Mouse$LButtonDown
+Mouse$LButtonUp   
+Mouse$LButtonDBLCLK
+Mouse$Move
+```
+
+>>上面的L代表左键, 也可以用R, 下同
+
+-   KeyState 状态
+
+```fortran
+Mouse$KS_Lbutton  !事件中按下左右键
+Mouse$KS_Shift
+Mouse$KS_Control
+16                !鼠标中键
+```
+
+> **Note**
+
+>> * 这些参数都是integer(kind=4)
+* MouseEvents 可以用函数IOR加以组合
+* 注册要写在监控之前
+* 监控和注册不需要的事件不需要对应, 只要对任何事件监测, 都是对鼠标所有事件的监测
+* 所以上述参数只要写监测的move就行, 其他复杂的东西在回调函数中写, 大量的参数不需要实例化
+
+#### 编辑菜单 
+
+```fortran
+lret = AppendMenuQQ(MenuID,flags,text,routine)  
+lret = InsertMenuQQ(MenuID,ItemID,flags,text,routine) 
+lret = DeleteMenuQQ(MenuID,ItemID)
+lret = ModifyMenuFlagsQQ(MenuID,ItemID,flags)
+lret = ModifyMenuRoutineQQ(MenuID,ItemID,Routine)
+lret = ModifyMenuStringQQ(MenuID,ItemID,Text)
+lret = InitialSettings()
+```
+
+> **Note**
+
+>> * 编辑菜单函数返回值都是逻辑
+* flags ($MenuSepartor, $MenuEnabled,$MenuUnabled)
+* text 是C字符串, 支持快捷方式, 如"In&sert\tCtrl+S"C
+* routine如果没有, 是用nul
+* 在修改菜单的时候, 如果有变化都会即时反映到顺序上, 如删除2, 3菜单, 程序要编成删除2, 2菜单. 
+* InitialSettings()是被系统自动调用的, 一般不需要自己调用, 只要改写`就行, 
+*  可以把菜单的编辑都写在里面. 窗口的大小等属性也可以在里面. 
+
+#### 其他 
+
+-   自带函数 WinPrint WinSave WinAbout ……
+-   运行外部程序
+
+```fortran
+iret = RunQQ('Explorer.exe', 'http://www.google.com'C)
+iret = WinExec('NotePad.exe menu.f90', sw_show)
+```
+
+>>后者要用dfwin, 如果要改成Runqq, 参数得为('NotePad.exe', 'menu.f90')
+
+-   弹出窗口
+
+```fortran
+MessageBoxQQ(Text_About, Text_Title, MB$IconExclamation . OR. MB$OK)
+```
+
+-   修改WinAbout的显示内容
+
+```fortran
+AboutBoxQQ('Text_about')  
+```
+
+-   字符串后面的C, 好像在cvf中没有必要

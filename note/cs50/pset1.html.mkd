@@ -1,0 +1,196 @@
+<!---->
+## pset 1 {#toc_0.0.0.1}
+
+----
+
+[pset1](https://cdn.cs50.net/2014/spring/psets/1/hacker1/hacker1.html)
+
+### mario
+
+* 目标：打印出mario的一个墙
+* 掌握：循环，函数
+
+```cpp
+/**
+ * mario.c
+ * generate a half-pyramid
+ * for give height
+ */
+
+#include <stdio.h>
+#include <cs50.h>
+
+void draw_with_symbol(int num, char c);
+
+int main(void)
+{
+    int height;
+    do
+    {
+        printf("please give the pyramid height, shoud smaller than 24:\n");
+        height = GetInt();
+    }
+    while (height <= 0 || height >= 24);
+    for (int i = 1; i <= height; i++)
+    {
+        draw_with_symbol(height - i, ' ');
+        draw_with_symbol(i, '#');
+        printf("  ");
+        draw_with_symbol(i, '#');
+        printf("\n");
+    }
+    return 0;
+}
+
+/**
+ * printf severl char in a line
+ * char c, the symbol to printf
+ * int num, number of symbols
+ */
+
+void draw_with_symbol(int num, char c)
+{
+    for (int i = 0; i < num; i++)
+    {
+        printf("%c",c);
+    }
+}
+```
+
+### 信用卡的验证
+
+* 目标：验证一个信用卡，并判断是哪个公司的
+* 掌握：循环，条件
+* 难点：不用数组挺啰嗦的
+
+```cpp
+/**
+ * credit.c
+ * validate a credit card and the company
+ */
+
+#include <cs50.h>
+#include <stdio.h>
+
+
+long long power(int n , int a);
+int getdigitnum(long long creditnum);
+int checksum(long long creditnum);
+
+int main(void)
+{
+    long long creditnum;
+    printf("Number:");
+    creditnum = GetLongLong();
+    int digitnum = getdigitnum(creditnum);
+    // get the first two digit of card
+    int firsttwonum = creditnum / power(10, digitnum - 2);
+
+    switch (digitnum)
+    {
+        case 13:
+            if (firsttwonum >= 40 && firsttwonum <= 49 && checksum(creditnum))
+            {
+                printf("VISA\n");
+            }
+            else
+            {
+                printf("INVALID\n");
+            }
+            break;
+        case 15:
+            if ((firsttwonum == 34 || firsttwonum == 37) && checksum(creditnum))
+            {
+                printf("AMEX\n");
+            }
+            else
+            {
+                printf("INVALID\n");
+            }
+            break;
+        case 16:
+            if (firsttwonum >= 40 && firsttwonum <= 49 && checksum(creditnum))
+            {
+                printf("VISA\n");
+            }
+            else if (firsttwonum >= 51 && firsttwonum <= 55 && checksum(creditnum))
+            {
+                printf("MASTERCARD\n");
+            }
+            else
+            {
+                printf("INVALID\n");
+            }
+            break;
+        default:
+            printf("INVALID\n");
+
+    }
+    return 0;
+}
+
+/**
+ * return the power n by a
+ */
+
+long long power(int n , int a)
+{
+    long long result = 1;
+    for(int i = 0; i < a; i++)
+    {
+       result *= n; 
+    }
+    return result;
+}
+
+/**
+ * get the digit number of the card
+ */
+
+int getdigitnum(long long creditnum)
+{
+   int digitnum = 1;
+   while (creditnum >= 10)
+   {
+        creditnum /= 10;
+        digitnum++;
+   }
+   return digitnum;
+}
+
+/**
+ * MOD 10 algorithm
+ */
+
+int checksum(long long creditnum)
+{
+    int digitcurr;
+    int sum = 0;
+    int i = 0;
+    while (creditnum >= 1)
+    {
+        digitcurr = creditnum % 10;
+        creditnum /= 10;
+        // if odd, sum added by digitcurrent
+        // else sum added by the sum of digit of  digitcurrent muti by 2 
+        if (i % 2 == 1)
+        {
+            sum += digitcurr * 2 % 10 + digitcurr * 2 / 10;
+        }
+        else
+        {
+            sum += digitcurr;
+        }
+        i++;
+    }
+    
+    if (sum % 10 == 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+```

@@ -1,0 +1,41 @@
+<!--fortran-->
+### Dialog intro 
+
+----
+
+#### 申明 
+
+>>需要申明 dflogm
+
+#### 文件管理 
+
+新加入的窗口等对象会存在script.rc文件中, 保存对象资源就会是修改并保存rc文件.  需要rc文件才能build. 每个对象都有一个整数id, fd文件就是存这个的.  修改rc文件fd文件会自动修改保存. 实际上, cvf只知道rc对象中的id,  在程序中如果要用对象的名字(一般情况下就是用名字), 就需要将名字转换成id, fd就是定义各个名字的.  堆控件的时候, 最好连续堆, 否则id不一样, 在之后的编码会有些问题. 
+
+#### 函数 
+
+-   dlginit 初始化 lret=dlginit(IDD\_name,dlg)
+-   dlgset 设置参数
+-   dlgsetsub 回调
+
+```fortran
+lret=dlgsetsub(dlg,control_name,callbacksub) !如果窗口调用control_name改为idd_name
+```
+
+>> 像dlgset并不是用户修改, 所以不会导致dlg_change,这时候可以用:
+<br>radio button 的默认数值也是如此
+
+```fortran
+call callbacksub(dlg,control_name,dlg_change)
+```
+
+-   dlgget 返回参数 
+-   `TRIM(ADJUSTL(text))` 去掉空格
+-   dlguninit 删除
+-   dlgmodal 显示窗口
+-   dlgModeless 类似上面, 参数较多
+
+#### note 
+
+-   测试窗口, C+T
+-   程序的图标会自动设置成Icon
+

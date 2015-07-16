@@ -1,0 +1,45 @@
+﻿<!---->
+
+### 关于 wiki
+
+-----
+
+本wiki是用 markdown + vimwiki + pandoc + batch 在蛋疼的 windows下面生成的, 详见[关于wiki](wiki/about wiki.html), 搞 wiki 的时候顺便学了一些[批处理](batch/batch.html)
+
+### CS 50
+
+-----
+
+CS50 是 harvard 的一门计算机科学基础课程, 主要是C语言基础, 后面讲了一点网页开发的东西. 网上资料非常丰富, 最近正在网上学习, 这里有些[笔记](cs50/cs50 note.html)
+
+### FORTRAN
+
+--------
+
+前段时间要改一个Fortran程序的界面, 在网上找了一些资料, 这里有些[FORRAN窗口编程](fortran/fortran visual intro.html)的笔记. 
+
+### vim小技巧
+
+------
+
+vim 真是非常强大的软件, 这里有些 [vim 小技巧](vim/vim.html)
+
+### 文档
+
+尝试用 wiki 记录一下文档, 这里是[西藏考察2014](doc/tibet study 2014.html)
+
+### 未整理
+
+[TODO](todo.html): 这里有些计划
+
+[GIS](gis/gis index.html) 有关的东西, 现在还没有整理
+
+[TMP](tmp/tmp.html):  这是涂鸦板, 都是些待整理的东西. 
+
+[ref](ref/ref index.html): 这里是一点文献阅读
+
+[stock](stock/stock index.html): 这里是一些跟股票有关的东西
+
+### 读书笔记
+
+学而不思则罔，思而不学则殆，看了书确不做笔记，不写感想，过不了多久就全忘掉了，因此，在这里记下来一些[阅读笔记](read/read index.html)

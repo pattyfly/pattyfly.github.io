@@ -1,0 +1,9 @@
+###note_ref
+
+------
+
+<div id=archive_catalogy>
+<ul>
+<li>[ref index](/wiki/note/ref/ref index.html)</li> 
+</ul>
+</div>

@@ -1,0 +1,24 @@
+<!--html-->
+### 服务器搭建 {#toc_0.0.0.1}
+
+----
+
+[部署](http://blog.csdn.net/junjieguo/article/details/6798369);
+
+#### apache
+
+cs50的设备已经设置好了服务器, 可以直接在vhost/localhost/pubilc中写入html 但是要注意一点, 写好的html的权限只有自己能读, 这时候需要改变权限 chmod 文件名 a+r 就可以变成所有人都能读了.  这样, 可以在设备上通过浏览器访问localhost/index.html, 或者在本地电脑上访问192.168.83.130/index.html 来访问了.
+
+设备上的`apache`设置已经把主页改到了public目录下面，而且已经安装了`php`，`phpMyAdmin`。在public目录下面如果有`index.html`或者`index.php`，浏览器访问的时候就会直接转到主页上面来。如果要访问public下面的目录，需要把这两个文件转移，另外也要设置这些目录的权限为755，如果为711，只有进入的权限，比如可以访问`public/test/index.html`，但是不能进入`public/test`
+
+如果没有安装`apache`, 需要安装，在linux下面叫`httpd`, 安装以后要去`/etc/httpd/conf/httpd.conf`修改一些设置，主页什么的，最后要重启服务器`service httpd restart`
+
+
+#### vsftp
+
+linux下用的最多的ftp服务端就是`vsftp`了，安装容易，配置稍微麻烦，主要是设置到用户权限等东西。配置好重启服务器`service vsftpd restart`.
+
+#### php&mysql&phpmysql
+
+安装php，连接php和mysql, 设置好用户名和密码, 安装phpmysql，之后就可以用`xxx.xxx.xxx.xxx/phpMyAdmin`来访问了数据库了
+

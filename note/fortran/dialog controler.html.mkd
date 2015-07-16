@@ -1,0 +1,112 @@
+<!--fortran-->
+### Dialog 控件 {#toc_0.0.1}
+
+----
+
+-   Order
+
+>>>>改变窗口的控件的默认顺序, C+D, 然后鼠标点要的顺序
+
+-   快捷方式
+
+>>>>要在某个控件上加,在标题某个字前面用&
+
+-   radio
+
+>>>>每组都需要在顺序排名第一的设置成group. 两组之间的顺序不能交叉
+
+-   text读写
+
+>>>>```fortran
+>>>>retlog = DLGGET (dlg, IDC_EDITBOX1, text)
+>>>>READ (text, *) 
+>>>>WRITE (text,'(I4)')
+>>>>retlog = DLGSET (dlg, IDC_EDITBOX1, text)
+>>>>```
+
+-   Button
+
+>>>>```fortran
+>>>>retlog = DlgSetSub( dlg, IDC_BUTTON_TIME, DisplayTime)
+>>>>```
+
+-   Scroll Bar
+
+>>>>```fortran
+>>>>MaxScrollPos = MaxRangeValue - (PageSize - 1)
+>>>>```
+
+-   List and Combo Box
+
+>>>>两者都分为sorted和unsorted 遍历选择:
+
+>>>>```fortran
+>>>>int select_index=1
+>>>>int item_value
+>>>>DO
+>>>>    retlog = dlgget(dlg,idc_listbox1,item_value,select_index)
+>>>>    if item_value = 0, break
+>>>>    retlog = dlgget(dlg,idc_listbox1,str,item_value)
+>>>>    select_index++
+>>>>ENDDO
+>>>>```
+
+>>>>**注意**Combo box 要将下来菜单变长一点, 否则出不来东西
+
+-   picture
+
+>>>>先添加bitmap资源, 然后在picture控件属性那里选择bitmap
+
+>>>>  -   tab
+>>>>     -   tab的窗口属性要设置成child, border要选none, titlebar取消
+>>>>     -   tab实例
+
+- 初始主窗口并回调:
+
+>>>>```fortran
+>>>>lret = DlgInit(IDD_DIALOG, gdlg)
+>>>>lret = DlgSetSub(gdlg, IDD_DIALOG, ShowMainSub)
+>>>>```
+
+- 设置tab:
+
+>>>>```fortran
+>>>>lret = DlgSet(gdlg, IDC_TAB, 2)
+>>>>lret = DlgSet(gdlg, IDC_TAB, "Sex", 1)
+>>>>lret = DlgSet(gdlg, IDC_TAB, "Account", 2)
+>>>>lret = DlgSet(gdlg, IDC_TAB, IDD_TAB_DIALOG1, 1)
+>>>>lret = DlgSet(gdlg, IDC_TAB, IDD_TAB_DIALOG2, 2)
+>>>>```
+
+- 初始tab窗口并设置回调(如果有):
+
+>>>>```fortran
+>>>>lret = DlgInit(IDD_TAB_DIALOG1,  gdlg_tab1)
+>>>>lret = DlgInit(IDD_TAB_DIALOG1,  gdlg_tab1)
+>>>>```
+
+- run window:
+
+>>>>```fortran
+>>>>lret = DlgModal(gdlg)
+>>>>```
+
+>>>>```fortran
+>>>>ShowMainSub( dlg, id, callbacktype )
+>>>>    if (callbacktype == dlg_init) then
+>>>>        hwnd = GetDlgItem(dlg % hwnd, IDC_TAB)
+>>>>        lret = DlgModeless(gdlg_tab1, SW_HIDE, hwnd)
+>>>>        lret = DlgModeless(gdlg_tab2, SW_HIDE, hwnd)
+>>>>        ! 申明默认的tab 
+>>>>        lret = DlgSet(dlg, IDC_TAB, 1, dlg_state)
+>>>>    end if
+>>>>end 
+>>>>```
+
+-   text
+
+>>>>一般来说, 静态文本框不能修改, 因为head文件里没有id. 可以修改动态框当静态用, 属性style中border和readonly修改就行.  或者修改要编辑的静态文本框属性, 改名(他没有id是因为他没有唯一的名字)
+
+-   Spin
+
+>>>>Spin和text一起用, 把spin的属性修改成alignment=right align;auto buddy=true,set buddy integer=true. 

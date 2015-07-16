@@ -1,0 +1,502 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>pset5</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#pset-5">pset 5</a><ul>
+        <li><a href="#bitmapwhodunit">bitmap(Whodunit)</a></li>
+        <li><a href="#csi">CSI</a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/c.html">c</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/07/12 10:13</div>
+<!--c-->
+<h2 id="pset-5">pset 5</h2>
+<hr />
+<p><a href="https://cdn.cs50.net/2014/spring/psets/5/hacker5/hacker5.html">pset5</a></p>
+<h3 id="bitmapwhodunit">bitmap(Whodunit)</h3>
+<ul>
+<li>要求：破解（修改）bmp图像，BMP放大</li>
+<li>掌握：栅格图像处理，xxd 命令，文件读写，结构体struct, 十六进制</li>
+<li>难点：
+<ul>
+<li>paddle计算</li>
+<li>文件处理，光标处理</li>
+<li>结构体</li>
+<li>BMP缩小</li>
+</ul></li>
+</ul>
+<p><a href="shell%20intro.html">xxd</a>, <a href="C%20intro.html">文件读写</a>, <a href="data%20structure.html">struct</a></p>
+<p>24位的bitmap, (位是bit, 字节是byte, 1 byte=8 bit, 32位机就是4 byte, 下面的编译器int就是4 byte, char 是 1 byte, 16进制单个数字是4bit)颜色是RGB模式(每8bit代表一种颜色, 8bit 可以表示2位16进制, 从0x00-0xff, 也就是从0到255.</p>
+<p>不过bitmap的颜色是倒过来的, 即BGR. 0000ff代表纯红) bitmap在数据最前方有一些元数据, 一般是两个结构体, 一个bitmapfileheader,14 byte,一个bitmapinfoheader, 40 byte. 之后就是像素颜色了, 从上到下, 从左到右.</p>
+<p>但是有个地方值得注意, 如果每行像素是4的倍数, 数据就是上面所说的. 如果不是, 比如说3×3, 就会在右侧自动补3个 &gt; 00, 变成4×3., 也就是说每行只能是4的倍数, 否则就在最后补0. 比如说10×9, 实际数据是30×9, 会变成32×9 有比如说10×8, 实际是30×8, 会变成32×9.</p>
+<p>还有一点值得注意, bmp默认是行倒置的, 就是图像的第一行是数据的最后一行.</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/**</span>
+ * bmp.h
+ *
+ * Computer Science <span class="dv">50</span>
+ * Problem Set <span class="dv">5</span>
+ *
+ * BMP-related data types based on Microsoft<span class="st">&#39;s own.</span>
+ */
+
+<span class="ot">#include &lt;stdint.h&gt;</span>
+
+<span class="co">/**</span>
+ * Common Data Types 
+ *
+ * The data types in <span class="kw">this</span> section are essentially aliases <span class="kw">for</span> C/C++ 
+ * primitive data types.
+ *
+ * Adapted from http:<span class="co">//msdn.microsoft.com/en-us/library/cc230309.aspx.</span>
+ * See http:<span class="co">//en.wikipedia.org/wiki/Stdint.h for more on stdint.h.</span>
+ */
+<span class="kw">typedef</span> <span class="dt">uint8_t</span>  BYTE;
+<span class="kw">typedef</span> <span class="dt">uint32_t</span> DWORD;
+<span class="kw">typedef</span> <span class="dt">int32_t</span>  LONG;
+<span class="kw">typedef</span> <span class="dt">uint16_t</span> WORD;
+
+<span class="co">/**</span>
+ * BITMAPFILEHEADER
+ *
+ * The BITMAPFILEHEADER structure contains information about the type, size,
+ * <span class="kw">and</span> layout of a file that contains a DIB [device-independent bitmap].
+ *
+ * Adapted from http:<span class="co">//msdn.microsoft.com/en-us/library/dd183374(VS.85).aspx.</span>
+ */
+<span class="kw">typedef</span> <span class="kw">struct</span> 
+{ 
+    WORD   bfType; 
+    DWORD  bfSize; 
+    WORD   bfReserved1; 
+    WORD   bfReserved2; 
+    DWORD  bfOffBits; 
+} <span class="ot">__attribute__</span>((__packed__)) 
+BITMAPFILEHEADER; 
+
+<span class="co">/**</span>
+ * BITMAPINFOHEADER
+ *
+ * The BITMAPINFOHEADER structure contains information about the 
+ * dimensions <span class="kw">and</span> color format of a DIB [device-independent bitmap].
+ *
+ * Adapted from http:<span class="co">//msdn.microsoft.com/en-us/library/dd183376(VS.85).aspx.</span>
+ */
+<span class="kw">typedef</span> <span class="kw">struct</span>
+{
+    DWORD  biSize; 
+    LONG   biWidth; 
+    LONG   biHeight; 
+    WORD   biPlanes; 
+    WORD   biBitCount; 
+    DWORD  biCompression; 
+    DWORD  biSizeImage; 
+    LONG   biXPelsPerMeter; 
+    LONG   biYPelsPerMeter; 
+    DWORD  biClrUsed; 
+    DWORD  biClrImportant; 
+} <span class="ot">__attribute__</span>((__packed__))
+BITMAPINFOHEADER; 
+
+<span class="co">/**</span>
+ * RGBTRIPLE
+ *
+ * This structure describes a color consisting of relative intensities of
+ * red, green, <span class="kw">and</span> blue.
+ *
+ * Adapted from http:<span class="co">//msdn.microsoft.com/en-us/library/aa922590.aspx.</span>
+ */
+<span class="kw">typedef</span> <span class="kw">struct</span>
+{
+    BYTE  rgbtBlue;
+    BYTE  rgbtGreen;
+    BYTE  rgbtRed;
+} <span class="ot">__attribute__</span>((__packed__))
+RGBTRIPLE;</code></pre>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/**</span>
+ * copy.c
+ *
+ * Computer Science <span class="dv">50</span>
+ * Problem Set <span class="dv">5</span>
+ *
+ * Copies a BMP piece by piece, just because.
+ */
+       
+<span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;stdlib.h&gt;</span>
+
+<span class="ot">#include &quot;bmp.h&quot;</span>
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span>* argv[])
+{
+    <span class="co">// ensure proper usage</span>
+    <span class="kw">if</span> (argc != <span class="dv">3</span>)
+    {
+        printf(<span class="st">&quot;Usage: ./copy infile outfile</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        <span class="kw">return</span> <span class="dv">1</span>;
+    }
+
+    <span class="co">// remember filenames</span>
+    <span class="dt">char</span>* infile = argv[<span class="dv">1</span>];
+    <span class="dt">char</span>* outfile = argv[<span class="dv">2</span>];
+
+    <span class="co">// open input file </span>
+    FILE* inptr = fopen(infile, <span class="st">&quot;r&quot;</span><span class="co">)</span>;
+    <span class="kw">if</span> (inptr == NULL)
+    {
+        printf(<span class="st">&quot;Could not open </span><span class="ch">%s</span><span class="st">.</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">,</span> infile);
+        <span class="kw">return</span> <span class="dv">2</span>;
+    }
+
+    <span class="co">// open output file</span>
+    FILE* outptr = fopen(outfile, <span class="st">&quot;w&quot;</span><span class="co">)</span>;
+    <span class="kw">if</span> (outptr == NULL)
+    {
+        fclose(inptr);
+        fprintf(stderr, <span class="st">&quot;Could not create </span><span class="ch">%s</span><span class="st">.</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">,</span> outfile);
+        <span class="kw">return</span> <span class="dv">3</span>;
+    }
+
+    <span class="co">// read infile&#39;s BITMAPFILEHEADER</span>
+    BITMAPFILEHEADER bf;
+    fread(&amp;bf, <span class="kw">sizeof</span>(BITMAPFILEHEADER), <span class="dv">1</span>, inptr);
+
+    <span class="co">// read infile&#39;s BITMAPINFOHEADER</span>
+    BITMAPINFOHEADER bi;
+    fread(&amp;bi, <span class="kw">sizeof</span>(BITMAPINFOHEADER), <span class="dv">1</span>, inptr);
+
+    <span class="co">// ensure infile is (likely) a 24-bit uncompressed BMP 4.0</span>
+    <span class="kw">if</span> (bf.bfType != <span class="bn">0x4d42</span> || bf.bfOffBits != <span class="dv">54</span> || bi.biSize != <span class="dv">40</span> || 
+        bi.biBitCount != <span class="dv">24</span> || bi.biCompression != <span class="dv">0</span>)
+    {
+        fclose(outptr);
+        fclose(inptr);
+        fprintf(stderr, <span class="st">&quot;Unsupported file format.</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        <span class="kw">return</span> <span class="dv">4</span>;
+    }
+
+    <span class="co">// write outfile&#39;s BITMAPFILEHEADER</span>
+    fwrite(&amp;bf, <span class="kw">sizeof</span>(BITMAPFILEHEADER), <span class="dv">1</span>, outptr);
+
+    <span class="co">// write outfile&#39;s BITMAPINFOHEADER</span>
+    fwrite(&amp;bi, <span class="kw">sizeof</span>(BITMAPINFOHEADER), <span class="dv">1</span>, outptr);
+
+    <span class="co">// determine padding for scanlines</span>
+    <span class="dt">int</span> padding =  (<span class="dv">4</span> - (bi.biWidth * <span class="kw">sizeof</span>(RGBTRIPLE)) % <span class="dv">4</span>) % <span class="dv">4</span>;
+
+    <span class="co">// iterate over infile&#39;s scanlines</span>
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>, biHeight = abs(bi.biHeight); i &lt; biHeight; i++)
+    {
+        <span class="co">// iterate over pixels in scanline</span>
+        <span class="kw">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; bi.biWidth; j++)
+        {
+            <span class="co">// temporary storage</span>
+            RGBTRIPLE triple;
+
+            <span class="co">// read RGB triple from infile</span>
+            fread(&amp;triple, <span class="kw">sizeof</span>(RGBTRIPLE), <span class="dv">1</span>, inptr);
+            <span class="kw">if</span> (triple.rgbtRed == <span class="bn">0xff</span>)
+            {
+                triple.rgbtRed = <span class="bn">0x00</span>;
+                triple.rgbtGreen = <span class="bn">0x00</span>;
+                triple.rgbtBlue = <span class="bn">0x00</span>;
+            }
+            <span class="co">// write RGB triple to outfile</span>
+            fwrite(&amp;triple, <span class="kw">sizeof</span>(RGBTRIPLE), <span class="dv">1</span>, outptr);
+        }
+
+        <span class="co">// skip over padding, if any</span>
+        fseek(inptr, padding, SEEK_CUR);
+
+        <span class="co">// then add it back (to demonstrate how)</span>
+        <span class="kw">for</span> (<span class="dt">int</span> k = <span class="dv">0</span>; k &lt; padding; k++)
+        {
+            fputc(<span class="bn">0x00</span>, outptr);
+        }
+    }
+
+    <span class="co">// close infile</span>
+    fclose(inptr);
+
+    <span class="co">// close outfile</span>
+    fclose(outptr);
+
+    <span class="co">// that&#39;s all folks</span>
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/**</span>
+ * copy.c
+ *
+ * Computer Science <span class="dv">50</span>
+ * Problem Set <span class="dv">5</span>
+ *
+ * Copies a BMP piece by piece, just because.
+ */
+       
+<span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;stdlib.h&gt;</span>
+
+<span class="ot">#include &quot;bmp.h&quot;</span>
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span>* argv[])
+{
+    <span class="co">// ensure proper usage</span>
+    <span class="kw">if</span> (argc != <span class="dv">4</span>)
+    {
+        printf(<span class="st">&quot;Usage: ./resize d infile outfile</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        <span class="kw">return</span> <span class="dv">1</span>;
+    }
+
+    <span class="co">// remember filenames</span>
+    <span class="dt">int</span> f = atoi(argv[<span class="dv">1</span>]);
+    <span class="dt">char</span>* infile = argv[<span class="dv">2</span>];
+    <span class="dt">char</span>* outfile = argv[<span class="dv">3</span>];
+
+    <span class="co">// open input file </span>
+    FILE* inptr = fopen(infile, <span class="st">&quot;r&quot;</span><span class="co">)</span>;
+    <span class="kw">if</span> (inptr == NULL)
+    {
+        printf(<span class="st">&quot;Could not open </span><span class="ch">%s</span><span class="st">.</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">,</span> infile);
+        <span class="kw">return</span> <span class="dv">2</span>;
+    }
+
+    <span class="co">// open output file</span>
+    FILE* outptr = fopen(outfile, <span class="st">&quot;w&quot;</span><span class="co">)</span>;
+    <span class="kw">if</span> (outptr == NULL)
+    {
+        fclose(inptr);
+        fprintf(stderr, <span class="st">&quot;Could not create </span><span class="ch">%s</span><span class="st">.</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">,</span> outfile);
+        <span class="kw">return</span> <span class="dv">3</span>;
+    }
+
+    <span class="co">// read infile&#39;s BITMAPFILEHEADER</span>
+    BITMAPFILEHEADER bf;
+    fread(&amp;bf, <span class="kw">sizeof</span>(BITMAPFILEHEADER), <span class="dv">1</span>, inptr);
+
+    <span class="co">// read infile&#39;s BITMAPINFOHEADER</span>
+    BITMAPINFOHEADER bi;
+    fread(&amp;bi, <span class="kw">sizeof</span>(BITMAPINFOHEADER), <span class="dv">1</span>, inptr);
+
+    <span class="co">// ensure infile is (likely) a 24-bit uncompressed BMP 4.0</span>
+    <span class="kw">if</span> (bf.bfType != <span class="bn">0x4d42</span> || bf.bfOffBits != <span class="dv">54</span> || bi.biSize != <span class="dv">40</span> || 
+        bi.biBitCount != <span class="dv">24</span> || bi.biCompression != <span class="dv">0</span>)
+    {
+        fclose(outptr);
+        fclose(inptr);
+        fprintf(stderr, <span class="st">&quot;Unsupported file format.</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        <span class="kw">return</span> <span class="dv">4</span>;
+    }
+
+    <span class="dt">int</span> row = bi.biHeight;
+    <span class="dt">int</span> col = bi.biWidth;
+    <span class="co">// determine padding for scanlines</span>
+    <span class="dt">int</span> padding_in =  (<span class="dv">4</span> - (col * <span class="kw">sizeof</span>(RGBTRIPLE)) % <span class="dv">4</span>) % <span class="dv">4</span>;
+    <span class="dt">int</span> padding_out;
+    <span class="kw">if</span> (f &gt;= <span class="dv">1</span>)
+    {
+        <span class="co">// change some data in bf and bi</span>
+        bi.biWidth *= f;
+        bi.biHeight *= f;
+        padding_out =  (<span class="dv">4</span> - (bi.biWidth * <span class="kw">sizeof</span>(RGBTRIPLE)) % <span class="dv">4</span>) % <span class="dv">4</span>;
+        bi.biSizeImage = (bi.biWidth + padding_out) * abs(bi.biHeight) * bi.biBitCount / <span class="dv">8</span>;
+        bf.bfSize = bi.biSizeImage + bf.bfOffBits;
+        <span class="co">// write outfile&#39;s BITMAPFILEHEADER</span>
+        fwrite(&amp;bf, <span class="kw">sizeof</span>(BITMAPFILEHEADER), <span class="dv">1</span>, outptr);
+
+        <span class="co">// write outfile&#39;s BITMAPINFOHEADER</span>
+        fwrite(&amp;bi, <span class="kw">sizeof</span>(BITMAPINFOHEADER), <span class="dv">1</span>, outptr);
+    }
+
+    <span class="co">// iterate over infile&#39;s scanlines</span>
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>, biHeight = abs(row); i &lt; biHeight; i++)
+    {
+        <span class="co">// iterate over pixels in scanline</span>
+        <span class="kw">for</span> (<span class="dt">int</span> n = <span class="dv">0</span>; n &lt; f; n++)
+        {
+            <span class="kw">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; col; j++)
+            {
+                <span class="co">// temporary storage</span>
+                RGBTRIPLE triple;
+
+                <span class="co">// read RGB triple from infile</span>
+                fread(&amp;triple, <span class="kw">sizeof</span>(RGBTRIPLE), <span class="dv">1</span>, inptr);
+
+                <span class="kw">for</span> (<span class="dt">int</span> m = <span class="dv">0</span>; m &lt; f; m++ )
+                    <span class="co">// write RGB triple to outfile</span>
+                    fwrite(&amp;triple, <span class="kw">sizeof</span>(RGBTRIPLE), <span class="dv">1</span>, outptr);
+            }
+
+            <span class="co">// then add it back (to demonstrate how)</span>
+            <span class="kw">for</span> (<span class="dt">int</span> k = <span class="dv">0</span>; k &lt; padding_out; k++)
+            {
+                fputc(<span class="bn">0x00</span>, outptr);
+            }
+            fseek(inptr, - col * <span class="dv">3</span>, SEEK_CUR);
+        }
+        fseek(inptr, col * <span class="dv">3</span>, SEEK_CUR);
+        <span class="co">// skip over padding, if any</span>
+        fseek(inptr, padding_in, SEEK_CUR);
+    }
+
+    <span class="co">// close infile</span>
+    fclose(inptr);
+
+    <span class="co">// close outfile</span>
+    fclose(outptr);
+
+    <span class="co">// that&#39;s all folks</span>
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<h3 id="csi">CSI</h3>
+<ul>
+<li>要求：恢复已经删除的jpg数据</li>
+<li>掌握：文件储存，文件类型引导数据(JPEGs signatures)</li>
+<li>难点：
+<ul>
+<li>文件读写</li>
+<li>光标处理</li>
+<li>用fread读出来的数是反着的，不知道怎么搞得 ```cpp /**</li>
+</ul></li>
+<li>recover.c</li>
+<li></li>
+<li>Computer Science 50</li>
+<li>Problem Set 5</li>
+<li></li>
+<li>Recovers JPEGs from a forensic image. */ #include <stdio.h> #include <string.h> #include <stdint.h></li>
+</ul>
+<p>int main(void) { FILE* inptr = fopen(&quot;card.raw&quot;,&quot;r&quot;); if (inptr == NULL) { printf(&quot;cant open input file./n&quot;); return 1; }</p>
+<pre><code>uint32_t t;
+do
+{
+    fread(&amp;t, sizeof(uint32_t), 1, inptr);
+}
+while((t != 0xe0ffd8ff)&amp;&amp;(t != 0xe1ffd8ff));
+fseek(inptr, -sizeof(uint32_t), SEEK_CUR);
+
+char output[8];
+char byte[512];
+int notend = 512;
+int i = 0;
+while (notend == 512)
+{
+    sprintf(output, &quot;%03d.jpg&quot;, i++);
+    FILE* outptr = fopen(output,&quot;w&quot;);
+    if (outptr == NULL)
+    {
+        printf(&quot;cant open output file./n&quot;);
+        return 2;
+    }
+    do
+    {
+        notend = fread(&amp;byte, sizeof(char), 512, inptr);
+        if(notend != 512)
+            break;
+        fwrite(&amp;byte, sizeof(char), 512, outptr);
+        fread(&amp;t, sizeof(uint32_t), 1, inptr);
+        fseek(inptr, -sizeof(uint32_t), SEEK_CUR);
+    }
+    while((t != 0xe0ffd8ff)&amp;&amp;(t != 0xe1ffd8ff));
+
+    fclose(outptr);
+}
+
+fclose(inptr);</code></pre>
+<p>} ```</p>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

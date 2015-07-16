@@ -1,0 +1,36 @@
+<!--html-php-js-css-->
+###### w3c {#toc_0.0.0.0.0.1}
+
+----
+
+-   关系
+    -   www-\>php-\>html+css-\>js
+    -   php用于服务端, 产生html文件, 并不会把php发送到客户, js则用于客户端, 改善html的显示. 
+-   模版
+    -   主网页
+
+        ``` {.code}
+              <?php render("header", ["title" => "CS50"]); ?>
+        ```
+
+    -   函数
+
+        ``` {.code}
+              <?php 
+              function($template, $data = [])
+              $path = $template . ".php" //模板位置
+              if (file_exists($path))
+              {
+                extract($data);
+                require($path);
+              }
+              ?>
+        ```
+
+    -   模版
+
+                  模板就正常写, 只需要把要替换的改掉, 根据前面的说明, 要把title改了. 
+                  <? = htmlspecialchars($title) ?>    把要放title的这样写就行了. 
+                  htmlspecialchars 主要是为了安全, 能把一些html的特殊符号转一下, 可以不用. 
+
+

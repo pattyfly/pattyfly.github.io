@@ -1,0 +1,571 @@
+﻿<!--c-makefile-algorithm-->
+## pset 6 
+
+----
+
+### Misspellings
+
+* 要求：根据一个外部词典，判断输入的文本文件是否有拼写错误，文件组合编译，makefile.
+* 掌握：数据结构，文件读写，文本处理（单词切割），指针，makefile 完整写法, 头文件的定义方式。
+* 难点：
+    - 数据结构构造及建立
+        - hash算法
+        - trie的建立，is_word 的由来
+    - 单词切割
+    - 内存管理
+    - 时间复杂度
+    - 全局变量
+    - 代码优化
+
+- note：
+    - speller 里面的for循环 把一个txt切割成单词, 整个代码非常叼. 
+    - Makefile [完整写法](clang.html)
+    - static [变量](C intro.html)
+
+- 常用的hash函数
+    -   [参考1](http://blog.csdn.net/jcwkyl/article/details/4088436)
+    -   [参考2](https://www.byvoid.com/blog/string-hash-compare)
+    -   hash值一般都是对素数取模, 这样好像能更加均匀
+
+- 优化
+
+>>在这个例子中 hash取余到1000003比较好, 对于14万的单词表： 所以看起来10万或者100万都是不错的选择.  hash会比trie要快, trie的功能、优点不在这. (load 和unload太久, 毕竟空间大) 但是对于稍微大一点的文章, 如果要检查的文字非常多, trie更有优势
+
+  ------------------ ------------------ ------------------ ------------------
+  素数               1000万             100万              10万
+  有冲突的桶子数目   1055               9759               6.7万
+  冲突的单词         1057               1万                8万
+  最长的桶子         2                  3                  8
+  ------------------ ------------------ ------------------ ------------------
+  
+  另外，程序的代码可以进行较大的优化，最明显的是原来的dictionary_hash，用了非常繁杂的过程，循环，条件等等都没有很好的逻辑，重写以后，不仅少了一半的代码，而且逻辑更加清晰。
+
+- [malloc](C intro.html)
+
+>> 对于malloc的内存的单位的默认值, bool 为 fasle, 指针是 NULL<br>
+>> 但是用valgrind检查, 就会出现错误, 所以必须要给这些变量赋值. 
+
+#### dictionary.h
+
+```cpp
+/****************************************************************************
+ * dictionary.h
+ *
+ * Computer Science 50
+ * Problem Set 6
+ *
+ * Declares a dictionary's functionality.
+ ***************************************************************************/
+
+#ifndef DICTIONARY_H
+#define DICTIONARY_H
+
+#include <stdbool.h>
+
+// maximum length for a word
+// (e.g., pneumonoultramicroscopicsilicovolcanoconiosis)
+#define LENGTH 45
+// ODDNUM should be primeNUM
+//#define ODDNUM 10000019
+//#define ODDNUM 1000003
+//#define ODDNUM 99991
+//#define ODDNUM 49999
+#define ODDNUM 9973
+//#define ODDNUM 997
+
+typedef struct node
+{
+    char word[LENGTH + 1];
+    struct node* next;
+}
+node;
+
+/**
+ * Returns true if word is in dictionary else false.
+ */
+bool check(const char* word);
+
+/**
+ * Loads dictionary into memory.  Returns true if successful else false.
+ */
+bool load(const char* dictionary);
+
+/**
+ * Returns number of words in dictionary if loaded else 0 if not yet loaded.
+ */
+unsigned int size(void);
+
+/**
+ * Unloads dictionary from memory.  Returns true if successful else false.
+ */
+bool unload(void);
+
+/**
+ * Get the order of alpha and ', a = 0, ' = 26
+ */
+int getAlphaOrder(char c);
+
+/**
+* SDBMHash
+**/
+unsigned int SDBMHash(char *str);
+
+/**
+ * wordToLower
+ **/
+void wordToLower(const char* src, char* dst);
+#endif // DICTIONARY_H
+```
+
+#### speller.c
+
+```cpp
+/****************************************************************************
+ * speller.c
+ *
+ * Computer Science 50
+ * Problem Set 6
+ *
+ * Implements a spell-checker.
+ ***************************************************************************/
+
+#include <ctype.h>
+#include <stdio.h>
+#include <sys/resource.h>
+#include <sys/time.h>
+
+#include "dictionary.h"
+#undef calculate
+#undef getrusage
+
+// default dictionary
+#define DICTIONARY "dictionaries/large"
+
+// prototype
+double calculate(const struct rusage* b, const struct rusage* a);
+
+int main(int argc, char* argv[])
+{
+    // check for correct number of args
+    if (argc != 2 && argc != 3)
+    {
+        printf("Usage: speller [dictionary] text\n");
+        return 1;
+    }
+
+    // structs for timing data
+    struct rusage before, after;
+
+    // benchmarks
+    double ti_load = 0.0, ti_check = 0.0, ti_size = 0.0, ti_unload = 0.0;
+
+    // determine dictionary to use
+    char* dictionary = (argc == 3) ? argv[1] : DICTIONARY;
+
+    // load dictionary
+    getrusage(RUSAGE_SELF, &before);
+    bool loaded = load(dictionary);
+    getrusage(RUSAGE_SELF, &after);
+
+    // abort if dictionary not loaded
+    if (!loaded)
+    {
+        printf("Could not load %s.\n", dictionary);
+        return 1;
+    }
+
+    // calculate time to load dictionary
+    ti_load = calculate(&before, &after);
+
+    // try to open text
+    char* text = (argc == 3) ? argv[2] : argv[1];
+    FILE* fp = fopen(text, "r");
+    if (fp == NULL)
+    {
+        printf("Could not open %s.\n", text);
+        unload();
+        return 1;
+    }
+
+    // prepare to report misspellings
+    printf("\nMISSPELLED WORDS\n\n");
+
+    // prepare to spell-check
+    int index = 0, misspellings = 0, words = 0;
+    char word[LENGTH+1];
+
+    // spell-check each word in text
+    for (int c = fgetc(fp); c != EOF; c = fgetc(fp))
+    {
+        // allow only alphabetical characters and apostrophes
+        if (isalpha(c) || (c == '\'' && index > 0))
+        {
+            // append character to word
+            word[index] = c;
+            index++;
+
+            // ignore alphabetical strings too long to be words
+            if (index > LENGTH)
+            {
+                // consume remainder of alphabetical string
+                while ((c = fgetc(fp)) != EOF && isalpha(c));
+
+                // prepare for new word
+                index = 0;
+            }
+        }
+
+        // ignore words with numbers (like MS Word can)
+        else if (isdigit(c))
+        {
+            // consume remainder of alphanumeric string
+            while ((c = fgetc(fp)) != EOF && isalnum(c));
+
+            // prepare for new word
+            index = 0;
+        }
+
+        // we must have found a whole word
+        else if (index > 0)
+        {
+            // terminate current word
+            word[index] = '\0';
+
+            // update counter
+            words++;
+
+            // check word's spelling
+            getrusage(RUSAGE_SELF, &before);
+            bool misspelled = !check(word);
+            getrusage(RUSAGE_SELF, &after);
+
+            // update benchmark
+            ti_check += calculate(&before, &after);
+
+            // print word if misspelled
+            if (misspelled)
+            {
+                printf("%s\n", word);
+                misspellings++;
+            }
+
+            // prepare for next word
+            index = 0;
+        }
+    }
+
+    // check whether there was an error
+    if (ferror(fp))
+    {
+        fclose(fp);
+        printf("Error reading %s.\n", text);
+        unload();
+        return 1;
+    }
+
+    // close text
+    fclose(fp);
+
+    // determine dictionary's size
+    getrusage(RUSAGE_SELF, &before);
+    unsigned int n = size();
+    getrusage(RUSAGE_SELF, &after);
+
+    // calculate time to determine dictionary's size
+    ti_size = calculate(&before, &after);
+
+    // unload dictionary
+    getrusage(RUSAGE_SELF, &before);
+    bool unloaded = unload();
+    getrusage(RUSAGE_SELF, &after);
+
+    // abort if dictionary not unloaded
+    if (!unloaded)
+    {
+        printf("Could not unload %s.\n", dictionary);
+        return 1;
+    }
+
+    // calculate time to unload dictionary
+    ti_unload = calculate(&before, &after);
+
+    // report benchmarks
+    printf("\nWORDS MISSPELLED:     %d\n", misspellings);
+    printf("WORDS IN DICTIONARY:  %d\n", n);
+    printf("WORDS IN TEXT:        %d\n", words);
+    printf("TIME IN load:         %.2f\n", ti_load);
+    printf("TIME IN check:        %.2f\n", ti_check);
+    printf("TIME IN size:         %.2f\n", ti_size);
+    printf("TIME IN unload:       %.2f\n", ti_unload);
+    printf("TIME IN TOTAL:        %.2f\n\n", 
+     ti_load + ti_check + ti_size + ti_unload);
+
+    // that's all folks
+    return 0;
+}
+
+/**
+ * Returns number of seconds between b and a.
+ */
+double calculate(const struct rusage* b, const struct rusage* a)
+{
+    if (b == NULL || a == NULL)
+    {
+        return 0.0;
+    }
+    else
+    {
+        return ((((a->ru_utime.tv_sec * 1000000 + a->ru_utime.tv_usec) -
+                 (b->ru_utime.tv_sec * 1000000 + b->ru_utime.tv_usec)) +
+                ((a->ru_stime.tv_sec * 1000000 + a->ru_stime.tv_usec) -
+                 (b->ru_stime.tv_sec * 1000000 + b->ru_stime.tv_usec)))
+                / 1000000.0);
+    }
+}
+```
+
+#### dictionary.c_hash
+
+```cpp
+/****************************************************************************
+ * dictionary.c
+ *
+ * Computer Science 50
+ * Problem Set 6
+ *
+ * Implements a dictionary's functionality.
+ ***************************************************************************/
+#include <ctype.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "dictionary.h"
+
+static node* barrel[ODDNUM] = {NULL};
+static int sizeDict = 0;
+/**
+ * Returns true if word is in dictionary else false.
+ */
+bool check(const char* word)
+{
+    char* tmpword = malloc(sizeof(char) * (strlen(word) + 1));
+    wordToLower(word, tmpword);
+    int i = SDBMHash(tmpword) % ODDNUM;
+
+    node* cursor = barrel[i];
+    while(cursor)
+    {
+        if (!strcmp(cursor->word, tmpword))
+        {
+            free(tmpword);
+            return true;
+        }
+        cursor = cursor->next;
+    }
+    free(tmpword);
+    return false;
+}
+
+/**
+ * Loads dictionary into memory.  Returns true if successful else false.
+ */
+bool load(const char* dictionary)
+{
+    FILE* fp = fopen(dictionary, "r");
+    if (fp == NULL)
+    {
+        printf("Read dictionary error\n");
+        return false;
+    }
+    
+    char word[LENGTH + 1];
+    
+    while(fscanf(fp, "%s", word) != EOF)
+    {
+        int i = SDBMHash(word) % ODDNUM;
+        node* cursor = malloc(sizeof(node));
+        if( cursor == NULL)
+            return false;
+
+        strcpy(cursor->word, word);
+        cursor->next = barrel[i];
+        barrel[i] = cursor;
+        sizeDict++;
+    }
+
+    fclose(fp);
+    return true;
+}
+
+/**
+ * Returns number of words in dictionary if loaded else 0 if not yet loaded.
+ */
+unsigned int size(void)
+{
+    return sizeDict;
+}
+
+/**
+ * Unloads dictionary from memory.  Returns true if successful else false.
+ */
+bool unload(void)
+{
+    for(int i = 0; i < ODDNUM; i++)
+    {
+        node* cursor = barrel[i];
+        while(cursor)
+        {
+            node* tmp = cursor;
+            cursor = cursor->next;
+            free(tmp);
+        }
+    }
+    return true;
+}
+
+/**
+ * SDBMHash
+ **/
+ unsigned int SDBMHash(char* str)
+ {
+    unsigned int hash = 0;
+    while(*str)
+        hash = (*str++) + (hash << 6) + (hash << 16) - hash;
+    return (hash & 0x7FFFFFFF);
+ }
+
+/**
+ * wordToLower
+ **/
+void wordToLower(const char* src, char* dst)
+{
+    while(*src)
+        *dst++ = tolower(*src++);
+    *dst = '\0';
+}
+```
+
+#### dictionary.c_trie
+
+```cpp
+/****************************************************************************
+ * dictionary.c
+ *
+ * Computer Science 50
+ * Problem Set 6
+ *
+ * Implements a dictionary's functionality.
+ ***************************************************************************/
+#include <ctype.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "dictionary.h"
+
+static node* root = NULL;
+static int sizeDict = 0;
+/**
+ * Returns true if word is in dictionary else false.
+ */
+bool check(const char* word)
+{
+    node* cursor = root;
+    for (int i = 0, wordLength = strlen(word); i < wordLength; i++)
+    {
+        int order = getAlphaOrder(tolower(word[i]));
+        cursor = cursor->children[order];
+        if (cursor == NULL)
+            return false;
+    }
+    if (cursor->is_word == false)
+        return false;
+    else
+        return true;
+}
+
+/**
+ * Loads dictionary into memory.  Returns true if successful else false.
+ */
+bool load(const char* dictionary)
+{
+    FILE* fp = fopen(dictionary, "r");
+    if (fp == NULL)
+    {
+        printf("Read dictionary error\n");
+        return false;
+    }
+    
+    char word[LENGTH + 1];
+    initNode(&root);
+    
+    while(fscanf(fp, "%s", word) != EOF)
+    {
+        node* cursor = root;
+        for(int i = 0, wordLength = strlen(word); i < wordLength; i++)
+        {
+            int order = getAlphaOrder(word[i]);
+            if (cursor->children[order] == NULL)
+                initNode(&(cursor->children[order]));
+            cursor = cursor->children[order];
+        }
+        cursor->is_word = true;
+        sizeDict++;
+    }
+
+    fclose(fp);
+    return true;
+}
+
+/**
+ * Returns number of words in dictionary if loaded else 0 if not yet loaded.
+ */
+unsigned int size(void)
+{
+    return sizeDict;
+}
+
+/**
+ * Unloads dictionary from memory.  Returns true if successful else false.
+ */
+bool unload(void)
+{
+    unloadNode(root);
+    return true;
+}
+
+void initNode(node** n)
+{
+    *n = malloc(sizeof(node));
+    for(int j = 0; j < CHARSUM; j++)
+        (*n)->children[j] = NULL;
+    (*n)->is_word = false;
+}
+
+/**
+ * Get the order of alpha and ', a = 0, ' = 26
+ */
+int getAlphaOrder(char c)
+{
+    if (islower(c))
+        return c - 'a';
+    else if (c == '\'')
+        return CHARSUM - 1;
+    else
+    {
+        return -1;
+        printf("the word contain other char than lower alpha or '\n");
+    }
+}
+
+void unloadNode(node* n)
+{
+    for (int i = 0; i < CHARSUM; i++)
+    {
+        if(n->children[i] != NULL)
+            unloadNode(n->children[i]);
+    }
+    free(n);
+}
+```

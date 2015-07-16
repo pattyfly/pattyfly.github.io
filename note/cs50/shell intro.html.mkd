@@ -1,0 +1,64 @@
+<!--linux-->
+### Shell 
+
+----
+
+#### 常用命令
+
+`cd  ls  cp  mkdir  rmdir  rm  touch  mv  man`
+
+> . 当前目录<br>
+> .. 上一级目录<br>
+> -a 所有的(包括隐藏)ls -al<br>
+> -l 长信息<br>
+> -f 不要确认, 不显示信息 rm xxx -rf<br>
+> -r 递归, 文件夹中间所有的东西<br>
+> - 上次的目录 cd -
+
+#### 常用参数
+
+`. .. -a -l -f -r -`
+
+#### 其他
+
+    -   重定位 \>
+    -   [参数传递](pipe.html) |
+    -   grep echo
+    -   history
+    -   重复上次参数 ！
+    -   chmod
+
+#### xxd
+
+```bash
+xxd [options] [infile [outfile]]
+xxd -r[evert] [options] [infile [outfile]]
+```
+
+> > xxd 命令用于用二进制或十六进制显示文件的内容, 如果没有指定outfile参数, 则把结果显示在屏幕上<br>
+> > 如果指定了outfile则把结果输出到 outfile中；如果infile参数为 – 或则没有指定infile参数, 则默认从标准输入读入<br>
+
+比如bitmap信息读入(smiley.bmp 是8 ×8的图像)
+
+```bash
+xxd -c 24 -g 3 -s 54 smiley.bmp
+```
+
+> > 其中-g 3 是3byte 一组, 正好是一像素的颜色 -c 24 是24byte一行, 也就是8像素.  -s 54 是不显示前面54byte数据, 也就是元数据不显示.  xxd 显示前面数字表示偏离开始位置的距离, 用十六进制表示,  后面的...如果是asc字符就显示, 否则就是点.  (c 24 就是一行会有24个点)
+
+用vim查看16进制
+
+> > vim 文件名 -b 采用二进制打开, 然后输入%!xxd 参数 回车就能显示16进制了. <br>
+> > 如果要修改, 注意不要用-s命令, 修改完了再%!xxd -r 参数 先转成2进制再保存.
+
+#### 示例
+
+1. 把目录权限改成适合网站建设的
+```bash
+find . -type d | xargs chmod 711
+find . -type f | xargs chmod 644
+```
+1. 删除某目录下面的某些文件, 详细见[这里](http://blog.csdn.net/caryaliu/article/details/8753028)
+```bash
+find . -name "*.txt" -type f -print -exec rm -fr {} 
+```

@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+        
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>pandoc markdown</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#pandoc-markdown">pandoc markdown</a><ul>
+        <li><a href="#表格">表格</a></li>
+        <li><a href="#注脚">注脚</a></li>
+        <li><a href="#引用-cite">引用 cite</a></li>
+        </ul></li>
+        <li><a href="#公式">公式</a></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/pandoc.html">pandoc</a></li>
+                <li><a href="/wiki/archive/tags/markdown.html">markdown</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/28 15:08</div>
+<!--pandoc-markdown-->
+<h3 id="pandoc-markdown">pandoc markdown</h3>
+<hr />
+<h4 id="表格">表格</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Fruit</th>
+<th align="left">Price</th>
+<th align="left">Advntages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">banans</td>
+<td align="left">$1.34</td>
+<td align="left">bright</td>
+</tr>
+<tr class="even">
+<td align="left">oranges</td>
+<td align="left">$2.1</td>
+<td align="left">tasty</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="22%" />
+<col width="29%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Fruit</th>
+<th align="left">Price</th>
+<th align="left">Advantages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><p>Bananas</p></td>
+<td align="left"><p>$1.34</p></td>
+<td align="left"><ul>
+<li>built-in wrapper</li>
+<li>bright color</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td align="left"><p>Oranges</p></td>
+<td align="left"><p>$2.10</p></td>
+<td align="left"><ul>
+<li>cures scurvy</li>
+<li>tasty</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+<p>pandoc markdown 支持好几种表格, 上面两个是用起来比较舒服的, 特别是第一个, 输入非常容易, 就是 | 和 tab 相互用就行, 中间的短划线也没有长度要求</p>
+<h4 id="注脚">注脚</h4>
+<p>pandoc markdown 支持注脚<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>, 像这个一样.</p>
+<p>常见的语法就是一个<code>[^key]</code>跟在要注释的地方, 然后再其他地方在写上<code>[^key]: balablah</code>什么的. 另外还有一种简单的方法, 就是这样 <code>^[blablah]</code>, 不要 <code>key</code>, 直接在文中就写, 只需要将 caret 移动到前面来就行.</p>
+<p><strong>注意</strong> 这种方式就是适合来注脚, 并不能拿着去做参考, 认为没出现一个注脚, 都会自动排号, 也就是说在文中引用多少次, 这个注脚就会出来多少次.</p>
+<h4 id="引用-cite">引用 cite</h4>
+<p>pandoc 自身是不支持引用的, 但安装pandoc的时候, 如果是windows, 会在同目录同时安装一个pandoc-citeproc, 这个东西可以用来处理引用.</p>
+<p>引用设置到两个方面, 一是得到引用条的各种项目的值, 二是将这些项目按某格式输出. 第一个可以用<code>--bibliography=FILE</code>来指定一个bibtex file来解决. 这个命令相当于 <code>--metadata bibliography=FILE --filter pandoc-citeproc</code>. 一般的数据库或者文献管理工具都提供bibtex输出, 所以要做的是先保证要引用的文献在这个 bibtex file 里面, 然后在要引用的地方 输入如下格式 <code>Blah blah [see @doe99, pp. 33-35; also @smith04, ch. 1].</code> <code>@doe99</code>就是这条引用在 bibtex file 里面的key 值(在每个数据的第一行)</p>
+<pre class="bib"><code>@article{Purdie201441,
+title = &quot;Franz Josef and Fox Glaciers, New Zealand: Historic length records &quot;,
+journal = &quot;Global and Planetary Change &quot;,
+volume = &quot;121&quot;,
+number = &quot;0&quot;,
+pages = &quot;41 - 52&quot;,
+year = &quot;2014&quot;,
+note = &quot;&quot;,
+issn = &quot;0921-8181&quot;
+......</code></pre>
+<blockquote>
+<blockquote>
+<p>这里的引用就是 <code>@Purdie201441</code></p>
+</blockquote>
+</blockquote>
+<p>得到这个值后, 怎样输出是个关键问题, pandoc 用vim 中的宏 和 csl 来解决的, 内置的只有一个格式, 但是引用的格式太多了, 几乎是一个期刊一个格式, 而且这个东西没有功底不要去尝试自己写. 引用点的格式, 引用内容的格式, 还有些奇葩用数字的, 作者数量, 分隔符等等麻烦的很. 幸好已经有人已经写好了, 在<a href="https://github.com/citation-style-language/styles">这里</a>基本上有全部的(额, 英文的)可以下载, . 对了使用方法就是 <code>--csl=csl_file</code>. 支持中文的就3个, 而且有2个还有些问题, 要用的话只能自己再改改了. 当然, 那种又有中文又有英文的, 还是直接改成品吧.</p>
+<p>可以直接用这个来生成md文件, 生成的md文件就没有这些site的东西了, 都改为了人见人爱的html.</p>
+<h3 id="公式">公式</h3>
+<p>这是一个行内公式 <span class="math"><em>e</em><sup><em>i</em><em>x</em></sup> = cos<em>x</em> + <em>i</em>sin<em>x</em></span>. 这是一个普通公式: <br /><span class="math"><em>e</em><sup><em>i</em><em>x</em></sup> = cos<em>x</em> + <em>i</em>sin<em>x</em></span><br /> 另外，希腊字母这样表示，全小写就是小写，首字母大写就是大写，注意，乘号不要写。 <br /><span class="math">Ω = <em>ω</em><em>n</em></span><br /> 再配合 css, 例如<code>br+span.math{margin-left: 45%}</code>就能使普通公式有类似居中的效果</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>具体来说有好几种语法<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

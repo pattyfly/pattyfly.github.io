@@ -1,0 +1,10 @@
+###doc
+
+------
+
+<div id=archive_tags>
+<ul>
+<li>[tibet study 2014](/wiki/note/doc/tibet study 2014.html)</li> 
+<li>[quaternary glacier at palong](/wiki/note/ref/glacier/quaternary glacier at palong.html)</li> 
+</ul>
+</div>

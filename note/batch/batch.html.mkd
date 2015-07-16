@@ -1,0 +1,62 @@
+﻿<!--batch-->
+### Batch
+
+----------
+
+在搞 wiki 的时候终于下决心学点批处理了, [这里](batch wiki.html)是关于 wiki 的批处理.
+
+- For
+
+    [官网][1]有详细解释, 可以看看下面这个例子
+    
+    >> [文本查找于替换](find and replace.html)
+    
+
+
+- token & delims
+
+    [这里][2]有些 token 的知识, 基本点如下
+    
+>>tokens=m表示提取第m列。
+<br>tokens=m,n表示提取第m列和第n列。
+<br>tokens=m-n表示提取第m列至第n列。
+<br>Tokens=*表示删除每行前面的空格。忽略行首的所有空格。
+<br>tokens=m*提取第m列以后的所有字符，星号表示剩余的字符。
+<br>tokens=m,*提取第m列以后的所有字符，星号表示剩余的字符。
+
+```bash
+for /F "eol=; tokens=2,3* delims=," %i in (myfile.txt) do @echo %i %j %k
+```
+This command parses each line in Myfile.txt, ignoring lines that begin with a semicolon and passing the second and third token from each line to the FOR body (tokens are delimited by commas or spaces). The body of the FOR statement references %i to get the second token, %j to get the third token, and %k to get all of the remaining tokens. If the file names that you supply contain spaces, use quotation marks around the text (for example, "File Name"). To use quotation marks, you must use usebackq. Otherwise, the quotation marks are interpreted as defining a literal string to parse. 比如说
+```bash
+for /f "tokens=1,2* delims=," %%i in (test.txt) do (
+set txt=%%i)
+```
+加入 `test.txt` 中只有一句 hello, world. 待分割的实际上是 1:hello, world.(1是行号)  所以第二个 `%%i` (表示第一段文字)就是 1:hello, 如果第二个 `%%i` 换成 `%%j` 就是设置成 world. 如果只要提取 hello 跟 world, 可以这样写:
+```bash
+for /f "tokens=2,3 delims=:," %%i in (test.txt) do (
+set txt1=%%i
+set txt2=%%j)
+```
+>> `%%i` 并不是指 `tokens 1` 而是指显示的 tokens 的第一个. 
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1]: https://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/for.mspx?mfr=true
+[2]: http://www.jb51.net/article/17928.htm

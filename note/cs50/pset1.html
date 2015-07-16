@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>pset1</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#toc_0.0.0.1">pset 1</a><ul>
+        <li><a href="#mario">mario</a></li>
+        <li><a href="#信用卡的验证">信用卡的验证</a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/24 04:32</div>
+<!---->
+<h2 id="toc_0.0.0.1">pset 1</h2>
+<hr />
+<p><a href="https://cdn.cs50.net/2014/spring/psets/1/hacker1/hacker1.html">pset1</a></p>
+<h3 id="mario">mario</h3>
+<ul>
+<li>目标：打印出mario的一个墙</li>
+<li>掌握：循环，函数</li>
+</ul>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/**</span>
+ * mario.c
+ * generate a half-pyramid
+ * <span class="kw">for</span> give height
+ */
+
+<span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;cs50.h&gt;</span>
+
+<span class="dt">void</span> draw_with_symbol(<span class="dt">int</span> num, <span class="dt">char</span> c);
+
+<span class="dt">int</span> main(<span class="dt">void</span>)
+{
+    <span class="dt">int</span> height;
+    <span class="kw">do</span>
+    {
+        printf(<span class="st">&quot;please give the pyramid height, shoud smaller than 24:</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        height = GetInt();
+    }
+    <span class="kw">while</span> (height &lt;= <span class="dv">0</span> || height &gt;= <span class="dv">24</span>);
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">1</span>; i &lt;= height; i++)
+    {
+        draw_with_symbol(height - i, <span class="st">&#39; &#39;</span>);
+        draw_with_symbol(i, <span class="st">&#39;#&#39;</span>);
+        printf(<span class="st">&quot;  &quot;</span><span class="co">)</span>;
+        draw_with_symbol(i, <span class="st">&#39;#&#39;</span>);
+        printf(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+    }
+    <span class="kw">return</span> <span class="dv">0</span>;
+}
+
+<span class="co">/**</span>
+ * printf severl <span class="dt">char</span> in a line
+ * <span class="dt">char</span> c, the symbol to printf
+ * <span class="dt">int</span> num, number of symbols
+ */
+
+<span class="dt">void</span> draw_with_symbol(<span class="dt">int</span> num, <span class="dt">char</span> c)
+{
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; num; i++)
+    {
+        printf(<span class="st">&quot;</span><span class="ch">%c</span><span class="st">&quot;</span><span class="co">,</span>c);
+    }
+}</code></pre>
+<h3 id="信用卡的验证">信用卡的验证</h3>
+<ul>
+<li>目标：验证一个信用卡，并判断是哪个公司的</li>
+<li>掌握：循环，条件</li>
+<li>难点：不用数组挺啰嗦的</li>
+</ul>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/**</span>
+ * credit.c
+ * validate a credit card <span class="kw">and</span> the company
+ */
+
+<span class="ot">#include &lt;cs50.h&gt;</span>
+<span class="ot">#include &lt;stdio.h&gt;</span>
+
+
+<span class="dt">long</span> <span class="dt">long</span> power(<span class="dt">int</span> n , <span class="dt">int</span> a);
+<span class="dt">int</span> getdigitnum(<span class="dt">long</span> <span class="dt">long</span> creditnum);
+<span class="dt">int</span> checksum(<span class="dt">long</span> <span class="dt">long</span> creditnum);
+
+<span class="dt">int</span> main(<span class="dt">void</span>)
+{
+    <span class="dt">long</span> <span class="dt">long</span> creditnum;
+    printf(<span class="st">&quot;Number:&quot;</span><span class="co">)</span>;
+    creditnum = GetLongLong();
+    <span class="dt">int</span> digitnum = getdigitnum(creditnum);
+    <span class="co">// get the first two digit of card</span>
+    <span class="dt">int</span> firsttwonum = creditnum / power(<span class="dv">10</span>, digitnum - <span class="dv">2</span>);
+
+    <span class="kw">switch</span> (digitnum)
+    {
+        <span class="kw">case</span> <span class="dv">13</span>:
+            <span class="kw">if</span> (firsttwonum &gt;= <span class="dv">40</span> &amp;&amp; firsttwonum &lt;= <span class="dv">49</span> &amp;&amp; checksum(creditnum))
+            {
+                printf(<span class="st">&quot;VISA</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+            }
+            <span class="kw">else</span>
+            {
+                printf(<span class="st">&quot;INVALID</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+            }
+            <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="dv">15</span>:
+            <span class="kw">if</span> ((firsttwonum == <span class="dv">34</span> || firsttwonum == <span class="dv">37</span>) &amp;&amp; checksum(creditnum))
+            {
+                printf(<span class="st">&quot;AMEX</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+            }
+            <span class="kw">else</span>
+            {
+                printf(<span class="st">&quot;INVALID</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+            }
+            <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="dv">16</span>:
+            <span class="kw">if</span> (firsttwonum &gt;= <span class="dv">40</span> &amp;&amp; firsttwonum &lt;= <span class="dv">49</span> &amp;&amp; checksum(creditnum))
+            {
+                printf(<span class="st">&quot;VISA</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+            }
+            <span class="kw">else</span> <span class="kw">if</span> (firsttwonum &gt;= <span class="dv">51</span> &amp;&amp; firsttwonum &lt;= <span class="dv">55</span> &amp;&amp; checksum(creditnum))
+            {
+                printf(<span class="st">&quot;MASTERCARD</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+            }
+            <span class="kw">else</span>
+            {
+                printf(<span class="st">&quot;INVALID</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+            }
+            <span class="kw">break</span>;
+        <span class="kw">default</span>:
+            printf(<span class="st">&quot;INVALID</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+
+    }
+    <span class="kw">return</span> <span class="dv">0</span>;
+}
+
+<span class="co">/**</span>
+ * <span class="kw">return</span> the power n by a
+ */
+
+<span class="dt">long</span> <span class="dt">long</span> power(<span class="dt">int</span> n , <span class="dt">int</span> a)
+{
+    <span class="dt">long</span> <span class="dt">long</span> result = <span class="dv">1</span>;
+    <span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; a; i++)
+    {
+       result *= n; 
+    }
+    <span class="kw">return</span> result;
+}
+
+<span class="co">/**</span>
+ * get the digit number of the card
+ */
+
+<span class="dt">int</span> getdigitnum(<span class="dt">long</span> <span class="dt">long</span> creditnum)
+{
+   <span class="dt">int</span> digitnum = <span class="dv">1</span>;
+   <span class="kw">while</span> (creditnum &gt;= <span class="dv">10</span>)
+   {
+        creditnum /= <span class="dv">10</span>;
+        digitnum++;
+   }
+   <span class="kw">return</span> digitnum;
+}
+
+<span class="co">/**</span>
+ * MOD <span class="dv">10</span> algorithm
+ */
+
+<span class="dt">int</span> checksum(<span class="dt">long</span> <span class="dt">long</span> creditnum)
+{
+    <span class="dt">int</span> digitcurr;
+    <span class="dt">int</span> sum = <span class="dv">0</span>;
+    <span class="dt">int</span> i = <span class="dv">0</span>;
+    <span class="kw">while</span> (creditnum &gt;= <span class="dv">1</span>)
+    {
+        digitcurr = creditnum % <span class="dv">10</span>;
+        creditnum /= <span class="dv">10</span>;
+        <span class="co">// if odd, sum added by digitcurrent</span>
+        <span class="co">// else sum added by the sum of digit of  digitcurrent muti by 2 </span>
+        <span class="kw">if</span> (i % <span class="dv">2</span> == <span class="dv">1</span>)
+        {
+            sum += digitcurr * <span class="dv">2</span> % <span class="dv">10</span> + digitcurr * <span class="dv">2</span> / <span class="dv">10</span>;
+        }
+        <span class="kw">else</span>
+        {
+            sum += digitcurr;
+        }
+        i++;
+    }
+    
+    <span class="kw">if</span> (sum % <span class="dv">10</span> == <span class="dv">0</span>)
+    {
+        <span class="kw">return</span> <span class="dv">1</span>;
+    }
+    <span class="kw">else</span>
+    {
+        <span class="kw">return</span> <span class="dv">0</span>;
+    }
+}</code></pre>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

@@ -1,0 +1,1194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>pset3</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#pset-3">pset 3</a><ul>
+        <li><a href="#find">find</a></li>
+        <li><a href="#game-of-fifeen"><a href="https://en.wikipedia.org/wiki/15_puzzle">game of fifeen</a></a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/c.html">c</a></li>
+                <li><a href="/wiki/archive/tags/algorithm.html">algorithm</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/07/08 21:29</div>
+<!--c-algorithm-->
+<h2 id="pset-3">pset 3</h2>
+<hr />
+<p><a href="https://cdn.cs50.net/2014/spring/psets/3/hacker3/hacker3.html">pset3</a></p>
+<h3 id="find">find</h3>
+<ul>
+<li>要求：生成随机数，对其排序，再搜索一个数是不是在这些随机数中</li>
+<li>掌握：搜索排序算法，多文件组合，随机数生成，Makefile编写，<a href="pipe.html">管道符</a>重定向，递归函数</li>
+<li>难点：
+<ul>
+<li>分制的思想</li>
+<li>排序：bubble,selection, insertion, merge, counting sort的实现</li>
+<li>binary search</li>
+<li>数组函数，指针函数</li>
+<li>不同功能程序在命令行中的组合</li>
+<li>对于知道范围整数的排序，可以用counting sort来实现O(n)的时间复杂度</li>
+</ul></li>
+<li>note
+<ul>
+<li>关于多文件组合, 一个文件可能包含多个功能类似的函数, 可以写一个filename.h, 在 filename.c 包括进来就行了</li>
+<li>main 文件中只要包含了其他文件的h文件就行, 编译的时候要一起编译</li>
+<li>理解递推和循环的差异，优劣点(binary search 两种方法都可以用，但是循环更容易理解，因为其不涉及到多个子进程的同时进行，对比merge sort，分制后每部分都得进行。对于像binary search的线性程序，循环比递归更加直接，另外有时候递归会比迭代产生高的多的复杂度，斐波拉切数列就是一个非常好的例子，用迭代，不要牺牲空间，只要3n次计算就能出来，而用递归，计算次数是2的n次方，产生了无数的stack帧。</li>
+<li>关于排序方法，见算法<a href="sort.html">排序</a></li>
+</ul></li>
+</ul>
+<pre class="sourceCode makefile"><code class="sourceCode makefile"><span class="dv">find:</span><span class="dt"> find. c helpers.c helpers.h</span>
+    clang -ggdb3 -O0 -std=c99 -Wall -Werror -o find find.c helpers.c -lcs50 -lm</code></pre>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/***************************************************************************</span>
+<span class="co"> * generate.c</span>
+<span class="co"> *</span>
+<span class="co"> * Computer Science 50</span>
+<span class="co"> * Problem Set 3</span>
+<span class="co"> *</span>
+<span class="co"> * Generates pseudorandom numbers in [0,LIMIT), one per line.</span>
+<span class="co"> *</span>
+<span class="co"> * Usage: generate n [s]</span>
+<span class="co"> *</span>
+<span class="co"> * where n is number of pseudorandom numbers to print</span>
+<span class="co"> * and s is an optional seed</span>
+<span class="co"> ***************************************************************************/</span>
+ 
+<span class="co">// standard libraries</span>
+<span class="ot">#define _XOPEN_SOURCE</span>
+<span class="ot">#include &lt;cs50.h&gt;</span>
+<span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;stdlib.h&gt;</span>
+<span class="ot">#include &lt;time.h&gt;</span>
+
+<span class="co">// constant</span>
+<span class="ot">#define LIMIT 65536</span>
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc, string argv[])
+{
+    <span class="kw">if</span> (argc != <span class="dv">2</span> &amp;&amp; argc != <span class="dv">3</span>)
+    {
+        printf(<span class="st">&quot;Usage: generate n [s]</span><span class="ch">\n</span><span class="st">&quot;</span>);
+        <span class="kw">return</span> <span class="dv">1</span>;
+    }
+
+    <span class="co">// TODO: converse string to number</span>
+    <span class="dt">int</span> n = atoi(argv[<span class="dv">1</span>]);
+
+    <span class="co">// TODO: the third argv as a seed</span>
+    <span class="kw">if</span> (argc == <span class="dv">3</span>)
+    {
+        srand48((<span class="dt">long</span> <span class="dt">int</span>) atoi(argv[<span class="dv">2</span>]));
+    }
+    <span class="kw">else</span>
+    {
+        srand48((<span class="dt">long</span> <span class="dt">int</span>) time(NULL));
+    }
+
+    <span class="co">// TODO: change random deci to interge</span>
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++)
+    {
+        printf(<span class="st">&quot;</span><span class="ch">%i\n</span><span class="st">&quot;</span>, (<span class="dt">int</span>) (drand48() * LIMIT));
+    }
+
+    <span class="co">// success</span>
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;stdlib.h&gt;</span>
+<span class="ot">#define LIMIT 65536</span>
+
+<span class="dt">int</span> binary_search(<span class="dt">int</span> value, <span class="dt">int</span>* arr, <span class="dt">int</span> n);
+<span class="dt">int</span> get_insertion_index(<span class="dt">int</span> value, <span class="dt">int</span>* arr, <span class="dt">int</span> n);
+<span class="dt">void</span> selection_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n);
+<span class="dt">void</span> bubble_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n);
+<span class="dt">void</span> insertion_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n);
+<span class="dt">void</span> merge_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n);
+<span class="dt">void</span> counting_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n);
+<span class="dt">void</span> swap(<span class="dt">int</span>* p, <span class="dt">int</span>* q);</code></pre>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/**</span>
+ * helpers.c
+ *
+ * Computer Science <span class="dv">50</span>
+ * Problem Set <span class="dv">3</span>
+ *
+ * Helper functions <span class="kw">for</span> Problem Set <span class="fl">3.</span>
+ */
+<span class="ot">#include &quot;helpers.h&quot;</span>
+
+<span class="dt">int</span> binary_search(<span class="dt">int</span> value, <span class="dt">int</span>* arr, <span class="dt">int</span> n)
+{
+    <span class="dt">int</span> beginning = <span class="dv">0</span>;
+    <span class="dt">int</span> ending = n - <span class="dv">1</span>;
+    <span class="dt">int</span> middle; 
+
+    <span class="kw">while</span> (ending &gt;= beginning)
+    {
+        middle = (beginning + ending) / <span class="dv">2</span>; 
+        <span class="kw">if</span> (value == *(arr + middle))
+            <span class="kw">return</span> <span class="dv">1</span>; 
+        <span class="kw">else</span> <span class="kw">if</span> (value &lt; *(arr + middle))
+            ending = middle - <span class="dv">1</span>;
+        <span class="kw">else</span>
+            beginning = middle + <span class="dv">1</span>;
+    }
+    <span class="kw">return</span> <span class="dv">0</span>;
+}
+
+<span class="dt">int</span> get_insertion_index(<span class="dt">int</span> value, <span class="dt">int</span>* arr, <span class="dt">int</span> n)
+{
+    <span class="dt">int</span> beginning = <span class="dv">0</span>;
+    <span class="dt">int</span> ending = n - <span class="dv">1</span>;
+    <span class="dt">int</span> middle; 
+
+    <span class="kw">while</span> (ending &gt;= beginning)
+    {
+        middle = (beginning + ending) / <span class="dv">2</span>; 
+        <span class="kw">if</span> (value == *(arr + middle))
+            <span class="kw">return</span> middle; 
+        <span class="kw">else</span> <span class="kw">if</span> (value &lt; *(arr + middle))
+            ending = middle - <span class="dv">1</span>;
+        <span class="kw">else</span>
+            beginning = middle + <span class="dv">1</span>;
+    }
+    <span class="kw">if</span> (value &lt; *(arr + middle))
+        <span class="kw">return</span> middle;
+    <span class="kw">else</span>
+        <span class="kw">return</span> middle + <span class="dv">1</span>;
+}
+
+<span class="dt">void</span> selection_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n)
+{
+    <span class="dt">int</span> index;
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++)
+    {
+        index = i;
+        <span class="kw">for</span> (<span class="dt">int</span> j = i + <span class="dv">1</span>; j &lt; n; j++)
+        {
+            <span class="kw">if</span> (*(arr + index) &gt; *(arr + j))
+            {
+                index = j; 
+            }
+        }
+        swap(arr + i, arr + index);
+    }
+}
+
+<span class="dt">void</span> bubble_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n)
+{
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++)
+    {
+        <span class="dt">int</span> swaped = <span class="dv">0</span>;
+        <span class="kw">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; n - <span class="dv">1</span>; j++)
+        {
+            <span class="kw">if</span> (*(arr + j) &gt; *(arr + j + <span class="dv">1</span>))
+            {
+                swap(arr + j, arr + j + <span class="dv">1</span>);
+                swaped++;
+            }
+        }
+        <span class="kw">if</span>(!swaped)
+            <span class="kw">break</span>;
+    }
+}
+
+<span class="dt">void</span> insertion_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n)
+{
+    <span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n - <span class="dv">1</span>; i++)
+    {
+        <span class="kw">for</span>(<span class="dt">int</span> j = i; j &gt;= <span class="dv">0</span>; j--)
+        {
+            <span class="kw">if</span> (*(arr + j + <span class="dv">1</span>) &lt; *(arr + j))
+            {
+                swap(arr + j, arr + j + <span class="dv">1</span>);
+            }
+        }
+        
+    }
+}
+
+<span class="dt">void</span> merge_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n)
+{
+    <span class="kw">if</span> (<span class="dv">1</span> == n)
+    NULL;
+    <span class="kw">else</span>
+    {
+        <span class="co">// spit in half</span>
+        <span class="dt">int</span> m = n / <span class="dv">2</span>;
+        merge_sort(arr, m);
+        merge_sort(arr + m, n - m);
+
+        <span class="co">// make a copy</span>
+        <span class="dt">int</span>* tmp = malloc(<span class="kw">sizeof</span>(<span class="dt">int</span>) * n);
+        <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++)
+            *(tmp + i) = *(arr + i);
+
+        <span class="co">// merge</span>
+        <span class="dt">int</span> i = <span class="dv">0</span>, j = m, k = <span class="dv">0</span>;
+        <span class="kw">while</span> (i &lt; m &amp;&amp; j &lt; n)
+            *(arr + k++) = (*(tmp + i) &lt; *(tmp + j)) ? *(tmp + i++) : *(tmp + j++);
+
+        <span class="co">// finish left part if didnot finished yet</span>
+        <span class="kw">while</span> (i &lt; m)
+            *(arr + k++) = *(tmp + i++);
+
+        free(tmp);
+    }
+}
+
+<span class="dt">void</span> counting_sort(<span class="dt">int</span>* arr, <span class="dt">int</span> n)
+{
+    <span class="dt">int</span>* bucket = malloc(<span class="kw">sizeof</span>(<span class="dt">int</span>) * LIMIT);
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++)
+        (*(bucket + *(arr + i)))++;
+    <span class="dt">int</span> j = <span class="dv">0</span>;
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; LIMIT; i++)
+        <span class="kw">while</span> ((*(bucket + i))--)
+            *(arr + j++) = i;
+    free(bucket);
+}
+
+<span class="dt">void</span> swap(<span class="dt">int</span>* p, <span class="dt">int</span>* q)
+{
+    <span class="dt">int</span> tmp = *p;
+    *p = *q;
+    *q = tmp;
+}</code></pre>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/**</span>
+ * find.c
+ *
+ * Computer Science <span class="dv">50</span>
+ * Problem Set <span class="dv">3</span>
+ *
+ * Prompts user <span class="kw">for</span> as many as MAX values until EOF is reached, 
+ * then proceeds to search that <span class="st">&quot;haystack&quot;</span><span class="co"> </span>of values <span class="kw">for</span> given needle.
+ *
+ * Usage: ./find needle
+ *
+ * where needle is the value to find in a haystack of values
+ */
+       
+<span class="ot">#include &lt;cs50.h&gt;</span>
+<span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;stdlib.h&gt;</span>
+
+<span class="ot">#include &quot;helpers.h&quot;</span>
+
+<span class="co">// maximum amount of hay</span>
+<span class="dt">const</span> <span class="dt">int</span> MAX = <span class="dv">65536</span>;
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc, string argv[])
+{
+    <span class="co">// ensure proper usage</span>
+    <span class="kw">if</span> (argc != <span class="dv">2</span>)
+    {
+        printf(<span class="st">&quot;Usage: ./find needle</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        <span class="kw">return</span> <span class="dv">-1</span>;
+    }
+
+    <span class="co">// remember needle</span>
+    <span class="dt">int</span> needle = atoi(argv[<span class="dv">1</span>]);
+
+    <span class="co">// fill haystack</span>
+    <span class="dt">int</span> size;
+    <span class="dt">int</span> haystack[MAX];
+    <span class="kw">for</span> (size = <span class="dv">0</span>; size &lt; MAX; size++)
+    {
+        <span class="co">// wait for hay until EOF</span>
+        <span class="co">//printf(&quot;\nhaystack[%d] = &quot;, size);</span>
+        <span class="dt">int</span> straw = GetInt();
+        <span class="kw">if</span> (straw == INT_MAX)
+        {
+            <span class="kw">break</span>;
+        }
+     
+        <span class="co">// add hay to stack</span>
+        haystack[size] = straw;
+    }
+
+    <span class="co">// sort the haystack</span>
+    <span class="co">//bubble_sort(haystack, size);</span>
+    <span class="co">//selection_sort(haystack, size);</span>
+    <span class="co">//insertion_sort(haystack, size);</span>
+    <span class="co">//merge_sort(haystack, size);</span>
+    counting_sort(haystack, size);
+
+    <span class="co">// try to find needle in haystack</span>
+    <span class="kw">if</span> (binary_search(needle, haystack, size))
+    {
+        printf(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Found needle in haystack!</span><span class="ch">\n\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        <span class="kw">return</span> <span class="dv">0</span>;
+    }
+    <span class="kw">else</span>
+    {
+        printf(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Didn&#39;t find needle in haystack.</span><span class="ch">\n\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        <span class="kw">return</span> <span class="dv">1</span>;
+    }
+}</code></pre>
+<h3 id="game-of-fifeen"><a href="https://en.wikipedia.org/wiki/15_puzzle">game of fifeen</a></h3>
+<p>这个作业我个人感觉最难，当然当时觉得非常有趣，也学到非常多的东西。但是在最近(2015)的教程中，这个作业已经没了，将之后的breakout提前，后面的网页分成了两个作业</p>
+<ul>
+<li>要求：写一个数字拼盘游戏，需要随机的开盘，并实现上帝模式</li>
+<li>掌握：数组</li>
+<li>难点：
+<ul>
+<li>大量的数学知识: 变形等价, <a href="https://zh.wikipedia.org/zh-hant/%E7%BD%AE%E6%8D%A2%E7%9A%84%E5%A5%87%E5%81%B6%E6%80%A7">置换奇偶性</a>, Manhattan距离</li>
+<li>随机开盘</li>
+<li><a href="https://zh.wikipedia.org/zh/A*%E6%90%9C%E5%AF%BB%E7%AE%97%E6%B3%95">A星演算法</a></li>
+<li><a href="http://zh.wikipedia.org/wiki/Dijkstra%E7%AE%97%E6%B3%95">Dijkstra算法</a></li>
+<li>上帝模式</li>
+</ul></li>
+<li>note
+<ul>
+<li>因为并不是任何一个随机序列都会有解，实际上有解的序列和无解的序列一样多，这东西就涉及到置换以及等价变形。为实现上帝模式，需要实现搜索算法。</li>
+<li>特殊输出格式(<a href="http://isthe.com/chongo/tech/comp/ansi_escapes.html">escape</a>)</li>
+<li><a href="escape.html">escape</a>如下：</li>
+<li>escape 打印能控制输出的颜色, 背景色, 控制光标移动等<br></li>
+<li>如下条命令就打出黄色的hello world, 注意后面要设置关闭所有属性, 否则所有东西都会是黄的.</li>
+</ul></li>
+</ul>
+<pre class="sourceCode cpp"><code class="sourceCode cpp">  printf(<span class="st">&quot;</span><span class="ch">\033</span><span class="st">[1;33m Hello World. </span><span class="ch">\033</span><span class="st">[0m </span><span class="ch">\n</span><span class="st">&quot;</span>);
+  printf(<span class="st">&quot;</span><span class="ch">\033</span><span class="st">[2J&quot;</span>); \\clean above
+  printf(<span class="st">&quot;</span><span class="ch">\033</span><span class="st">[</span><span class="ch">%d</span><span class="st">;</span><span class="ch">%d</span><span class="st">H&quot;</span>,<span class="dv">0</span>,<span class="dv">0</span>); \\move curse</code></pre>
+<ul>
+<li><p>注解 由于最开始的时候空格位于右下角，结束的时候也要位于右下角，所以不管怎么玩，空格都要走偶数的步数，每一步都是一个置换，所以这个游戏只能是经过偶数次的置换。一个数列不管怎么打乱，最终的置换数如果是奇数的话，只能经过奇数的置换才能恢复，在这种情况下游戏是无解的，所以初始化的时候一定要随机出一个偶数置换。所以随机出来后是奇数置换则还需要加上一个置换。 关于GOD模式，大概的思路是这样的：</p></li>
+<li>对于大于3的方格，先实现第一排和第一列的，再实现第二排和第二列的，直到剩下一个3X3的方格
+<ul>
+<li>找到第一排需要的对应的数字，判断要往上或往左或右移动多少步</li>
+<li>移动方格(方格初始位置在右下角，采用某种移动策略，使得移动空格的时候不会影响要移动的数字)到数字该方向的一侧</li>
+<li>再移动数字并将空格移动到右下角，这两个过程就将该数字朝需要的方向移动了一格</li>
+<li>重复前面两个步骤，直到该数字移动到需要的位置，再换另外一个数字</li>
+</ul></li>
+<li>完成3X3</li>
+<li>详细的过程实际上要复杂很多，比如：
+<ul>
+<li>完成某一排时，如果剩下最后一个的时候，不能直接移动过去，所以在移动倒数第二个的时候，要把这个先移动到最后的一格，然后再移动最后一个，这时候也会出现特殊情况，即最后一格是倒数第二个数，而最后一个数却占在倒数第二格的位置，简单的说就是形成 1，3,2，这种情况下要把3先移动到下下行（这样才不会被干扰），再移动2到最后一格，再移动3到2下面，最后才形成1,2,3</li>
+</ul></li>
+</ul>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">/**</span>
+ * fifteen.c
+ * Computer Science <span class="dv">50</span>
+ * Problem Set <span class="dv">3</span>
+ *
+ * Implements the Game of Fifteen (generalized to d x d).
+ *
+ * Usage: ./fifteen d
+ *
+ * whereby the board<span class="st">&#39;s dimensions are to be d x d,</span>
+ * where d must be in [MIN,MAX]
+ *
+ * Note that usleep is obsolete, but it offers more granularity than
+ * sleep <span class="kw">and</span> is simpler to use than nanosleep; <span class="er">`</span>man usleep<span class="er">`</span> <span class="kw">for</span> more.
+ */
+ 
+<span class="ot">#define _XOPEN_SOURCE 500</span>
+
+<span class="ot">#include &lt;cs50.h&gt;</span>
+<span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;stdlib.h&gt;</span>
+<span class="ot">#include &lt;unistd.h&gt;</span>
+<span class="ot">#include &lt;time.h&gt;</span>
+<span class="ot">#include &lt;math.h&gt;</span>
+<span class="ot">#include &lt;string.h&gt;</span>
+
+<span class="co">// board&#39;s minimal dimension</span>
+<span class="ot">#define MIN 3</span>
+
+<span class="co">// board&#39;s maximal dimension</span>
+<span class="ot">#define MAX 20</span>
+<span class="ot">#define WAIT 500000</span>
+
+<span class="co">// board, whereby board[i][j] represents row i and column j</span>
+<span class="dt">int</span> board[MAX][MAX];
+
+<span class="co">// board&#39;s dimension</span>
+<span class="dt">int</span> d;
+
+<span class="co">// prototypes</span>
+<span class="dt">void</span> clear(<span class="dt">void</span>);
+<span class="dt">void</span> greet(<span class="dt">void</span>);
+<span class="dt">void</span> init(<span class="dt">void</span>);
+<span class="dt">void</span> draw(<span class="dt">void</span>);
+<span class="dt">bool</span> move(<span class="dt">int</span> tile);
+<span class="dt">bool</span> won(<span class="dt">void</span>);
+<span class="dt">void</span> save(<span class="dt">void</span>);
+<span class="dt">void</span> showAndSave(<span class="dt">void</span>);
+
+<span class="dt">void</span> findTile(<span class="dt">int</span>* x, <span class="dt">int</span>* y, <span class="dt">int</span> tile);
+<span class="dt">void</span> moveBlank(<span class="dt">int</span> i, <span class="dt">int</span> j);
+<span class="dt">void</span> moveUp(<span class="dt">int</span> row, <span class="dt">int</span> colu);
+<span class="dt">void</span> moveDown(<span class="dt">int</span> row, <span class="dt">int</span> colu);
+<span class="dt">void</span> moveLeft(<span class="dt">int</span> row, <span class="dt">int</span> colu);
+<span class="dt">void</span> moveRight(<span class="dt">int</span> row, <span class="dt">int</span> colu);
+<span class="dt">void</span> moveToAB(<span class="dt">int</span> x, <span class="dt">int</span> y, <span class="dt">int</span> a, <span class="dt">int</span> b);
+<span class="dt">void</span> moveRow(<span class="dt">int</span> n);
+<span class="dt">void</span> moveThree();
+
+<span class="dt">void</span> randArray(<span class="dt">int</span> array[], <span class="dt">int</span> n);
+<span class="dt">int</span> isParity(<span class="dt">int</span> array[], <span class="dt">int</span> n);
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc, string argv[])
+{
+    <span class="co">// greet player</span>
+    greet();
+
+    <span class="co">// ensure proper usage</span>
+    <span class="kw">if</span> (argc != <span class="dv">2</span>)
+    {
+        printf(<span class="st">&quot;Usage: ./fifteen d</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        <span class="kw">return</span> <span class="dv">1</span>;
+    }
+
+    <span class="co">// ensure valid dimensions</span>
+    d = atoi(argv[<span class="dv">1</span>]);
+    <span class="kw">if</span> (d &lt; MIN || d &gt; MAX)
+    {
+        printf(<span class="st">&quot;Board must be between </span><span class="ch">%i</span><span class="st"> x </span><span class="ch">%i</span><span class="st"> and </span><span class="ch">%i</span><span class="st"> x </span><span class="ch">%i</span><span class="st">, inclusive.</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">,</span>
+            MIN, MIN, MAX, MAX);
+        <span class="kw">return</span> <span class="dv">2</span>;
+    }
+
+    <span class="co">// initialize the board</span>
+    init();
+
+    <span class="co">// accept moves until game is won</span>
+    <span class="kw">while</span> (<span class="kw">true</span>)
+    {
+        <span class="co">// clear the screen</span>
+        clear();
+
+        <span class="co">// draw the current state of the board</span>
+        draw();
+
+        <span class="co">// saves the current state of the board (for testing)</span>
+        save();
+
+        <span class="co">// check for win</span>
+        <span class="kw">if</span> (won())
+        {
+            printf(<span class="st">&quot;ftw!</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+            <span class="kw">break</span>;
+        }
+
+        <span class="co">// prompt for move</span>
+        printf(<span class="st">&quot;Tile to move: &quot;</span><span class="co">)</span>;
+        
+        <span class="dt">char</span>* input = GetString();
+        <span class="kw">if</span>(!strcmp(input, <span class="st">&quot;GOD&quot;</span><span class="co">)</span>)
+        {
+            <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; d - <span class="dv">3</span>; i++)
+                moveRow(i);
+            moveThree();
+        }
+        <span class="co">// move if possible, else report illegality</span>
+        <span class="kw">else</span> <span class="kw">if</span>(!move(atoi(input)))
+        {
+            printf(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Illegal move.</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+            usleep(WAIT);
+        }
+        <span class="co">// sleep for animation&#39;s sake</span>
+        usleep(WAIT);
+    }
+
+    <span class="co">// that&#39;s all folks</span>
+    <span class="kw">return</span> <span class="dv">0</span>;
+}
+
+<span class="co">/**</span>
+ * Clears screen <span class="kw">using</span> ANSI escape sequences.
+ */
+<span class="dt">void</span> clear(<span class="dt">void</span>)
+{
+    printf(<span class="st">&quot;</span><span class="ch">\033</span><span class="st">[2J&quot;</span><span class="co">)</span>;
+    printf(<span class="st">&quot;</span><span class="ch">\033</span><span class="st">[</span><span class="ch">%d</span><span class="st">;</span><span class="ch">%d</span><span class="st">H&quot;</span><span class="co">,</span> <span class="dv">0</span>, <span class="dv">0</span>);
+}
+
+<span class="co">/**</span>
+ * Greets player.
+ */
+<span class="dt">void</span> greet(<span class="dt">void</span>)
+{
+    clear();
+    printf(<span class="st">&quot;GAME OF FIFTEEN</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+    usleep(WAIT);
+}
+
+
+<span class="co">/* return parity of a array</span>
+<span class="co">*  0 if the parity is even</span>
+<span class="co">*  1 if the parity is odd</span>
+<span class="co">*  if the array is sorted, the number in it is from 1 to n</span>
+<span class="co">*  where n is the lenth of array</span>
+<span class="co">*/</span>
+<span class="dt">int</span> isParity(<span class="dt">int</span> array[], <span class="dt">int</span> n)
+{
+    <span class="dt">int</span>* tmp = malloc(n * <span class="kw">sizeof</span>(<span class="dt">int</span>));
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++)
+        tmp[i] = array[i];
+
+    <span class="dt">int</span> p = <span class="dv">0</span>;
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++)
+    {
+        <span class="dt">int</span> t = i;
+        <span class="kw">while</span> ((tmp[t] != i + <span class="dv">1</span>) &amp;&amp; (tmp[t] != <span class="dv">0</span>))
+        {
+            tmp[t] = <span class="dv">0</span>;
+            t = array[t] - <span class="dv">1</span>;
+            p++;
+        }
+        tmp[t] = <span class="dv">0</span>;
+    }
+    free(tmp);
+    <span class="kw">return</span> p % <span class="dv">2</span>;
+}
+
+<span class="co">/* random a array</span>
+<span class="co">*  the array must from 1 to n, and sorted</span>
+<span class="co">*/</span>
+<span class="dt">void</span> randArray(<span class="dt">int</span> array[], <span class="dt">int</span> n)
+{
+    <span class="dt">int</span>* tmp = malloc(n * <span class="kw">sizeof</span>(<span class="dt">int</span>));
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++)
+        tmp[i] = array[i];
+    srand(time(NULL));
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++)
+    {
+        <span class="dt">int</span> r = rand()%(n - i) + <span class="dv">1</span>;
+        <span class="dt">int</span> k;
+        <span class="kw">for</span> (k  = <span class="dv">0</span>; k &lt; n; k++)
+        {
+            <span class="kw">if</span> (tmp[k] != <span class="dv">0</span>)
+            {
+                <span class="kw">if</span> (r == <span class="dv">1</span>)
+                    <span class="kw">break</span>;
+                r--;
+            }
+        }
+        array[i] = tmp[k];
+        tmp[k] = <span class="dv">0</span>;
+    }
+    free(tmp);
+}
+
+<span class="co">/**</span>
+ * Initializes the game<span class="st">&#39;s board with tiles numbered 1 through d*d - 1,</span>
+ * (i.e., fills board with values but does <span class="kw">not</span> actually print them),
+ * whereby board[i][j] represents row i <span class="kw">and</span> column j.
+ */
+<span class="dt">void</span> init(<span class="dt">void</span>)
+{
+    <span class="dt">int</span> n = d * d - <span class="dv">1</span>;
+    <span class="dt">int</span>* tmpArray = malloc((n + <span class="dv">1</span>) * <span class="kw">sizeof</span>(<span class="dt">int</span>));
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++)
+        tmpArray[i] = i + <span class="dv">1</span>;
+    tmpArray[n] = <span class="dv">0</span>;
+    
+    randArray(tmpArray, n);
+
+    <span class="co">//the parity of array plus the taxicab of black(in the right  bottom) must be even</span>
+    <span class="co">//see wiki/N-puzzle</span>
+    <span class="co">//int taxicab = d + d - 2;</span>
+    <span class="co">//int cantSlove = (taxicab + isParity(tmpArray, n)) % 2;</span>
+    <span class="kw">if</span> (isParity(tmpArray, n))
+    {
+        <span class="dt">int</span> tmp = tmpArray[n<span class="dv">-1</span>];
+        tmpArray[n<span class="dv">-1</span>] = tmpArray[n<span class="dv">-2</span>];
+        tmpArray[n<span class="dv">-2</span>] = tmp;
+    }
+
+    <span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; d; i++)
+    {
+        <span class="kw">for</span>(<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; d; j++)
+        {
+           board[i][j] = tmpArray[i*d+j];
+        }
+    }
+    free(tmpArray);
+}
+
+<span class="co">/**</span>
+ * Prints the board in its current state.
+ */
+<span class="dt">void</span> draw(<span class="dt">void</span>)
+{
+    <span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; d; i++)
+    {
+        <span class="kw">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; d; j++)
+            <span class="kw">if</span>(board[i][j])
+                printf(<span class="st">&quot;</span><span class="ch">\033</span><span class="st">[1;43m      </span><span class="ch">\033</span><span class="st">[0m&quot;</span><span class="co">)</span>;
+            <span class="kw">else</span>
+                printf(<span class="st">&quot;</span><span class="ch">\033</span><span class="st">[5m</span><span class="ch">\033</span><span class="st">[1;45m      </span><span class="ch">\033</span><span class="st">[0m&quot;</span><span class="co">)</span>;
+        printf(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+        <span class="kw">for</span>(<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; d; j++)
+        {
+            <span class="kw">if</span>(board[i][j])
+                printf(<span class="st">&quot;</span><span class="ch">\033</span><span class="st">[1;43m</span><span class="ch">\033</span><span class="st">[1;34m</span><span class="ch">%4d</span><span class="st">  </span><span class="ch">\033</span><span class="st">[0m&quot;</span><span class="co">,</span>board[i][j]);
+            <span class="kw">else</span>
+                printf(<span class="st">&quot;</span><span class="ch">\033</span><span class="st">[5m</span><span class="ch">\033</span><span class="st">[1;45m      </span><span class="ch">\033</span><span class="st">[0m&quot;</span><span class="co">)</span>;
+        }
+        printf(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+    }
+}
+
+<span class="co">/**</span>
+ * If tile borders empty space, moves tile <span class="kw">and</span> returns <span class="kw">true</span>, <span class="kw">else</span>
+ * returns <span class="kw">false</span>. 
+ */
+<span class="dt">bool</span> move(<span class="dt">int</span> tile)
+{
+    <span class="kw">if</span> ((tile &lt; <span class="dv">1</span>) || (tile &gt; d * d <span class="dv">-1</span>))
+        <span class="kw">return</span> <span class="kw">false</span>;
+    <span class="dt">int</span> row_tile, colu_tile, row_0, colu_0;
+
+    findTile(&amp;row_tile, &amp;colu_tile, tile);
+    findTile(&amp;row_0, &amp;colu_0, <span class="dv">0</span>);
+
+    <span class="kw">if</span>((abs(row_tile -  row_0) + abs(colu_tile - colu_0)) == <span class="dv">1</span>)
+        {
+            board[row_0][colu_0] = board[row_tile][colu_tile];
+            board[row_tile][colu_tile] = <span class="dv">0</span>;
+            showAndSave();
+            <span class="kw">return</span> <span class="kw">true</span>;
+        }
+    <span class="kw">else</span>
+        <span class="kw">return</span> <span class="kw">false</span>;
+}
+
+<span class="co">/**</span>
+ * Returns <span class="kw">true</span> <span class="kw">if</span> game is won (i.e., board is in winning configuration), 
+ * <span class="kw">else</span> <span class="kw">false</span>.
+ */
+<span class="dt">bool</span> won(<span class="dt">void</span>)
+{
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; d - <span class="dv">1</span>; i++)
+    {
+        <span class="kw">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; d; j++)
+        {
+            <span class="kw">if</span> (board[i][j] != (i * d + j + <span class="dv">1</span>))
+                <span class="kw">return</span> <span class="kw">false</span>;
+        }
+    }
+    <span class="kw">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; d - <span class="dv">1</span>; j++)
+    {
+        <span class="kw">if</span> (board[d<span class="dv">-1</span>][j] != ((d - <span class="dv">1</span>) * d + j + <span class="dv">1</span>))
+            <span class="kw">return</span> <span class="kw">false</span>;
+    }
+    <span class="kw">return</span> <span class="kw">true</span>;
+}
+
+<span class="co">/**</span>
+ * Saves the current state of the board to disk (<span class="kw">for</span> testing).
+ */
+<span class="dt">void</span> save(<span class="dt">void</span>)
+{
+    <span class="co">// log</span>
+    <span class="dt">const</span> string log = <span class="st">&quot;log.txt&quot;</span><span class="co">;</span>
+    <span class="co">// delete existing log, if any, before first save</span>
+    unlink(log);
+    <span class="co">// open log</span>
+    FILE* p = fopen(log, <span class="st">&quot;a&quot;</span><span class="co">)</span>;
+    <span class="kw">if</span> (p == NULL)
+        <span class="kw">return</span>;
+
+    <span class="co">// log board</span>
+    fprintf(p, <span class="st">&quot;{&quot;</span><span class="co">)</span>;
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; d; i++)
+    {
+        fprintf(p, <span class="st">&quot;{&quot;</span><span class="co">)</span>;
+        <span class="kw">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; d; j++)
+        {
+            fprintf(p, <span class="st">&quot;</span><span class="ch">%i</span><span class="st">&quot;</span><span class="co">,</span> board[i][j]);
+            <span class="kw">if</span> (j &lt; d - <span class="dv">1</span>)
+            {
+                fprintf(p, <span class="st">&quot;,&quot;</span><span class="co">)</span>;
+            }
+        }
+        fprintf(p, <span class="st">&quot;}&quot;</span><span class="co">)</span>;
+        <span class="kw">if</span> (i &lt; d - <span class="dv">1</span>)
+        {
+            fprintf(p, <span class="st">&quot;,&quot;</span><span class="co">)</span>;
+        }
+    }
+    fprintf(p, <span class="st">&quot;}</span><span class="ch">\n</span><span class="st">&quot;</span><span class="co">)</span>;
+    <span class="co">// close log</span>
+    fclose(p);
+}
+
+<span class="dt">void</span> showAndSave()
+{
+    clear();
+    draw();
+    save();
+    usleep(WAIT);
+}
+
+<span class="co">/* find the x, y of tile */</span>
+<span class="dt">void</span> findTile(<span class="dt">int</span>* x, <span class="dt">int</span>* y, <span class="dt">int</span> tile)
+{
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; d; i++)
+        <span class="kw">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; d; j++)
+            <span class="kw">if</span> (board[i][j] == tile)
+            {
+                *x = i;
+                *y = j;
+            }
+}
+
+<span class="co">/* find and move the blank to x, y */</span>
+<span class="dt">void</span> moveBlank(<span class="dt">int</span> x, <span class="dt">int</span> y)
+{
+    <span class="dt">int</span> row, colu;
+    findTile(&amp;row, &amp;colu, <span class="dv">0</span>); 
+
+    <span class="dt">int</span> tile_x, tile_y;
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; abs(row - x); i++)
+    {
+        tile_x = (row &gt; x)?(row - <span class="dv">1</span> - i):(row + <span class="dv">1</span> + i);
+        tile_y = colu;
+        move(board[tile_x][tile_y]);
+    }
+    <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; abs(colu - y); i++)
+    {
+        tile_x = x;
+        tile_y = (colu &gt; y)?(colu - <span class="dv">1</span> - i):(colu + <span class="dv">1</span> + i);
+        move(board[tile_x][tile_y]);
+    }
+}
+
+<span class="co">/* move the origin x, y tile to house */</span>
+<span class="dt">void</span> moveToAB(<span class="dt">int</span> x, <span class="dt">int</span> y, <span class="dt">int</span> a, <span class="dt">int</span> b)
+{
+    <span class="co">// reset the blank</span>
+    moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+    <span class="dt">int</span> tile = x * d + y + <span class="dv">1</span>;
+    <span class="dt">int</span> row, colu;
+    findTile(&amp;row, &amp;colu, tile); 
+    <span class="kw">if</span>(colu == d - <span class="dv">1</span>)
+    {
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+        moveBlank(row, colu - <span class="dv">1</span>);
+        move(tile);
+        colu--;
+    }
+    <span class="kw">else</span>
+    {
+        moveBlank(row, colu <span class="dv">+1</span>);
+    }
+    
+    <span class="kw">if</span>(row == d<span class="dv">-1</span>)
+        moveUp(row--, colu);
+
+    <span class="kw">while</span>((b - colu) &gt; <span class="dv">0</span>)
+        moveRight(row, colu++);
+    <span class="kw">while</span>((row - a) &gt; <span class="dv">0</span>)
+        moveUp(row--, colu);
+    <span class="kw">while</span>((a - row) &gt; <span class="dv">0</span>)
+        moveDown(row++, colu);
+    <span class="kw">while</span>((colu - b) &gt; <span class="dv">0</span>)
+        moveLeft(row, colu--);
+}
+
+<span class="dt">void</span> moveLeft(<span class="dt">int</span> row, <span class="dt">int</span> colu)
+{
+    move(board[row<span class="dv">+1</span>][colu<span class="dv">+1</span>]);
+    move(board[row<span class="dv">+1</span>][colu]);
+    move(board[row<span class="dv">+1</span>][colu<span class="dv">-1</span>]);
+    move(board[row][colu<span class="dv">-1</span>]);
+    move(board[row][colu]);
+}
+<span class="dt">void</span> moveRight(<span class="dt">int</span> row, <span class="dt">int</span> colu)
+{
+    move(board[row][colu]);
+    move(board[row<span class="dv">+1</span>][colu]);
+    move(board[row<span class="dv">+1</span>][colu<span class="dv">+1</span>]);
+    move(board[row<span class="dv">+1</span>][colu<span class="dv">+2</span>]);
+    move(board[row][colu<span class="dv">+2</span>]);
+}
+<span class="dt">void</span> moveUp(<span class="dt">int</span> row, <span class="dt">int</span> colu)
+{
+    move(board[row<span class="dv">-1</span>][colu<span class="dv">+1</span>]);
+    move(board[row<span class="dv">-1</span>][colu]);
+    move(board[row][colu]);
+    move(board[row][colu<span class="dv">+1</span>]);
+    move(board[row<span class="dv">-1</span>][colu<span class="dv">+1</span>]);
+}
+<span class="dt">void</span> moveDown(<span class="dt">int</span> row, <span class="dt">int</span> colu)
+{
+    move(board[row<span class="dv">+1</span>][colu<span class="dv">+1</span>]);
+    move(board[row<span class="dv">+1</span>][colu]);
+    move(board[row][colu]);
+    move(board[row][colu<span class="dv">+1</span>]);
+    move(board[row<span class="dv">+1</span>][colu<span class="dv">+1</span>]);
+}
+
+<span class="dt">void</span> moveRow(<span class="dt">int</span> n)
+{
+    <span class="co">// begin to fix n row</span>
+    <span class="kw">for</span>(<span class="dt">int</span> i = n; i &lt; d - <span class="dv">1</span>; i++)
+    {
+        moveToAB(n, i, n, i);
+    }
+        move(board[n][d<span class="dv">-2</span>]); <span class="co">//move 3 to the border</span>
+        moveToAB(n, d - <span class="dv">1</span>, n + <span class="dv">1</span>, d <span class="dv">-2</span>); <span class="co">// move 4 to beneath ori 3</span>
+        move(board[n<span class="dv">+1</span>][d<span class="dv">-2</span>]);<span class="co">//move 4 to the borde to beneath now 3</span>
+        moveBlank(n, d - <span class="dv">2</span>);
+        move(board[n][d<span class="dv">-1</span>]);<span class="co">//move 3 back</span>
+        move(board[n<span class="dv">+1</span>][d<span class="dv">-1</span>]);<span class="co">// move 4 back</span>
+    <span class="co">// begin to fix n colu</span>
+    <span class="kw">for</span>(<span class="dt">int</span> i = n + <span class="dv">1</span>; i &lt; d - <span class="dv">1</span>; i++)
+    {
+        moveToAB(i, n, i, n);
+    }
+        moveBlank(d - <span class="dv">1</span>, n + <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">1</span>, n);
+        move(board[d<span class="dv">-2</span>][n]);
+        moveBlank(d - <span class="dv">2</span>, n + <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">1</span>, d <span class="dv">-1</span>);
+        moveToAB(d - <span class="dv">1</span>, n, d - <span class="dv">2</span>, n + <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">1</span>, n + <span class="dv">2</span>);
+        moveBlank(d - <span class="dv">1</span>, n + <span class="dv">1</span>);
+        move(board[d<span class="dv">-2</span>][n<span class="dv">+1</span>]);
+        move(board[d<span class="dv">-2</span>][n]);
+        move(board[d<span class="dv">-1</span>][n]);
+        move(board[d<span class="dv">-1</span>][n<span class="dv">+1</span>]);
+}
+<span class="dt">void</span> moveThree()
+{
+    <span class="co">// move the 1st tile</span>
+    moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+    <span class="dt">int</span> row, colu;
+    <span class="dt">int</span> tile = (d - <span class="dv">3</span>) * d + (d - <span class="dv">3</span>) + <span class="dv">1</span>;
+    findTile(&amp;row, &amp;colu, tile);
+    <span class="kw">if</span>(row == d - <span class="dv">1</span>)
+    {
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">2</span>, colu);
+        move(tile);
+        row--;
+    }
+    <span class="kw">if</span>(row == d - <span class="dv">2</span>)
+    {
+        <span class="kw">if</span>(colu == d - <span class="dv">1</span>)
+        {
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+            moveBlank(row, d - <span class="dv">2</span> );
+            move(tile);
+            colu--;
+        }
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">3</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">3</span>, colu);
+        move(tile);
+        row--;
+    }
+    <span class="kw">if</span>(row == d - <span class="dv">3</span>)
+    {
+        <span class="kw">if</span>(colu == d - <span class="dv">1</span>)
+        {
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+            moveBlank(d - <span class="dv">3</span>, d - <span class="dv">2</span>);
+            move(tile);
+            colu--;
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+        }
+        <span class="kw">if</span>(colu == d - <span class="dv">2</span>)
+        {
+            moveBlank(d - <span class="dv">2</span>, d - <span class="dv">3</span>);
+            moveBlank(d - <span class="dv">3</span>, d - <span class="dv">3</span>);
+            move(tile);
+            colu--;
+        }
+    }
+
+    moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+    <span class="co">// move the 2nd tile</span>
+    tile = (d - <span class="dv">3</span>) * d + (d - <span class="dv">2</span>) + <span class="dv">1</span>;
+    findTile(&amp;row, &amp;colu, tile);
+    <span class="kw">if</span>(row == d - <span class="dv">1</span>)
+    {
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">2</span>, colu);
+        move(tile);
+        row--;
+    }
+    <span class="kw">if</span>(row == d - <span class="dv">2</span>)
+    {
+        <span class="kw">if</span>(colu == d - <span class="dv">3</span>)
+        {
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+            moveBlank(d - <span class="dv">2</span>, d - <span class="dv">2</span>);
+            move(tile);
+            colu++;
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">3</span>);
+        }
+
+        <span class="kw">if</span>(colu == d - <span class="dv">2</span>)
+        {
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+            moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+            move(tile);
+            colu++;
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+        }
+
+        <span class="kw">if</span>(colu == d - <span class="dv">1</span>)
+        {
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+            moveBlank(d - <span class="dv">3</span>, d - <span class="dv">2</span> );
+            moveBlank(d - <span class="dv">3</span>, d - <span class="dv">1</span> );
+            move(tile);
+            row--;
+        }
+    }
+    <span class="kw">else</span> <span class="kw">if</span>((row  == d - <span class="dv">3</span>) &amp;&amp; (colu == d - <span class="dv">2</span>))
+    {
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">3</span>, d - <span class="dv">1</span>);
+        move(tile);
+        colu++;
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+    }
+
+    moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+    <span class="co">// move the 3rd tile</span>
+    tile = (d - <span class="dv">3</span>) * d + (d - <span class="dv">1</span>) + <span class="dv">1</span>;
+    findTile(&amp;row, &amp;colu, tile);
+    
+    <span class="kw">if</span>(row == d - <span class="dv">3</span>)
+    {
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">2</span>);
+        moveBlank(d - <span class="dv">3</span>, d - <span class="dv">2</span>);
+        moveBlank(d - <span class="dv">3</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">2</span>);
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">3</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">3</span>, d - <span class="dv">2</span>);
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+        row++;
+    }
+
+    <span class="kw">else</span> <span class="kw">if</span>(row == d - <span class="dv">1</span>)
+    {
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">2</span>, colu);
+        move(tile);
+        row--;
+    }
+    <span class="kw">if</span>(colu == d - <span class="dv">3</span>)
+    {
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">2</span>);
+        move(tile);
+        colu++;
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">3</span>);
+    }
+    <span class="kw">if</span>(colu == d <span class="dv">-2</span>)
+    {
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+        move(tile);
+        colu++;
+    }
+    moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+    moveBlank(d - <span class="dv">3</span>, d - <span class="dv">2</span>);
+    moveBlank(d - <span class="dv">3</span>, d - <span class="dv">1</span>);
+    moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+    
+    <span class="co">// move the 4th tile</span>
+    moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+    tile = (d - <span class="dv">2</span>) * d + (d - <span class="dv">3</span>) + <span class="dv">1</span>;
+    findTile(&amp;row, &amp;colu, tile);
+    
+    <span class="kw">if</span>(row == d - <span class="dv">2</span>)
+    {
+        <span class="kw">while</span>(colu != d - <span class="dv">3</span>)
+        {
+            moveBlank(d - <span class="dv">1</span>, colu - <span class="dv">1</span>);
+            moveBlank(d - <span class="dv">2</span>, colu - <span class="dv">1</span>);
+            move(tile);
+            colu--;
+            moveBlank(d - <span class="dv">1</span>, colu + <span class="dv">1</span>);
+        }
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">3</span>);
+        move(tile);
+        row++;
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+    }
+    <span class="kw">else</span>
+    {
+        <span class="kw">if</span>(colu == d - <span class="dv">2</span>)
+        {
+            moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+            moveBlank(d - <span class="dv">2</span>, d - <span class="dv">3</span>);
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">3</span>);
+            move(tile);
+            colu--;
+        }
+    }
+
+    <span class="co">// move the 7th tile</span>
+    moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+    tile = (d - <span class="dv">1</span>) * d + (d - <span class="dv">3</span>) + <span class="dv">1</span>;
+    findTile(&amp;row, &amp;colu, tile);
+    
+    <span class="kw">if</span>(row ==  d - <span class="dv">2</span>)
+    {
+        <span class="kw">if</span> (colu == d - <span class="dv">3</span>)
+        {
+            moveBlank(d - <span class="dv">2</span>, d - <span class="dv">2</span>);
+            moveBlank(d - <span class="dv">2</span>, d - <span class="dv">3</span>);
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">3</span>);
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+            moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+            moveBlank(d - <span class="dv">2</span>, d - <span class="dv">2</span>);
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">3</span>);
+            moveBlank(d - <span class="dv">2</span>, d - <span class="dv">3</span>);
+            moveBlank(d - <span class="dv">2</span>, d - <span class="dv">2</span>);
+            moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+            moveBlank(d - <span class="dv">2</span>, d - <span class="dv">2</span>);
+        }
+        <span class="kw">else</span>
+        {
+            <span class="kw">if</span>(colu == d <span class="dv">-1</span>)
+            {
+                moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+                moveBlank(d - <span class="dv">2</span>, d - <span class="dv">2</span>);
+                moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+                moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+            }
+            moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+            move(tile);
+        }
+    }
+    <span class="kw">else</span>
+    {
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">2</span>);
+    }
+    moveBlank(d - <span class="dv">2</span>, d - <span class="dv">3</span>);
+    moveBlank(d - <span class="dv">1</span>, d - <span class="dv">3</span>);
+    moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+
+
+
+    <span class="co">// move the 5th tile</span>
+    moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+    tile = (d - <span class="dv">2</span>) * d + (d - <span class="dv">2</span>) + <span class="dv">1</span>;
+    findTile(&amp;row, &amp;colu, tile);
+
+    <span class="kw">if</span>((row == d - <span class="dv">2</span>) &amp;&amp; (colu == d <span class="dv">-1</span>))
+    {
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">2</span>);
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+    }
+    <span class="kw">else</span> <span class="kw">if</span>((row == d - <span class="dv">1</span>) &amp;&amp; (colu == d - <span class="dv">2</span>))
+    {
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">1</span>);
+        moveBlank(d - <span class="dv">2</span>, d - <span class="dv">2</span>);
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">2</span>);
+        moveBlank(d - <span class="dv">1</span>, d - <span class="dv">1</span>);
+    }
+
+} </code></pre>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

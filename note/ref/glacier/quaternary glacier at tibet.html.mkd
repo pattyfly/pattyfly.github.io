@@ -1,0 +1,118 @@
+<!--glacier-ref-->
+
+## Quaternary glaciation of the Himalayan–Tibetan orogen
+
+-------------
+
+[文章](Quaternary glaciation of the Himalayan-Tibetan orogen.pdf)很好的介绍了青藏高原的构造，气候，冰川发育情况，以及详细介绍了冰川研究历史，中间提到了中国学者的研究。特别的详细的介绍了各种测年方法在冰川上的应用，以及各种方法的优缺点，重点讲了宇生核素<sup>10</sup>Be测年法的缺点
+
+青藏高原发育着除两极以外最大的冰川，是研究第四纪冰川发育与气候变化的天然实验室。古冰川的各冰期冰阶的界定年龄以及相应的冰川发育范围是青藏高原古气候研究的主要内容。最早的研究者们通过沉积学和地层学，地貌学等来研究古冰川的发育历史，但是由于此区域的滑坡崩塌等重力侵蚀以及水力侵蚀、冻融侵蚀都十分强烈，难以在地貌上找到古冰川的痕迹，更别说建立一个完整的冰川发育演替过程。另外，部分重力侵蚀的物质在水流等作用下也会呈现近似古冰川的地貌，给古冰川的研究成果带来了更大的不确定性。最初的年代学进展是通过研究冰碛物周边的土壤化程度，只能得出粗略的相对年龄，直到C14测年应用在冰碛物上应用，冰川残留物才开始了有了定量的年代研究。但是在青藏高原上，很多地方缺少C定年方法所需的有机体，并且C14定年的量程有限(1万年左右)，该方法并没有得到广泛的应用。随后光释光OSL和宇生核素TCN测年法的出现又导致了冰川定年研究的蓬勃发展。但是这些方法也都有各自的缺点，光释光最重要的问题是结果并不是直接反应沉积物的埋藏时间，在沉积之前曝光不完全，剂量变化率不稳定（特别是随湿度变化），以及西藏地区的石英矿物的低敏感和低亮度等都导致测量结果有较大的误差。比如说每有1%的湿度误差，测年误差就有1%。不完全曝光是光释光最大的问题，会导致测年数据偏高。已发布的OSL测年方法大部分没有给出详细的假设，计算方法，测量条件等(而研究者之间针对这些因子并没有很好的统一), 因此文中得到的数据不能完整的评价以及综合比较研究。
+
+为了研究西藏地区和全球的冰期是否同步，90年代做了大量的定年工作，最终证明了西藏山区冰川不仅和全球冰期不同步，而且山地之间也有很大的差异，部分地区的最大冰期发生在LGM之前，30-60ka，位于mis 3。作者认为这些差异源自于整个西藏局部的气候差异，即季风和西风的影响差异。
+
+TCN刚兴起就大量应用在冰碛物的测年研究上，90年代到00年代西藏地区有超过800个的TCN测量成果，由于机理简单并且只需要石英质，所有的TCN都用10Be方法，在已发布的冰川测年研究成果中，TCN方法占有大部分比例。这些数据都说明青藏高原季风区域只有末次冰期的痕迹，而中部西风带有很多大于100 ka的冰川痕迹，作者分析了2006年以前的TCN年代数据，认为在末次冰期时，西风带冰川发育有限，而季风区域冰川对温度非常敏感，发育可能覆盖了之前的，并且季风区侵蚀和沉积作用都强烈，部分年代久远的冰碛物也难以保留。*不过这个观点没有从构造抬升的角度来分析，总觉得不是很靠谱，季风带是对温度敏感，但是为什么就一定会覆盖以前的冰期，光用对温度敏感是不能解释季风区和西风区的差异的，毕竟冰期温度都是低的。可能150 ka 以来的差异抬升是这个差异的关键*
+
+TCN方法现在存在的一些问题是，测得的岩石表面年龄会受到一些地质作用的影响, 岩石表明不能完好的保存，比如风化，剥蚀，冰雪或者泥沙的遮蔽作用，以及所测岩石提前曝光现象。另外，在计算年龄的时候，采取的剂量变化率也很关键，这个值跟宇宙射线强度有关系，而强度会随时间和空间微弱变化，跟当地的地球磁场强度以及大气压强有关。而众所周知，地球磁场在地质时间尺度上总在波动，所以需要对这部分进行修正。
+
+为了修正地球磁场波动带来的误差，又可以采取不同的比例模型（scaling models）。不同的模型之间有较大的误差，特别是当测量地点在低纬度和高纬度，误差也会随海拔变化。在70ka左右，不同的模型有30%左右的误差，在2500m，误差有20%。To complicate matters further, different studies have used different production rates and scaling models to calculate their TCN ages, 作者把已发布的TCN数据都采用不同的模型和计算方法进行重新计算，发现他们之间相差有40%之多。
+
+由于TCN方法也有这么多误差，单个数据已经不能很好的表达真正的冰进时间，作者分析了所有的TCN数据，用频率的方法来考察冰期。*这个方法非常巧妙！但是有个非常大的问题，就是他的样品是否具有代表性。首先，时代越久远，冰碛物保存程度肯定越低，TCN数据也就越少。这个还可以通过对年龄分段来解决。另一个问题是研究必然有热点，有冷门，有没有涉及到的地区。比如如果把这套方法搬到国内，得出的肯定就是末次冰期，因为大部分的定年研究都集中在波堆冰川*
+
+为了研究整个西藏地区是否同步，作者又把这些测量数据分成4个地区，Himalaya和Tibet的季风区和西风区，发现在概率曲线上，西风区达到峰值的时间点早于季风区。（其实就是西部早于东部，其实有文献证明青藏高原的隆起是西部早于东部的）,而且在最西端，并没有发现其他地区一样的晚冰期以来的峰值。These data suggest that the westernmost Himalayan–Tibetan orogen is behaving differently from the other regions. This region is most influenced by the mid-latitude westerlies and has little influence from the south Asian monsoon.  
+
+文章最后部分提到了ELA，认为由于西藏地区独特的陡峻地形以及冰川严重被冰碛物覆盖，大部分的ELA计算方法都有问题，不能采用。
+
+## Nature and timing of Quaternary glaciation in the HimalayaneTibetan orogen
+
+-------------
+
+[文章](Nature and timing of Quaternary glaciation in the Himalaya-Tibetan orogen.pdf)是上一篇文章的最新版本，更加全面。
+
+国内的研究：诗雅凤，李世杰（2），郑本兴（6），周尚哲（5）
+
+*十多年来，在全球气候变暖的背景下，以及由于各种dating方法的出现，重构古冰川序列成为了冰川研究的热点，大部分的冰川研究都集中在第四纪古冰川各冰阶的时间鉴定以及相关时期的古冰川发育范围，借以研究古气候的变化以及冰川对温度变化的响应。鲜少有研究涉及到冰川侵蚀和沉积的地貌作用，特别是这些作用对河流系统的影响。事实上，无论是现代冰川的侵蚀形成的泥沙亦或是第四纪古冰川残留下来的冰碛物对河流的阻塞，都很大程度上决定了高原山地河流的河流形态以及沟谷地貌。*
+
+#### 研究区域地理环境及冰川地貌
+
+Derbyshire (1982) divided the glaciers into three main types: 1) continental interior types in the central and western parts of the Tibet Plateau; 2) maritime monsoonal types in the Himalaya and in southeastern Tibet; and 3) continental monsoonal types in eastern and northeastern Tibet
+
+emphasized that snow avalanching from precipitous slopes forms an important component of accumulation on many of these glaciers, and glacier ablation areas can be separated from source areas by steep icefalls or avalanche tracks. These are usually high activity glaciers that may have velocities up to several hundred meters per year (e.g.Seong et al., 2009d). Basin topography, therefore, plays an important role in determining the geometry and mass balance of these monsoonal glaciers
+*这段涉及到悬冰川的特点，作者认为地形在这种冰川的运动中起了非常大的作用，但是正如之前看到的那篇文章提到的一样，冰前地形计时山谷冰川特征的原因，也是这种山谷冰川的结果。即在大的时间尺度上，冰川是形成这种陡峭地形的主要原因。终其原因，在于快速抬升导致边缘区域超大的落差以及充沛的降水带来的强烈的剥蚀*
+
+文章提到了这些季风冰川中大部分冰川消融区都被厚厚的debris覆盖。认为有很多原因影响这个：
+1. 冰川流域内陡峭地形所占的比例（这个最为重要，是物质来源)
+2. 降雨的多少
+3. 冰川的长度（越长冰川消融的越多，积累的越多。因为这种表碛主要来源是冰川融化留下来的，另一部分是直接掉下来的）
+4. 岩石的抗侵蚀程度（完好的花岗岩就比破碎的片岩或者其他沉积岩好多了）
+
+另外，文章也总结很多研究冰川泥沙问题或者地貌问题的重要文章，都值得一读。
+
+#### 重构古冰川序列方法论及定年研究成果
+
+从重构古冰川发育范围研究方法的角度，作者强烈的反对了青藏高原大冰盖假说，批判了Kuhle的论点论据。作者又强调了由于青藏高原独特的地理环境和气候，用地貌学、沉积学的方法来判断冰川残留的时候需要非常小心。在定量的年代研究方面，文章收集了所有的C14，OLS，TCN, 并针对每个方法详细说明了方法的缺陷。osl一般反应的是depositional ages, 而TCN反应的是deglaciation ages(最小的TCN年龄)，C14则可能比tcn大，也可以比tcn小。因为TCN数据最多，作者又针对TCN数据分析数据应该分析和舍去，具体来说，因为风化剥蚀等作用以及遮蔽或者提前曝光等都会对年龄造成较大的影响，所以一个测量值如果要有代表性就应该多取几个，实际测量过程中，一组上多个测量值往往是非常分散的，怎样根据这些分散的年龄解译冰进是最大的难点。部分学者偏向采取最大的年龄（如果不是明显偏移的样本），但是这样很可能就有提前曝光的数据。导致年龄整体偏大。而根据最新的研究，在冰碛物中这种提前曝光的岩石比例非常多，并且可能分布也是非常广泛。因此在剔除偏移者的时候是非常不明显的。作者推荐应用[Mean square weighted deviation](http://en.wikipedia.org/wiki/Mean_square_weighted_deviation)来检验数据的有效性。 总的来说，由于采样出来的数据已经非常分散，加上计算时模型选取也没有明显偏向导致的结果差异，TCN年龄及解译都必须非常谨慎。因为上述的原因，研究者要选择一个和自己假设符合的数据是非常容易。
+
+文章也统计了整个青藏高原地区已研究冰川的年龄，最老的冰碛物可以追溯到0.5Ma，也就是中更新世，*由于第四纪冰期开始的时间约在2.5ma（上新世和更新世的界点），这个年龄相对较小，而且，这段时间内高原抬升速度也很快，粗略的估计，按照2mm/yr-4mm/yr的速度，高原在这段时间内抬升了1000-2000m，也就是当时的高原平均海拔为3000m，这个高度可能就是冰川发生的临界高度，更早期的冰碛物没有出现可能是高原在更早以前并没有抬升到相应的高度。当然也有个更简单的解释，更早的冰碛物被侵蚀掉了。（对比阿尔卑斯的古典四大冰期，最早的可能是0.6ma，但是也发现更早的冰碛物残留，单从侵蚀能力来说，欧洲应该要强于青藏高原内部西风带，所以说青藏高原没有出现0.5m以前的冰川残留的原因很可能就是高原高度的问题，另外，文章提到最早的冰川位于ladakh，其次是the west side of gurla mandata, 这两个地方特别是第一个都接近喜马拉雅西构造结，也就是说最早出现冰川的地方出现在海拔最高的位置（结合青藏高原抬升过程是先西部再东部的），因此更加佐证了之前的观点）* 文章也列举了一些其他比较久远的冰川残留物，但是总体上都位于青藏高原西部或者内部，比如昆仑山等。
+
+**经过众多学者的研究，关于青藏高原冰川近期最重要的成果之一就是基本证明了区域不同步，这种不同步的原因现在仍然没有得到一致的认同。与此相关的原因可能有一下：1）青藏高原东部由于侵蚀严重，更早的冰期残留被侵蚀了；2）东部和西部受不同的气候带控制; 3) 受青藏高原海拔限制，即青藏高原整体的不均匀抬升使得不同地区进入冰川的时间不同。这三个观点个人认为第3个更有可能。如国内最新的研究提出的一样，冰川的发育要和高原的抬升联系起来，如果说真的是高原的抬升高度影响了冰川出现的时期，而不是后期剥蚀导致了久远的冰碛物不存在，那么现在以后的结果应该是这样，发现的冰川痕迹应该是西边最老，中部次之，东部最晚（具体的形式还待整理好青藏高原的具体抬升过程），同时还可以和构造结联系起来，当然也有可能出现这样的情况，即后期冰川规模比之前大，把之前的覆盖了。所以总的来说，冰川出现的时间模式既要和青藏高原的抬升过程耦合，也应该考虑覆盖的问题，至于侵蚀，可能不会出现完全侵蚀干净的状态**
+
+#### 末次冰期以及全新世冰进研究、
+
+作者再次收集并分析了1700个已经发表的B10数据，用概率密度函数的方法，又说明了在西风带和季风带的控制下，青藏高原内部冰川发育不同步的现象。昆仑山-帕米尔高原由于主要受西风带控制，整个冰川序列更加偏向北半球冰盖一些。而其他地区，则更多的受到印度洋季风影响。特别是喜马拉雅山东边缘，几乎现在所有的冰川残留都在30ka以内，作者对此也给出了一些可能的解释，但是具体的原因还是不清楚。之后引用了dortch和murari两个的研究，基于统计学t分布的方法分别建立了青藏高原西风带和季风带第四纪冰期的冰阶序列。两者都根据已有定年成果把青藏高原的第四纪冰期分为9个冰阶。
+
+文章也有些到一些相关的问题，比如说Neoglacial，部分学者把全新世以来所有的冰期都称为Neoglacial，作者指出这样不合本意，Neoglacial应该不包括5.6ka之前的（具体是多少，需要看引用的文献），这部分最后也单独对LIA小冰期的研究成果做了简要总结。
+
+#### 过去以及将来的研究挑战
+
+这部分开始就说了，青藏高原大部分地区的冰川在20世纪小冰期之后就开始退缩。Cogley (2011)provides a comprehensive glacier inventory for the Himalaya and Karakoram containing 20,812 glaciers covering an area of 43,178 km, and he suggests that about one-fifth of glacier present in 1985 may have disappeared. 但也有部分研究证明，在一些区域，部分冰川比较稳定，在100多年里几乎才动了100-200米，也有一些冰川在前进（这个就和隧洞口的冰川情况差不多）
+
+the large altitudinal range, and the complex topographic setting, and microclimatic variations make it difficult to quantify future temperature change and its net effect on glacier melting. *从观测的数据和现象来看，隧道附近的3个冰川只能说活动性不同，最多只能说一个在活跃，一个在退缩，一个在慢慢消亡。但是并不能说明有生命周期。确实，那两条不行的冰川以前是尽力过活跃期，但这个活跃的不一定就会衰退。当然，说一个东西具有生命周期总是不会错的，哪个东西没有生命周期。但是能不能把这个周期的大概长度，受什么东西影响想清楚才是重点。根据文中所说的，一个冰川的活动性跟下面一些因素有关：温度、降雪量、cloudiness(水汽)、冰川表面泥沙覆盖*
+
+### Timing and climatic drivers for glaciation across monsoon-influenced regions of the HimalayaneTibetan orogen
+
+------------------
+
+[文章](Timing and climatic drivers for glaciation across monsoon-influenced regions of the HimalayaneTibetan orogen.pdf)
+
+#### 简介
+
+在印度 Garwhal 地区的38个冰碛物的<sup>10</sup>Be的年龄表明，末次冰期是该区域历史上冰川发育最为广泛的时期。 all date to less than ~12.5 ka. This suggests that the Lateglacial and/or Holocene glacial advances were more extensive than their predecessors 
+
+作者把自己测量的38个数据以及已经发表的1081个<sup>10</sup>Be年龄数据进行整理分组，提出 27 regional glacial stages (plus 2 tentative glacial stages)，其中5个在LGM之前，13个在LGM，11个在全新世。27个中16个属于季风带，11个属于西风带。
+
+#### 细节
+
+（In the more arid regions of the orogen (<500 mm/yr precipitation) glaciation is restricted in extent and moraine successions date back to several hundreds of thousands of years. In contrast, wetter monsoonal-influenced regions typically have more extensive glacial advances with little evidence preserved for glaciation older than a few tens of thousands of years.）中纬度西风带的半干旱地区冰川遗迹可以追溯到几十万年以上，海洋性冰川受气候影响大， 末次冰期是最大的冰期，冰川遗迹物的年龄都在几万年左右。
+
+The orogen is one of the most glaciated outside of the polar realms. The climate of the region is influenced by both the mid-latitude westerlies and south Asian monsoon, with strong south-north and east-west precipitation gradients. The region is drained by the Indus, Ganges, Brahmaputra, Irrawaddy, Yangtze, and Yellow Rivers.
+
+文中图10这样做出来的效果真的非常好，不知道是数据本身就是这么好，还是经过选择的，或者就是任何一组数据排序后都有这样的效果？图中个出的冰阶也挺有意思的，依次是LIA, Medieval Warm Period, Roman humid Period, Holocene Climatic, 8.2 ka event, 9.3 ka event, Younger Dryas, Allerod, Bolling, Older Dryas, Heinrich 1, Oldest Dryas. 
+
+### Spatial patterns of precipitation and topography in the Himalaya
+
+----------
+
+[文章](Spatial patterns of precipitation and topography in the Himalaya.pdf)对trmm数据评价及应用.
+
+### Alpine proglacial suspended sediment dynamics in warm and cool ablation seasons: Implications for global warming
+
+-------------
+
+[文章](Alpine proglacial suspended sediment dynamics.pdf)作者在2003年和2004年分别在同一个冰川下游观测冰川融水带来的悬移质。悬移质浓度用自动采样机采取，频率为一天一次，并根据浊度计加密。流量用水位计测量，频率为10分钟一次，同时也按照这个频率测量了温度。比较两年的温度，2003年平均温度高了1.2度，平均流量是04年的2.3倍，悬移质含沙率是04年的3到4倍。相对往年来说，03年异常热，04年异常冷，这些观测数据可以为气候变暖提供基础。
+
+文章最前面有些全球变暖的基础文献，以及阿尔卑斯山冰川退缩和冰雪覆盖率变化的文献，当然由于文章已经比较老了，这些数据文献也能需要更新。
+
+### Quaternary Glaciations: Extent and Chronology in China
+
+-----------
+
+[文章](Quaternary Glaciation Extent and Chronology in China.pdf)作者把青藏高原地区的冰川分为4个部分，分别总结每个部分的冰期。第一个是喀喇昆仑山，昆仑山以及喜马拉雅西部，喀喇昆仑山周边有四个明显的冰期，其中倒数第二个冰期范围最大。昆仑山部分明显区分的为三个冰期，喜马拉雅山也是四个冰期。第二个是喜马拉雅-念青唐古拉山以及横断山脉， There are 19,118 km 2 of existing glaciers in total in both the Nyainqentanglha and the Chinese part of the Himalayas.波堆河谷是研究念青唐古拉山冰川最重要的地区，这里最老的冰碛物是古乡冰期，This glacial period was termed the Guxiang Glaciation by Li Jijun et al. (1986). 他同时也提出了白玉冰期的概念。横断山脉上冰川数量虽然相对较少，但是第四纪冰川也是非常广泛，有证据显示这里甚至形成了小的冰盖。比如说金沙江和雅砻江之间的一个较平的高台（4700）上冰碛物无处不在。第三部分是祁连山。第四部分是高原内部。
+
+![波堆藏布第四纪冰川](波堆藏布第四纪冰川.png)
+
+![波堆藏布古乡和白玉冰期覆盖范围](波堆藏布古乡和白玉冰期覆盖范围.png)
+
+先按照地区分类说了之后，接着按着时间来说。文章总结了各地的最老冰期，认为这时期的冰川残留物比较重要，涉及到青藏高原抬升的过程。之后也列出了一些倒数第二冰期的研究成果，表明倒数第二冰期的分布范围比末次冰期广。末次冰期是研究的最多的冰期，大量的研究成果表明，末次冰期中mis3是冰川发育最为广泛的时候，文章这里引用Owen的研究成果，认为是mis3太阳光照强，南亚季风强度大，降雨多。而LMG的时候太阳光照弱。因此，好像可以得到结论，全球温度变暖冰川反而会发育。之后也稍微说了一下全新世的 Neoglacier 和 LIA。
+
+引用诗雅凤2006年的成果——对第四纪雪线的重构，文章指出青藏高原东边缘的ela变化远远大于中部。末次冰川覆盖率和现在的比例也是如此，这反映了季风的影响。
+
+文章的最后分析了冰川发育和构造抬升的关系，中国学者提出的两次快速抬升时期——昆黄运动、共和运动对青藏高原冰川的发育有决定性影响，这个模型能解释青藏高原上一些冰川的问题。文章最后还不忘记批判了一下大冰盖假说，悲惨的kuhle同学。

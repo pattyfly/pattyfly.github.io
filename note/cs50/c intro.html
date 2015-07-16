@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>c intro</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#c-intro">C intro</a><ul>
+        <li><a href="#循环变量">循环变量</a></li>
+        <li><a href="#字母转变">字母转变</a></li>
+        <li><a href="#随机">随机</a></li>
+        <li><a href="#文件读写">文件读写</a></li>
+        <li><a href="#static-变量">static 变量</a></li>
+        <li><a href="#其他">其他</a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/c.html">c</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/06 15:27</div>
+<!--c-->
+<h3 id="c-intro">C intro</h3>
+<hr />
+<h4 id="循环变量">循环变量</h4>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="kw">for</span> (i = <span class="dv">0</span>; i &lt; len(s); i++)  
+<span class="kw">for</span> (i = <span class="dv">0</span>, <span class="dt">int</span> n = len(s); i &lt; n; i++)</code></pre>
+<h4 id="字母转变">字母转变</h4>
+<pre class="sourceCode cpp"><code class="sourceCode cpp">s[i] = s[i] - (<span class="st">&#39;a&#39;</span> - <span class="st">&#39;A&#39;</span>)</code></pre>
+<div class="figure">
+<img src="images/stoi.png" alt="stoi" /><p class="caption">stoi</p>
+</div>
+<h4 id="随机">随机</h4>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;stdlib.h&gt;</span>
+<span class="ot">#include &lt;time.h&gt;</span>
+
+srand(time(NULL));
+<span class="dt">int</span> num = rand() % <span class="dv">5</span>;</code></pre>
+<h4 id="文件读写">文件读写</h4>
+<pre class="sourceCode cpp"><code class="sourceCode cpp">FILE* inptr = fopen(<span class="st">&quot;filename&quot;</span>, <span class="st">&quot;r&quot;</span>)
+<span class="kw">if</span> (inptr  == NULL)
+{
+  printf(<span class="st">&quot;some error&quot;</span>);
+  <span class="kw">return</span> <span class="dv">1</span>;
+}
+type s;
+fread(&amp;s, <span class="kw">sizeof</span>(date will be read), n, inptr); <span class="co">//n 是要读入的data的数目, 一般为1</span>
+fwrite(&amp;s,<span class="kw">sizeof</span>(date will be writeen),n outptr);
+fseek(inptr, n, SEEK_CUR)           <span class="co">// 移动光标, n是n个byte, SEEK_CUR表示当前位置. </span>
+fclose(inptr);</code></pre>
+<blockquote>
+<blockquote>
+<p>文件读写的时候有个非常奇怪的地方, 比如说元文件是AA BB CC DD. . <br> 如果定义一个4字节的unsigned int, 一次性读入两个字节, 用printf(&quot;%X&quot;,)出来的是BBAA <br> 也就是说读进去的是倒置的, 两个字节为单位. 但是用fwrite, 得到的还会是AABB. <br></p>
+</blockquote>
+</blockquote>
+<h4 id="static-变量">static 变量</h4>
+<p>在函数文件中, 如果多个函数要共用一个变量, 需要在文件前部分声明静态变量, 并赋值.</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">static</span> <span class="dt">int</span> account = <span class="dv">0</span>;
+<span class="dt">static</span> node* p[<span class="dv">10</span>] = {NULL}</code></pre>
+<h4 id="其他">其他</h4>
+<p>我有特殊的打印技巧^_^ <a href="escape.html">escape</a></p>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

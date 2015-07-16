@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="pandoc" />
+
+        
+    <style type="text/css">code{white-space: pre;}</style>
+
+                <style type="text/css">
+            table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+              margin: 0; padding: 0; vertical-align: baseline; border: none; }
+            table.sourceCode { width: 100%; line-height: 100%; }
+            td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+            td.sourceCode { padding-left: 5px; }
+            code > span.kw { color: #0000ff; }
+            code > span.ch { color: #008080; }
+            code > span.st { color: #008080; }
+            code > span.co { color: #008000; }
+            code > span.ot { color: #ff4000; }
+            code > span.al { color: #ff0000; }
+            code > span.er { font-weight: bold; }
+        </style>
+    
+    
+    
+    
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/bootstrap.min.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <script type="text/javascript" src="/wiki/static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/wiki/static/js/vimwiki.js"></script>
+    <title>point</title>
+</head>
+
+<body>
+        <div id="wiki_header"> 
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/wiki.html">Pattyfly</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/wiki/note/wiki.html">HOME</a></li>
+                        <li><a href="/wiki/note/cs50/cs50 note.html">CS50</a></li>
+                        <li><a href="/wiki/note/diary/diary.html">DIARY</a></li>
+                        <li><a href="/wiki/note/todo.html">TODO</a></li>
+                        <li><a href="/wiki/note/wiki/about wiki.html">Wiki</a></li>
+                        <li class="dropdown" id="accountmenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">W3C
+                                <!--    <b> class="caret"</b>  三角形  -->
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/wiki/note/cs50/html.html">HTML</a></li>
+                                <li><a href="/wiki/note/cs50/css.html">CSS</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/wiki/note/cs50/php.html">PHP</a></li>
+                                <li><a href="/wiki/note/cs50/javascript.html">JavaScript</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">SQL</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/wiki/archive/archive.html">Archive</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+            <div class="toc">
+        <ul>
+        <li><a href="#point">point</a><ul>
+        <li><a href="#动态内存">动态内存</a></li>
+        <li><a href="#初始化">初始化</a></li>
+        <li><a href="#指针和数组">指针和数组</a></li>
+        <li><a href="#malloc">malloc</a></li>
+        </ul></li>
+        </ul>
+        </div>
+    
+    <div class="container content-body">
+        <div id="wiki_tag">
+            <ul>
+                <li><a href="/wiki/archive/tags/c.html">c</a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+                <li><a href="/wiki/archive/tags/.html"></a></li>
+            </ul>
+        </div>
+        <div id=update_time>创建时间: 2015/07/16 17:39; 更新时间: 2015/06/28 04:16</div>
+<!--c-->
+<h3 id="point">point</h3>
+<hr />
+<p>指针主要在lecture 5 . 字符串实际上是指针的地址. <code>char* s = &quot;abc&quot;;</code> <code>s</code>就是&quot;abc&quot;的地址, 具体来讲是头个字符的地址, s 跟 &amp;s[0] 指向同一个东西.</p>
+<h4 id="动态内存">动态内存</h4>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">char</span>* s = malloc((strlen(s)<span class="dv">+1</span>)*<span class="kw">sizeof</span>(<span class="dt">char</span>));</code></pre>
+<h4 id="初始化">初始化</h4>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">int</span> a = <span class="dv">1</span>; <span class="dt">int</span>* x = &amp;a <span class="co">//正确</span>
+<span class="dt">int</span> a = <span class="dv">1</span>; <span class="dt">int</span>* x(=NULL); *x = a; <span class="co">//这样就不对, x是一个空地址：ox00, 不能赋值</span></code></pre>
+<p><strong>注意:</strong>由于指针的随意性, 在定义指针的时候一定要给他分配初始值, 要指向某个具体的地方, 否则就会出现严重的错误.</p>
+<h4 id="指针和数组">指针和数组</h4>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">int</span> arr[] = {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>};
+<span class="dt">int</span>* p = arr;</code></pre>
+<p><em>注意:</em> 这段代码很有迷惑性，我刚学的时候经常搞错，<code>p</code>是一个<code>int</code>型的指针，p是内存中的一个地址。等式右端，也就是赋值源<code>arr</code>并不是一个地址，<code>arr</code>是整个数组，而<code>&amp;arr</code>才是一个地址，而且重要的是，这两个地址虽然指向同一个地方，但是类型却是不同的，<code>&amp;arr</code>长度为8，<code>p</code>的长度为2。真正和p相同的是<code>&amp;arr[0]</code>.所以代码的第二行可以写成<code>int* p = &amp;arr[0];</code>, 其实际意义也是一个指向数组第一个元素的指针。同理，当数组名作为参数传递的时候，也只是传递第一个元素的地址</p>
+<ul>
+<li><a href="pset4.html">pset4</a>对指针有进一步的认识</li>
+</ul>
+<h4 id="malloc">malloc</h4>
+<ul>
+<li>section 4 有一些关于指针的内容, 特别是海豚的例子, 涉及到堆栈</li>
+<li>因为在一个子函数结束的时候，他所在的stack框架会被销毁，所以malloc分配的空间得保存在heap里面, 这时需要自己释放</li>
+<li>如果想要函数创建一个数组并返回, 需要用malloc, 在heap上申请内存, 向java这种语言, 直接在函数里面就可以创建对象, 并返回对象引用. 默认的就是在heap上存储所有复杂数据.</li>
+<li><a href="pset2.html">pset2</a>对malloc有进一步的认识，section5 的这个小函数 <a href="cp.html">cp</a> 也有一些malloc和空间的东西，从这个程序也能看到指针<code>*</code>和<code>&amp;</code>的优劣。</li>
+<li>section 4 main 里面数组大小是n, 是个变量, 在网上查了一下, C99已经可以这样搞了</li>
+<li>字符串初始化, 可以这样<code>char* c = &quot;abc&quot;;</code> 后面不需要\0(NULL)</li>
+<li>对于malloc的内存的单位的默认值, bool 为 fasle, 指针是 NULL</li>
+<li>但是用valgrind检查, 就会出现错误, 所以必须要给这些变量赋值.</li>
+<li>记得用 <a href="valgrind.html">valgrind</a> 检查问题</li>
+</ul>
+    </div>
+    
+    <div id="wiki_leftside">
+        <div id="xiami">
+            <embed id="xiami_list"
+            src="http://www.xiami.com/widget/10184493_388385,1770201852,1770062238,388390,388406,388414,388389,388410,388392,388407,388396,388394,19375,388409,378828,388391,19351,19396,_235_346_FF8719_494949_0/multiPlayer.swf" type="application/x-shockwave-flash" wmode="opaque" >
+            </embed>
+        </div>
+    </div>
+
+       </body>
+</html>

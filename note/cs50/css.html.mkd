@@ -1,0 +1,38 @@
+<!--css-->
+### css intro 
+
+----
+
+#### 引用
+
+  `<link rel="stylesheet" href="styles.css"/>`
+
+#### tag类型
+
+| css              | html           |
+| -------          | ----------     |
+| `#top`           | `id="top"`     |
+| `.active`        | `<h2>xxx</h2>` |
+| `[type="radio"]` | `type="radio"` |
+| `#rob h1:hover`  | `?`            |
+
+css选择器
+
+
+id只能出现一次, 但class可以出现多次
+
+  ------------------------------------ ------------------------------------
+  `#rob h1`                              能在 id 直接或间接下级作用           
+  `#rob > h1`                            只能在直接下级作用
+  `#rob ~ h1`                            在 id 完了才作用
+  `#rob + h1`                            在id完了紧接第一个才作用
+  ------------------------------------ ------------------------------------
+
+#### 关键字
+
+-   font-size: 16px(pt)
+-   font-weight: bold
+-   text-align: center
+-   margin-left[up/bottom/right]: 35px
+-   .....
+

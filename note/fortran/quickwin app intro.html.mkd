@@ -1,0 +1,86 @@
+<!--fortran-->
+### QuickWin App 基础 {#toc_0.0.1}
+
+----
+
+#### 设置窗口大小两个函数 {#toc_0.0.1.1}
+
+```fortran
+Iret = setwsizeqq(eunit,winfo)
+```
+
+>> 这里`eunit`如果是主窗口, 就用`qwin$framewindow`
+<br>`Tpye(qwinfo) :: winfo = {tpye,X,Y,W,H}`, 其中`type(qwin$max,qwin$min,qwin$set)`
+
+```fortran
+Iret = setwindowconfig(wc)
+```
+
+>>`Tpye(windowconfig) :: wc = {numxpixels, numypixels, numtextcols, numtextrows, title, fontsize}`
+<br>前者只能设置窗口大小位置, 后者能设置大小, 字体, 标题
+
+#### 取消提示 {#toc_0.0.1.2}
+
+```fortran
+iret = setexitqq(exitmode)
+```
+
+>>其中`exitmode(qwin$exitprompt ,qwin$exitnopresist,qwin$exitpresist)`(默认, 马上消失, 正常显示)
+
+#### 颜色 {#toc_0.0.1.3}
+
+-   窗口颜色
+
+```fortran
+iret = setbkcolorRGB(color)
+```
+
+>>这里 `color` 是 `integer`, 如 `#FF0000`, 或者用这种方式, `color = PGBtoInteger(255,0,0)`
+<br>这个函数只有当文字发生变化时才会使变化区域变色, 要全改背景需要调用清屏
+
+```fortran
+call clearscreen(area)                                       
+integer area($gclearscreen,gviewport,gwindow)
+```
+
+-   文字颜色
+
+```fortran
+iret = settextcolorRGB(color)
+```
+
+#### 定位 {#toc_0.0.1.4}
+
+-   文本模式
+
+```fortran
+call settextposition(row,column,t)
+```
+
+>> `type(rccoord)::t`  保存光标位置 `t(row,col)`
+<br>文本模式对应的可以用 `call outtext(text)`
+
+-   图形模式
+
+```fortran
+call moveto(x,y,t)
+```
+
+>> `type(xycoord)::t`  坐标位置 `t(xcoord,ycoord)`
+<br>图形模式对应的是  `call outgtext`
+<br>图形模式中字体设置有所不同
+
+-   实例：
+
+```fortran
+iret = setcolorRGB(#FF0000)              !只有这样才能改变图形模式的文字颜色
+iret =  initializefoint()                !这个是必须的
+iret = setfont('t' '幼圆' 'h18w10')      !屏幕坐标中, x对应的竖向的, y是水平向右为正, 左上角为原点. 
+```
+
+#### 其他 {#toc_0.0.1.5}
+
+```fortran
+iret = DisplayCursor($gCursorOn)  !显示光标
+iret = ClickMenuQQ(Qwin$Title) !点击菜单上的title, 使子窗口平铺
+```
